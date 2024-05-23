@@ -42,7 +42,8 @@ class MainGUI:
         frame1_2_1_1.pack_propagate(False)
         frame1_2_1_1.pack(padx=10, pady=10)
         self.charImageLabel = Label(frame1_2_1_1, text='이미지', image=self.testImage, width=140, height=180, padx=10, pady=10)
-        self.charImageLabel.pack(anchor='center', fill='both')
+        self.charImageLabel.image = self.testImage
+        self.charImageLabel.pack(expand=True)
         frame1_2_2 = Frame(frame1_2, width=290, height=200, bg='red')
         frame1_2_2.place(x=270, y=50)
         name = '김땡땡'    # 테스트용
