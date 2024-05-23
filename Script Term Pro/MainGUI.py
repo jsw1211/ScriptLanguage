@@ -17,7 +17,7 @@ class MainGUI:
         image = image.resize((200, 200))
         self.testImage = ImageTk.PhotoImage(image)
 
-        self.notebook = tkinter.ttk.Notebook(self.window, width=800, height=600)
+        self.notebook = tkinter.ttk.Notebook(self.window, width=600, height=800)
         self.notebook.pack()
 
         #
@@ -26,7 +26,7 @@ class MainGUI:
         frame1 = Frame(self.window)  # 캐릭터 정보 검색 기능
         self.notebook.add(frame1, text='캐릭터 정보')
         # Label(frame1, text='캐릭터 정보를 조회', fg='red', font='helvetica 48').pack()
-        frame1_1 = Frame(frame1, width=600, height=100)
+        frame1_1 = Frame(frame1, width=600, height=100, bg='gold')
         frame1_1.pack()
         self.searchStr = StringVar()
         Entry(frame1_1, textvariable=self.searchStr, width=20, justify=LEFT, font=self.font).place(x=50, y=50)
@@ -34,33 +34,59 @@ class MainGUI:
         Button(frame1_1, text='별', width=3, height=1, command=self.pressedFavorite, font=self.fontB).place(x=450, y=45)
         Button(frame1_1, text='메일', width=3, height=1, command=self.pressedMail, font=self.fontB).place(x=510, y=45)
 
-        frame1_2 = Frame(frame1, width=600, height=700)
+        frame1_2 = Frame(frame1, width=600, height=700, bg='gold')
         frame1_2.pack()
-        frame1_2_1 = Frame(frame1_2, width=160, height=200, bg='#ede0c8')
-        frame1_2_1.place(x=50, y=50)
-        frame1_2_1_1 = Frame(frame1_2_1, width=140, height=180)
-        frame1_2_1_1.pack_propagate(False)
-        frame1_2_1_1.pack(padx=10, pady=10)
-        self.charImageLabel = Label(frame1_2_1_1, text='이미지', image=self.testImage, width=140, height=180, padx=10, pady=10)
+
+        Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
+        frame1_2_1 = Frame(frame1_2, width=600, height=200, bg='gray50')
+        frame1_2_1.pack()
+        frame1_2_1_1 = Frame(frame1_2_1, width=160, height=200, bg='#ede0c8')
+        frame1_2_1_1.place(x=50, y=0)
+        frame1_2_1_1_1 = Frame(frame1_2_1_1, width=140, height=180)
+        frame1_2_1_1_1.pack_propagate(False)
+        frame1_2_1_1_1.pack(padx=10, pady=10)
+        self.charImageLabel = Label(frame1_2_1_1_1, text='이미지', image=self.testImage, width=140, height=180, padx=10, pady=10)
         self.charImageLabel.image = self.testImage
         self.charImageLabel.pack(expand=True)
-        frame1_2_2 = Frame(frame1_2, width=290, height=200, bg='red')
-        frame1_2_2.place(x=270, y=50)
+        frame1_2_1_2 = Frame(frame1_2_1, width=290, height=200, bg='purple1')
+        frame1_2_1_2.place(x=270, y=0)
         name = '김땡땡'    # 테스트용
-        self.charNameLabel = Label(frame1_2_2, text=name, font=self.font)
+        self.charNameLabel = Label(frame1_2_1_2, text=name, font=self.font)
         self.charNameLabel.place(x=10, y=10)
         level = 250     # 토스트용
-        self.charLevelLabel = Label(frame1_2_2, text='Lv '+str(level), font=self.font)
+        self.charLevelLabel = Label(frame1_2_1_2, text='Lv '+str(level), font=self.font)
         self.charLevelLabel.place(x=100, y=10)
         server = '스카니아'     # 텨스트용
-        self.charServerLabel = Label(frame1_2_2, text='서버 - '+server, font=self.font)
+        self.charServerLabel = Label(frame1_2_1_2, text='서버 - '+server, font=self.font)
         self.charServerLabel.place(x=10, y=50)
         guild = '지존'    # 임시
-        self.charGuildLabel = Label(frame1_2_2, text='길드 - '+guild, font=self.font)
+        self.charGuildLabel = Label(frame1_2_1_2, text='길드 - '+guild, font=self.font)
         self.charGuildLabel.place(x=10, y=90)
         popular = 999   # 비둘기
-        self.charPopularLabel = Label(frame1_2_2, text='인기도 - '+str(popular), font=self.font)
+        self.charPopularLabel = Label(frame1_2_1_2, text='인기도 - '+str(popular), font=self.font)
         self.charPopularLabel.place(x=10, y=130)
+
+        Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
+        frame1_2_2 = Frame(frame1_2, width=600, height=300, bg='gray50')
+        frame1_2_2.pack()
+        frame1_2_2_1 = Frame(frame1_2_2, width=240, height=300, bg='khaki1')
+        frame1_2_2_1.pack_propagate(False)
+        frame1_2_2_1.place(x=40, y=0)
+        frame1_2_2_1_1 = Frame(frame1_2_2_1, width=200, height=40, bg='sky blue')
+        frame1_2_2_1_1.pack()
+        frame1_2_2_1_2 = Frame(frame1_2_2_1, width=240, height=260, bg='thistle')
+        frame1_2_2_1_2.pack()
+        frame1_2_2_2 = Frame(frame1_2_2, width=240, height=300, bg='burlywood1')
+        frame1_2_2_2.pack_propagate(False)
+        frame1_2_2_2.place(x=320, y=0)
+        frame1_2_2_2_1 = Frame(frame1_2_2_2, width=200, height=40, bg='sky blue')
+        frame1_2_2_2_1.pack()
+        frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, bg='thistle')
+        frame1_2_2_2_2.pack()
+
+        Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
+        frame1_2_3 = Frame(frame1_2, width=600, height=80, bg='gray50')
+        frame1_2_3.pack()
 
         #
         #
