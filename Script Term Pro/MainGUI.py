@@ -11,6 +11,7 @@ class MainGUI:
         self.window.geometry('600x800')
 
         self.font = font.Font(self.window, size=16, weight='bold', family='굴림')
+        self.fontS = font.Font(self.window, size=8, weight='bold', family='굴림')
         self.fontB = font.Font(self.window, size=16, weight='bold', family='arial')
         self.fontT = font.Font(self.window, size=24, weight='bold', family='굴림')
         self.fontV = font.Font(self.window, size=28, weight='bold', family='굴림')
@@ -22,7 +23,7 @@ class MainGUI:
         self.notebook = tkinter.ttk.Notebook(self.window, width=600, height=800)
         self.notebook.pack()
 
-        #
+        # 캐릭터 정보 검색 페이지
         #
         #
         frame1 = Frame(self.window)  # 캐릭터 정보 검색 기능
@@ -118,21 +119,44 @@ class MainGUI:
         self.mureungLabel = Label(frame1_2_3, text='무릉 '+str(49)+'층 '+str(12)+':'+str(59), font=self.fontV)
         self.mureungLabel.pack(side=TOP)
 
-        #
+        # 랭킹 페이지
         #
         #
         frame2 = Frame(self.window)  # 랭킹 기능
         self.notebook.add(frame2, text='랭킹 정보')
-        Label(frame2, text='랭킹을 보여줌', fg='blue', font='helvetica 48').pack()
+        frame2_1 = Frame(frame2, width=600, height=100, bg='gray50')
+        frame2_1.pack_propagate(False)
+        frame2_1.pack()
+        w = 4   # 버튼 넓이
+        h = 1   # 버튼 높이
+        px = 5  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
+        py = 5  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
+        # 서버들 버튼 (추후에 버튼 크기 맞추어야 함)
+        Button(frame2_1, text='전체', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=0, padx=px, pady=py)
+        Button(frame2_1, text='스카니아', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=1, padx=px, pady=py)
+        Button(frame2_1, text='베라', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=2, padx=px, pady=py)
+        Button(frame2_1, text='루나', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=3, padx=px, pady=py)
+        Button(frame2_1, text='제니스', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=4, padx=px, pady=py)
+        Button(frame2_1, text='크로아', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=5, padx=px, pady=py)
+        Button(frame2_1, text='유니온', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=6, padx=px, pady=py)
+        Button(frame2_1, text='엘리시움', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=7, padx=px, pady=py)
+        Button(frame2_1, text='이노시스', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=0, padx=px, pady=py)
+        Button(frame2_1, text='레드', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=1, column=1, padx=px, pady=py)
+        Button(frame2_1, text='오로라', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=2, padx=px, pady=py)
+        Button(frame2_1, text='아케인', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=3, padx=px, pady=py)
+        Button(frame2_1, text='노바', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=1, column=4, padx=px, pady=py)
+        Button(frame2_1, text='리부트', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=5, padx=px, pady=py)
+        Button(frame2_1, text='리부트1', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=6, padx=px, pady=py)
+        Button(frame2_1, text='리부트2', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=7, padx=px, pady=py)
 
-        #
+        # 확률 정보 페이지
         #
         #
         frame3 = Frame(self.window)  # 확률 정보 기능
         self.notebook.add(frame3, text='확률 정보')
         Label(frame3, text='인게임 확률 통계를 보여줌', fg='green', font='helvetica 48').pack()
 
-        #
+        # 팝업스토어 위치 및 이미지
         #
         #
         frame4 = Frame(self.window)  # 팝업스토어 위치 지도 기능
@@ -148,6 +172,9 @@ class MainGUI:
         pass
 
     def pressedMail(self):
+        pass
+
+    def pressedServer(self):
         pass
 
 
