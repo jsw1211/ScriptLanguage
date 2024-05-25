@@ -124,13 +124,13 @@ class MainGUI:
         #
         frame2 = Frame(self.window)  # 랭킹 기능
         self.notebook.add(frame2, text='랭킹 정보')
-        frame2_1 = Frame(frame2, width=600, height=100, bg='gray50')
-        frame2_1.pack_propagate(False)
+        frame2_1 = Frame(frame2, width=600, height=100, bg='gray50', padx=8, pady=8)
+        frame2_1.grid_propagate(False)
         frame2_1.pack()
         w = 4   # 버튼 넓이
         h = 1   # 버튼 높이
-        px = 5  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
-        py = 5  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
+        px = 10  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
+        py = 4  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
         # 서버들 버튼 (추후에 버튼 크기 맞추어야 함)
         Button(frame2_1, text='전체', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=0, padx=px, pady=py)
         Button(frame2_1, text='스카니아', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=1, padx=px, pady=py)
@@ -148,6 +148,29 @@ class MainGUI:
         Button(frame2_1, text='리부트', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=5, padx=px, pady=py)
         Button(frame2_1, text='리부트1', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=6, padx=px, pady=py)
         Button(frame2_1, text='리부트2', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=7, padx=px, pady=py)
+        # 임시 랭킹들 나열
+        Frame(frame2, width=600, height=30, background='LightBlue1').pack()
+        frame2_2 = Frame(frame2, width=600, height=640, bg='gray50', padx=10, pady=10)
+        frame2_2.grid_propagate(False)
+        frame2_2.pack()
+        px = 24  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
+        py = 4  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
+        Label(frame2_2, text='랭킹 #', width=5, height=2, font=self.font).grid(row=0, column=0, padx=px, pady=py)
+        Label(frame2_2, text='닉네임', width=5, height=2, font=self.font).grid(row=0, column=1, padx=px, pady=py)
+        Label(frame2_2, text='레벨', width=5, height=2, font=self.font).grid(row=0, column=2, padx=px, pady=py)
+        Label(frame2_2, text='서버', width=5, height=2, font=self.font).grid(row=0, column=3, padx=px, pady=py)
+        Label(frame2_2, text='직업', width=5, height=2, font=self.font).grid(row=0, column=4, padx=px, pady=py)
+        # 1~10 한페이지에서 보여질 10명
+        self.lankingLabels = [[] for _ in range(10)]
+        for i in range(10):
+            self.lankingLabels[i].append(Label(frame2_2, text=str(i+1)+'위', width=5, height=2, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text='김땡땡', width=5, height=2, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text=str(295)+'Lv', width=5, height=2, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text='스카니아', width=5, height=2, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text='초보자', width=5, height=2, font=self.font))
+
+            for j, label in enumerate(self.lankingLabels[i]):
+                label.grid(row=i+1, column=j, padx=px, pady=py)
 
         # 확률 정보 페이지
         #
