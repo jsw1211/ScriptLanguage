@@ -131,7 +131,7 @@ class MainGUI:
         h = 1   # 버튼 높이
         px = 10  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
         py = 4  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
-        # 서버들 버튼 (추후에 버튼 크기 맞추어야 함)
+        # 서버들 버튼 (추후에 버튼 크기 맞추어야 함) 이건 place 배치로 해야 해결 가능하다고 함
         Button(frame2_1, text='전체', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=0, padx=px, pady=py)
         Button(frame2_1, text='스카니아', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=1, padx=px, pady=py)
         Button(frame2_1, text='베라', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=2, padx=px, pady=py)
@@ -150,7 +150,7 @@ class MainGUI:
         Button(frame2_1, text='리부트2', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=7, padx=px, pady=py)
         # 임시 랭킹들 나열
         Frame(frame2, width=600, height=30, background='LightBlue1').pack()
-        frame2_2 = Frame(frame2, width=600, height=640, bg='gray50', padx=10, pady=10)
+        frame2_2 = Frame(frame2, width=600, height=550, bg='gray50', padx=10, pady=10)
         frame2_2.grid_propagate(False)
         frame2_2.pack()
         px = 24  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
@@ -161,16 +161,23 @@ class MainGUI:
         Label(frame2_2, text='서버', width=5, height=2, font=self.font).grid(row=0, column=3, padx=px, pady=py)
         Label(frame2_2, text='직업', width=5, height=2, font=self.font).grid(row=0, column=4, padx=px, pady=py)
         # 1~10 한페이지에서 보여질 10명
+        px = 24  # 요소별 양옆에 패딩
+        py = 10  # 랭킹 우아래 패딩
         self.lankingLabels = [[] for _ in range(10)]
         for i in range(10):
-            self.lankingLabels[i].append(Label(frame2_2, text=str(i+1)+'위', width=5, height=2, font=self.font))
-            self.lankingLabels[i].append(Label(frame2_2, text='김땡땡', width=5, height=2, font=self.font))
-            self.lankingLabels[i].append(Label(frame2_2, text=str(295)+'Lv', width=5, height=2, font=self.font))
-            self.lankingLabels[i].append(Label(frame2_2, text='스카니아', width=5, height=2, font=self.font))
-            self.lankingLabels[i].append(Label(frame2_2, text='초보자', width=5, height=2, font=self.font))
-
-            for j, label in enumerate(self.lankingLabels[i]):
+            self.lankingLabels[i].append(Label(frame2_2, text=str(i+1)+'위', width=5, height=1, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text='김땡땡', width=5, height=1, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text=str(295)+'Lv', width=5, height=1, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text='스카니아', width=5, height=1, font=self.font))
+            self.lankingLabels[i].append(Label(frame2_2, text='초보자', width=5, height=1, font=self.font))
+            for j, label in enumerate(self.lankingLabels[i]):   # 그리드 배치
                 label.grid(row=i+1, column=j, padx=px, pady=py)
+        # 다음 페이지 버튼(10 페이지 정도 생각중)
+        Frame(frame2, width=600, height=30, background='LightBlue1').pack()
+        frame2_3 = Frame(frame2, width=600, height=60, bg='plum1')
+        frame2_3.pack()
+        Button(frame2_3, text='<-', width=10, height=2, command=self.pressedPrev, font=self.fontB).place(x=150, y=0, width=100, height=50)
+        Button(frame2_3, text='->', width=10, height=2, command=self.pressedNext, font=self.fontB).place(x=350, y=0, width=100, height=50)
 
         # 확률 정보 페이지
         #
@@ -198,6 +205,12 @@ class MainGUI:
         pass
 
     def pressedServer(self):
+        pass
+
+    def pressedPrev(self):
+        pass
+
+    def pressedNext(self):
         pass
 
 
