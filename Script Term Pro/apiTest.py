@@ -13,9 +13,30 @@ urlString = "https://open.api.nexon.com/maplestory/v1/id?character_name=" + encC
 response = requests.get(urlString, headers=headers)
 
 print(response.json())
+print('\n')
 
 # 가져온 id로 캐릭터 정보 조회
 urlString_1 = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + response.json()['ocid']
 response_1 = requests.get(urlString_1, headers=headers)
 
 print(response_1.json())
+print('\n\n')
+
+# 랭킹정보 보기 서버는 전체(일반서버 기준)
+urlString_2 = "https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22"
+response_2 = requests.get(urlString_2, headers=headers)
+
+for char in response_2.json()['ranking']:
+    print(char)
+
+# 서버를 특정하고 싶으면
+serverName = "스카니아"
+encServerName = urllib.parse.quote(serverName)
+urlString_3 = "https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22&world_name="+encServerName
+response_3 = requests.get(urlString_3, headers=headers)
+
+print('\n\n')
+print(serverName)
+print('\n\n')
+for char in response_3.json()['ranking']:
+    print(char)
