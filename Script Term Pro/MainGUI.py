@@ -2,9 +2,16 @@ from tkinter import *
 from tkinter import font
 import tkinter.ttk
 from PIL import Image, ImageTk
+from enum import Enum
+import requests
+import urllib.request
 
 
 class MainGUI:
+    headers = { # 송승호 개발용 키
+        "x-nxopen-api-key": "test_cebf915b37b6eae59393a51b5d2a56e2798071e29e9cae7e85d9e988c8e293b61d98edcf6f5e475acb4e50f454c8019e"
+    }
+
     def __init__(self):
         self.window = Tk()
         self.window.title('메이플스토리(임시)')
@@ -122,6 +129,8 @@ class MainGUI:
         # 랭킹 페이지
         #
         #
+        self.lankSeenServer = ServerMod.Entire  # default 전체서버(일반서버 전체)
+        self.lankPage = 0   # default 0 0~9페이지까지(100위까지 보여줄 예정)
         frame2 = Frame(self.window)  # 랭킹 기능
         self.notebook.add(frame2, text='랭킹 정보')
         frame2_1 = Frame(frame2, width=600, height=100, bg='gray50')
@@ -129,24 +138,24 @@ class MainGUI:
         frame2_1.pack()
         w = 4   # 버튼 넓이
         h = 1   # 버튼 높이
-        px = 60  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
-        py = 35  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
-        Button(frame2_1, text='전체', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*0, y=10, width=px, height=py)
-        Button(frame2_1, text='스카니아', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*1, y=10, width=px, height=py)
-        Button(frame2_1, text='베라', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*2, y=10, width=px, height=py)
-        Button(frame2_1, text='루나', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*3, y=10, width=px, height=py)
-        Button(frame2_1, text='제니스', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*4, y=10, width=px, height=py)
-        Button(frame2_1, text='크로아', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*5, y=10, width=px, height=py)
-        Button(frame2_1, text='유니온', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*6, y=10, width=px, height=py)
-        Button(frame2_1, text='엘리시움', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*7, y=10, width=px, height=py)
-        Button(frame2_1, text='이노시스', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*0, y=55, width=px, height=py)
-        Button(frame2_1, text='레드', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*1, y=55, width=px, height=py)
-        Button(frame2_1, text='오로라', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*2, y=55, width=px, height=py)
-        Button(frame2_1, text='아케인', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*3, y=55, width=px, height=py)
-        Button(frame2_1, text='노바', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*4, y=55, width=px, height=py)
-        Button(frame2_1, text='리부트', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*5, y=55, width=px, height=py)
-        Button(frame2_1, text='리부트1', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*6, y=55, width=px, height=py)
-        Button(frame2_1, text='리부트2', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*7, y=55, width=px, height=py)
+        px = 60  # 버튼 넓이 픽셀
+        py = 35  # 버튼 높이 픽셀
+        Button(frame2_1, text='전체', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Entire), font=self.font).place(x=25+70*0, y=10, width=px, height=py)
+        Button(frame2_1, text='스카니아', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Scania), font=self.fontS).place(x=25+70*1, y=10, width=px, height=py)
+        Button(frame2_1, text='베라', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Bera), font=self.font).place(x=25+70*2, y=10, width=px, height=py)
+        Button(frame2_1, text='루나', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Luna), font=self.font).place(x=25+70*3, y=10, width=px, height=py)
+        Button(frame2_1, text='제니스', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Zenis), font=self.fontS).place(x=25+70*4, y=10, width=px, height=py)
+        Button(frame2_1, text='크로아', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Croah), font=self.fontS).place(x=25+70*5, y=10, width=px, height=py)
+        Button(frame2_1, text='유니온', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Union), font=self.fontS).place(x=25+70*6, y=10, width=px, height=py)
+        Button(frame2_1, text='엘리시움', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Elisium), font=self.fontS).place(x=25+70*7, y=10, width=px, height=py)
+        Button(frame2_1, text='이노시스', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Enosis), font=self.fontS).place(x=25+70*0, y=55, width=px, height=py)
+        Button(frame2_1, text='레드', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Red), font=self.font).place(x=25+70*1, y=55, width=px, height=py)
+        Button(frame2_1, text='오로라', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Aurora), font=self.fontS).place(x=25+70*2, y=55, width=px, height=py)
+        Button(frame2_1, text='아케인', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Arcane), font=self.fontS).place(x=25+70*3, y=55, width=px, height=py)
+        Button(frame2_1, text='노바', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Nova), font=self.font).place(x=25+70*4, y=55, width=px, height=py)
+        Button(frame2_1, text='리부트', width=w, height=h, command=lambda : self.pressedServer(ServerMod.RebootAll), font=self.fontS).place(x=25+70*5, y=55, width=px, height=py)
+        Button(frame2_1, text='리부트1', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Reboot1), font=self.fontS).place(x=25+70*6, y=55, width=px, height=py)
+        Button(frame2_1, text='리부트2', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Reboot2), font=self.fontS).place(x=25+70*7, y=55, width=px, height=py)
         # 임시 랭킹들 나열
         Frame(frame2, width=600, height=30, background='LightBlue1').pack()
         frame2_2 = Frame(frame2, width=600, height=550, bg='gray50', padx=10, pady=10)
@@ -177,6 +186,7 @@ class MainGUI:
         frame2_3.pack()
         Button(frame2_3, text='<-', width=10, height=2, command=self.pressedPrev, font=self.fontB).place(x=150, y=0, width=100, height=50)
         Button(frame2_3, text='->', width=10, height=2, command=self.pressedNext, font=self.fontB).place(x=350, y=0, width=100, height=50)
+        self.changeLankServerAll(0)
 
         # 확률 정보 페이지
         #
@@ -203,14 +213,113 @@ class MainGUI:
     def pressedMail(self):
         pass
 
-    def pressedServer(self):
-        pass
+    def pressedServer(self, server):
+        serverNameKorea = ''
+        if server == ServerMod.Entire or server == ServerMod.RebootAll:
+            self.lankSeenServer = server
+            if server == ServerMod.Entire:
+                self.changeLankServerAll(0) # 0이 일반 서버
+            else:
+                self.changeLankServerAll(1) # 1이 리부트 서버이기 때문에
+        elif server in ServerMod:
+            self.lankSeenServer = server
+            if server == ServerMod.Scania:
+                serverNameKorea = '스카니아'
+            elif server == ServerMod.Bera:
+                serverNameKorea = '베라'
+            elif server == ServerMod.Luna:
+                serverNameKorea = '루나'
+            elif server == ServerMod.Zenis:
+                serverNameKorea = '제니스'
+            elif server == ServerMod.Croah:
+                serverNameKorea = '크로아'
+            elif server == ServerMod.Union:
+                serverNameKorea = '유니온'
+            elif server == ServerMod.Elisium:
+                serverNameKorea = '엘리시움'
+            elif server == ServerMod.Enosis:
+                serverNameKorea = '이노시스'
+            elif server == ServerMod.Red:
+                serverNameKorea = '레드'
+            elif server == ServerMod.Aurora:
+                serverNameKorea = '오로라'
+            elif server == ServerMod.Arcane:
+                serverNameKorea = '아케인'
+            elif server == ServerMod.Nova:
+                serverNameKorea = '노바'
+            elif server == ServerMod.Reboot1:
+                serverNameKorea = '리부트'
+            elif server == ServerMod.Reboot2:
+                serverNameKorea = '리부트2'
+            self.changeLankServer(serverNameKorea)
+        else:
+            pass    # 유효한 서버가 아닙니다.
 
     def pressedPrev(self):
-        pass
+        # 랭킹 페이지 <- 버튼에 대해서
+        if self.lankPage > 0:
+            self.lankPage -= 1
+        self.UpdateLankingLabel()
 
     def pressedNext(self):
-        pass
+        # 랭킹 페이지 -> 버튼에 대해서
+        if self.lankPage < 9:
+            self.lankPage += 1
+        self.UpdateLankingLabel()
+
+    def changeLankServer(self, serverName):
+        # 서버 이름을 받고 데이터를 API로 불러온다.
+        urlString = 'https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22&world_name=' + serverName
+        response = requests.get(urlString, headers=self.headers)
+        if response.status_code == 200:
+            self.lankingData = response.json()['ranking']
+        else:
+            print('올바른 데이터 반응이 아닙니다(디버깅용)')
+
+        self.lankPage = 0
+        self.UpdateLankingLabel()
+
+    def changeLankServerAll(self, serverMod):
+        # 서버 통합 모드
+        urlString = 'https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22&world_type=' + str(serverMod)
+        response = requests.get(urlString, headers=self.headers)
+        if response.status_code == 200:
+            self.lankingData = response.json()['ranking']
+        else:
+            print('올바른 데이터 반응이 아닙니다(디버깅용)')
+
+        self.lankPage = 0
+        self.UpdateLankingLabel()
+
+    def UpdateLankingLabel(self):
+        # self.lankPage 에 따라 그에 맞는 label을 보여주기 위해 업데이트
+        digit = self.lankPage * 10
+        for i in range(10):
+            nowLank = self.lankingData[i+digit]
+            self.lankingLabels[i][0]['text'] = str(nowLank['ranking'])+'위'
+            self.lankingLabels[i][1]['text'] = nowLank['character_name']
+            self.lankingLabels[i][2]['text'] = str(nowLank['character_level'])+'Lv'
+            self.lankingLabels[i][3]['text'] = nowLank['world_name']
+            self.lankingLabels[i][4]['text'] = nowLank['class_name']
+
+
+class ServerMod(Enum):
+    Entire = 0
+    Scania = 1
+    Bera = 2
+    Luna = 3
+    Zenis = 4
+    Croah = 5
+    Union = 6
+    Elisium = 7
+    Enosis = 8
+    Red = 9
+    Aurora = 10
+    Arcane = 11
+    Nova = 12
+    RebootAll = 13
+    Reboot1 = 14
+    Reboot2 = 15
 
 
 MainGUI()
