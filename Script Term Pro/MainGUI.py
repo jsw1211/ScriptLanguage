@@ -190,7 +190,7 @@ class MainGUI:
         frame2_3.pack()
         Button(frame2_3, text='<-', width=10, height=2, command=self.pressedPrev, font=self.fontB).place(x=150, y=0, width=100, height=50)
         Button(frame2_3, text='->', width=10, height=2, command=self.pressedNext, font=self.fontB).place(x=350, y=0, width=100, height=50)
-        self.changeLankServerAll(0)
+        self.pressedServer(ServerMod.Entire)
 
         # 확률 정보 페이지
         #
@@ -218,7 +218,8 @@ class MainGUI:
         pass
 
     def pressedServer(self, server):
-        serverNameKorea = ''
+        self.lankServerButton[self.lankSeenServer.value]['state'] = 'active'
+        self.lankServerButton[self.lankSeenServer.value]['bg'] = 'SystemButtonFace'
         if server == ServerMod.Entire or server == ServerMod.RebootAll:
             self.lankSeenServer = server
             if server == ServerMod.Entire:
@@ -226,6 +227,7 @@ class MainGUI:
             else:
                 self.changeLankServerAll(1) # 1이 리부트 서버이기 때문에
         elif server in ServerMod:
+            serverNameKorea = ''
             self.lankSeenServer = server
             if server == ServerMod.Scania:
                 serverNameKorea = '스카니아'
@@ -258,6 +260,8 @@ class MainGUI:
             self.changeLankServer(serverNameKorea)
         else:
             pass    # 유효한 서버가 아닙니다.
+        self.lankServerButton[self.lankSeenServer.value]['state'] = 'disabled'
+        self.lankServerButton[self.lankSeenServer.value]['bg'] = 'gray'
 
     def pressedPrev(self):
         # 랭킹 페이지 <- 버튼에 대해서
