@@ -124,30 +124,29 @@ class MainGUI:
         #
         frame2 = Frame(self.window)  # 랭킹 기능
         self.notebook.add(frame2, text='랭킹 정보')
-        frame2_1 = Frame(frame2, width=600, height=100, bg='gray50', padx=8, pady=8)
+        frame2_1 = Frame(frame2, width=600, height=100, bg='gray50')
         frame2_1.grid_propagate(False)
         frame2_1.pack()
         w = 4   # 버튼 넓이
         h = 1   # 버튼 높이
-        px = 10  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
-        py = 4  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
-        # 서버들 버튼 (추후에 버튼 크기 맞추어야 함) 이건 place 배치로 해야 해결 가능하다고 함
-        Button(frame2_1, text='전체', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=0, padx=px, pady=py)
-        Button(frame2_1, text='스카니아', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=1, padx=px, pady=py)
-        Button(frame2_1, text='베라', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=2, padx=px, pady=py)
-        Button(frame2_1, text='루나', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=0, column=3, padx=px, pady=py)
-        Button(frame2_1, text='제니스', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=4, padx=px, pady=py)
-        Button(frame2_1, text='크로아', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=5, padx=px, pady=py)
-        Button(frame2_1, text='유니온', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=6, padx=px, pady=py)
-        Button(frame2_1, text='엘리시움', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=0, column=7, padx=px, pady=py)
-        Button(frame2_1, text='이노시스', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=0, padx=px, pady=py)
-        Button(frame2_1, text='레드', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=1, column=1, padx=px, pady=py)
-        Button(frame2_1, text='오로라', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=2, padx=px, pady=py)
-        Button(frame2_1, text='아케인', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=3, padx=px, pady=py)
-        Button(frame2_1, text='노바', width=w, height=h, command=self.pressedServer, font=self.font).grid(row=1, column=4, padx=px, pady=py)
-        Button(frame2_1, text='리부트', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=5, padx=px, pady=py)
-        Button(frame2_1, text='리부트1', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=6, padx=px, pady=py)
-        Button(frame2_1, text='리부트2', width=w, height=h, command=self.pressedServer, font=self.fontS).grid(row=1, column=7, padx=px, pady=py)
+        px = 60  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
+        py = 35  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
+        Button(frame2_1, text='전체', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*0, y=10, width=px, height=py)
+        Button(frame2_1, text='스카니아', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*1, y=10, width=px, height=py)
+        Button(frame2_1, text='베라', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*2, y=10, width=px, height=py)
+        Button(frame2_1, text='루나', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*3, y=10, width=px, height=py)
+        Button(frame2_1, text='제니스', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*4, y=10, width=px, height=py)
+        Button(frame2_1, text='크로아', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*5, y=10, width=px, height=py)
+        Button(frame2_1, text='유니온', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*6, y=10, width=px, height=py)
+        Button(frame2_1, text='엘리시움', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*7, y=10, width=px, height=py)
+        Button(frame2_1, text='이노시스', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*0, y=55, width=px, height=py)
+        Button(frame2_1, text='레드', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*1, y=55, width=px, height=py)
+        Button(frame2_1, text='오로라', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*2, y=55, width=px, height=py)
+        Button(frame2_1, text='아케인', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*3, y=55, width=px, height=py)
+        Button(frame2_1, text='노바', width=w, height=h, command=self.pressedServer, font=self.font).place(x=25+70*4, y=55, width=px, height=py)
+        Button(frame2_1, text='리부트', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*5, y=55, width=px, height=py)
+        Button(frame2_1, text='리부트1', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*6, y=55, width=px, height=py)
+        Button(frame2_1, text='리부트2', width=w, height=h, command=self.pressedServer, font=self.fontS).place(x=25+70*7, y=55, width=px, height=py)
         # 임시 랭킹들 나열
         Frame(frame2, width=600, height=30, background='LightBlue1').pack()
         frame2_2 = Frame(frame2, width=600, height=550, bg='gray50', padx=10, pady=10)
