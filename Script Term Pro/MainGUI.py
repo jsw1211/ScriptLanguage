@@ -22,6 +22,7 @@ class MainGUI:
         self.fontB = font.Font(self.window, size=16, weight='bold', family='arial')
         self.fontT = font.Font(self.window, size=24, weight='bold', family='굴림')
         self.fontV = font.Font(self.window, size=28, weight='bold', family='굴림')
+        self.fontN = font.Font(self.window, size=12, weight='bold', family='굴림')
 
         image = Image.open('Resource/Image/tempCharImage.png')
         image = image.resize((200, 200))
@@ -158,16 +159,16 @@ class MainGUI:
         Button(frame2_1, text='리부트2', width=w, height=h, command=lambda : self.pressedServer(ServerMod.Reboot2), font=self.fontS).place(x=25+70*7, y=55, width=px, height=py)
         # 임시 랭킹들 나열
         Frame(frame2, width=600, height=30, background='LightBlue1').pack()
-        frame2_2 = Frame(frame2, width=600, height=550, bg='gray50', padx=10, pady=10)
+        frame2_2 = Frame(frame2, width=600, height=550, bg='gray50')
         frame2_2.grid_propagate(False)
         frame2_2.pack()
         px = 24  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
         py = 4  # 버튼 패딩 위아래 - 버튼 사이 간격 확보
-        Label(frame2_2, text='랭킹 #', width=5, height=2, font=self.font).grid(row=0, column=0, padx=px, pady=py)
-        Label(frame2_2, text='닉네임', width=5, height=2, font=self.font).grid(row=0, column=1, padx=px, pady=py)
-        Label(frame2_2, text='레벨', width=5, height=2, font=self.font).grid(row=0, column=2, padx=px, pady=py)
-        Label(frame2_2, text='서버', width=5, height=2, font=self.font).grid(row=0, column=3, padx=px, pady=py)
-        Label(frame2_2, text='직업', width=5, height=2, font=self.font).grid(row=0, column=4, padx=px, pady=py)
+        Label(frame2_2, text='랭킹 #', width=5, height=2, font=self.font).place(x=20+115*0, y=10, width=100, height=60)
+        Label(frame2_2, text='닉네임', width=5, height=2, font=self.font).place(x=20+115*1, y=10, width=100, height=60)
+        Label(frame2_2, text='레벨', width=5, height=2, font=self.font).place(x=20+115*2, y=10, width=100, height=60)
+        Label(frame2_2, text='서버', width=5, height=2, font=self.font).place(x=20+115*3, y=10, width=100, height=60)
+        Label(frame2_2, text='직업', width=5, height=2, font=self.font).place(x=20+115*4, y=10, width=100, height=60)
         # 1~10 한페이지에서 보여질 10명
         px = 24  # 요소별 양옆에 패딩
         py = 10  # 랭킹 우아래 패딩
@@ -179,7 +180,7 @@ class MainGUI:
             self.lankingLabels[i].append(Label(frame2_2, text='스카니아', width=5, height=1, font=self.font))
             self.lankingLabels[i].append(Label(frame2_2, text='초보자', width=5, height=1, font=self.font))
             for j, label in enumerate(self.lankingLabels[i]):   # 그리드 배치
-                label.grid(row=i+1, column=j, padx=px, pady=py)
+                label.place(x=20+115*j, y=80+46*i, width=100, height=40)
         # 다음 페이지 버튼(10 페이지 정도 생각중)
         Frame(frame2, width=600, height=30, background='LightBlue1').pack()
         frame2_3 = Frame(frame2, width=600, height=60, bg='plum1')
@@ -298,9 +299,24 @@ class MainGUI:
             nowLank = self.lankingData[i+digit]
             self.lankingLabels[i][0]['text'] = str(nowLank['ranking'])+'위'
             self.lankingLabels[i][1]['text'] = nowLank['character_name']
+            if len(self.lankingLabels[i][1]['text']) > 6:
+                self.lankingLabels[i][1]['font'] = self.fontS
+            elif len(self.lankingLabels[i][1]['text']) > 4:
+                self.lankingLabels[i][1]['font'] = self.fontN
+            else:
+                self.lankingLabels[i][1]['font'] = self.font
             self.lankingLabels[i][2]['text'] = str(nowLank['character_level'])+'Lv'
             self.lankingLabels[i][3]['text'] = nowLank['world_name']
-            self.lankingLabels[i][4]['text'] = nowLank['class_name']
+            if nowLank['sub_class_name'] == '':
+                self.lankingLabels[i][4]['text'] = nowLank['class_name']
+            else:
+                self.lankingLabels[i][4]['text'] = nowLank['sub_class_name']
+            if len(self.lankingLabels[i][4]['text']) > 6:
+                self.lankingLabels[i][4]['font'] = self.fontS
+            elif len(self.lankingLabels[i][4]['text']) > 4:
+                self.lankingLabels[i][4]['font'] = self.fontN
+            else:
+                self.lankingLabels[i][4]['font'] = self.font
 
 
 class ServerMod(Enum):
