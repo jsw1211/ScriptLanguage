@@ -22,6 +22,13 @@ response_1 = requests.get(urlString_1, headers=headers)
 print(response_1.json())
 print('\n\n')
 
+# 캐릭터 장비 조회
+urlString_5 = "https://open.api.nexon.com/maplestory/v1/character/item-equipment?ocid=" + response.json()['ocid']
+response_5 = requests.get(urlString_5, headers=headers)
+print(response_5.json())
+print('\n\n')
+
+
 # 랭킹정보 보기 서버는 전체(일반서버 기준)
 urlString_2 = "https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22"
 response_2 = requests.get(urlString_2, headers=headers)
