@@ -204,6 +204,8 @@ class MainGUI:
         frame2_3.pack()
         Button(frame2_3, text='<-', width=10, height=2, command=self.pressedPrev, font=self.fontB).place(x=150, y=0, width=100, height=50)
         Button(frame2_3, text='->', width=10, height=2, command=self.pressedNext, font=self.fontB).place(x=350, y=0, width=100, height=50)
+        self.lankPageLabel = Label(frame2_3, text=str(self.lankPage+1), width=2, height=1, font=self.fontB)
+        self.lankPageLabel.place(x=250+10, y=0, width=80, height=50)
         self.pressedServer(ServerMod.Entire)
 
         # 확률 정보 페이지
@@ -382,6 +384,7 @@ class MainGUI:
 
     def UpdateLankingLabel(self):
         # self.lankPage 에 따라 그에 맞는 label을 보여주기 위해 업데이트
+        self.lankPageLabel['text'] = str(self.lankPage+1)
         digit = self.lankPage * 10
         for i in range(10):
             nowLank = self.lankingData[i+digit]
