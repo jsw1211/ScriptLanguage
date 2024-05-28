@@ -28,6 +28,12 @@ response_5 = requests.get(urlString_5, headers=headers)
 print(response_5.json())
 print('\n\n')
 
+#능력치 조회
+urlString_6 = "https://open.api.nexon.com/maplestory/v1/character/stat?ocid=" + response.json()['ocid']
+response_6 = requests.get(urlString_6, headers=headers)
+print(response_6.json())
+print('\n\n')
+
 
 # 랭킹정보 보기 서버는 전체(일반서버 기준)
 urlString_2 = "https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22"
