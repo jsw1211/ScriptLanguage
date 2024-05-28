@@ -212,8 +212,16 @@ class MainGUI:
         #
         #
         frame3 = Frame(self.window)  # 확률 정보 기능
-        self.notebook.add(frame3, text='확률 정보')
-        Label(frame3, text='인게임 확률 통계를 보여줌', fg='green', font='helvetica 48').pack()
+        self.notebook.add(frame3, text='스타포스 확률')
+        frame3_1 = Frame(frame3, width=600, height=100, bg='OliveDrab1')
+        frame3_1.pack()
+        self.searchAPIKey = StringVar()
+        Entry(frame3_1, textvariable=self.searchAPIKey, justify=LEFT, font=self.font).place(x=50, y=50, width=400, height=25)
+        Button(frame3_1, text='키 입력', width=5, height=1, command=self.pressedAPIKey, font=self.fontB).place(x=485, y=48, width=80, height=30)
+        frame3_2 = Frame(frame3, width=600, height=700, bg='tan1')
+        frame3_2.pack()
+        self.percentageCanvas = Canvas(frame3_2, background="white", width=600, height=660)
+        self.percentageCanvas.pack()
 
         # 오프라인 이벤트 위치 및 이미지
         #
@@ -344,7 +352,7 @@ class MainGUI:
         else:
             pass    # 유효한 서버가 아닙니다.
         self.lankServerButton[self.lankSeenServer.value]['state'] = 'disabled'
-        self.lankServerButton[self.lankSeenServer.value]['bg'] = 'gray'
+        self.lankServerButton[self.lankSeenServer.value]['bg'] = 'gray70'
 
     def pressedPrev(self):
         # 랭킹 페이지 <- 버튼에 대해서
@@ -357,6 +365,9 @@ class MainGUI:
         if self.lankPage < 9:
             self.lankPage += 1
         self.UpdateLankingLabel()
+
+    def pressedAPIKey(self):
+        pass
 
     def changeLankServer(self, serverName):
         # 서버 이름을 받고 데이터를 API로 불러온다.
