@@ -29,7 +29,7 @@ class MainGUI:
         self.testImage = ImageTk.PhotoImage(image)
 
         image_hat = Image.open('Resource/Image/testHat.png')
-        image_hat = image_hat.resize((200, 200))
+        image_hat = image_hat.resize((50, 50))
         self.testImage_hat = ImageTk.PhotoImage(image_hat)
 
         self.notebook = tkinter.ttk.Notebook(self.window, width=600, height=800)
@@ -125,9 +125,9 @@ class MainGUI:
         frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, bg='thistle', padx=10, pady=10)
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
-        self.equipmnLabel_2 = Label(frame1_2_2_2_2, text='장비', image=self.testImage_hat, width=50, height=50, padx=10, pady=10)
+        self.equipmnLabel_2 = Label(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, width=50, height=50)
         self.equipmnLabel_2.image = self.testImage_hat
-        self.equipmnLabel_2.pack(expand=True)
+        self.equipmnLabel_2.place(x=80, y=-5)
 
         Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
         frame1_2_3 = Frame(frame1_2, width=600, height=80, bg='gray50')
