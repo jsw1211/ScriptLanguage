@@ -133,6 +133,7 @@ class MainGUI:
         self.equipmnLabel_2.image = self.testImage_hat
         self.equipmnLabel_2.place(x=80, y=-5)
 
+        #무릉
         Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
         frame1_2_3 = Frame(frame1_2, width=600, height=80, bg='gray50')
         frame1_2_3.pack_propagate(False)
@@ -233,17 +234,20 @@ class MainGUI:
             response_3 = requests.get(urlString_3, headers=self.headers)
             urlString_4 = "https://open.api.nexon.com/maplestory/v1/character/stat?ocid=" + response_1.json()['ocid']
             response_4 = requests.get(urlString_4, headers=self.headers)
-            if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200:
+            urlString_5 = "https://open.api.nexon.com/maplestory/v1/character/dojang?ocid=" + response_1.json()['ocid']
+            response_5 = requests.get(urlString_5, headers=self.headers)
+            if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200 and response_5.status_code == 200:
                 charData = response_2.json()
                 charData_pop = response_3.json()
                 charData_stat = response_4.json()
-                self.updateCharacterInfo(charData, charData_pop, charData_stat)
+                charData_mureung = response_5.json()
+                self.updateCharacterInfo(charData, charData_pop, charData_stat, charData_mureung)
             else:
                 print('캐릭터 정보를 가져오는 데 실패했습니다.')
         else:
             print('캐릭터 이름을 입력하세요.')
 
-    def updateCharacterInfo(self, charData, charData_pop, charData_stat):
+    def updateCharacterInfo(self, charData, charData_pop, charData_stat, charData_mureung):
         # 캐릭터 정보를 업데이트하는 함수
         self.charNameLabel['text'] = str(charData.get('character_name'))
         self.charLevelLabel['text'] = 'Lv ' + str(charData.get('character_level'))
@@ -275,6 +279,9 @@ class MainGUI:
         self.testImage = ImageTk.PhotoImage(image)
         self.charImageLabel.configure(image=self.testImage)
         self.charImageLabel.image = self.testImage
+
+        #무릉 업데이트
+        self.mureungLabel['text'] = '무릉 ' + str(charData_mureung.get('dojang_best_floor')) + '층 ' + str(charData_mureung.get('dojang_best_time')) + '초'
 
     def pressedFavorite(self):
         pass
