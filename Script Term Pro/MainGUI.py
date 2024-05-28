@@ -251,12 +251,17 @@ class MainGUI:
         # 능력치 업데이트
         for stat in charData_stat['final_stat']:
             if stat['stat_name'] == 'HP':
-                self.HPLabel['text'] = 'HP: ' + str(charData_stat.get('stat_value'))
-        #self.MPLabel['text'] = 'MP: ' + str(charData_stat.get('stat_value'))
-        #self.STRLabel['text'] = 'STR: ' + str(charData_stat.get('stat_value'))
-        #self.DEXLabel['text'] = 'DEX: ' + str(charData_stat.get('stat_value'))
-        #self.INTLabel['text'] = 'INT: ' + str(charData_stat.get('stat_value'))
-        #self.LUKLabel['text'] = 'LUK: ' + str(charData_stat.get('stat_value'))
+                self.HPLabel['text'] = 'HP: ' + stat['stat_value']
+            elif stat['stat_name'] == 'MP':
+                self.MPLabel['text'] = 'MP: ' + stat['stat_value']
+            elif stat['stat_name'] == 'STR':
+                self.STRLabel['text'] = 'STR: ' + stat['stat_value']
+            elif stat['stat_name'] == 'DEX':
+                self.DEXLabel['text'] = 'DEX: ' + stat['stat_value']
+            elif stat['stat_name'] == 'INT':
+                self.INTLabel['text'] = 'INT: ' + stat['stat_value']
+            elif stat['stat_name'] == 'LUK':
+                self.LUKLabel['text'] = 'LUK: ' + stat['stat_value']
 
         # 캐릭터 이미지 업데이트
         image_url = charData.get('character_image')
