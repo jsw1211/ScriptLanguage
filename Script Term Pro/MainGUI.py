@@ -86,6 +86,9 @@ class MainGUI:
         popular = 999   # 비둘기
         self.charPopularLabel = Label(frame1_2_1_2, text='인기도 - '+str(popular), font=self.font)
         self.charPopularLabel.place(x=10, y=130)
+        c_class = '모험가' # 떠나요~ 둘이서~
+        self.charClassLabel = Label(frame1_2_1_2, text='직업 - ' + str(c_class), font=self.font)
+        self.charClassLabel.place(x=10, y=170)
 
         Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
         frame1_2_2 = Frame(frame1_2, width=600, height=300, bg='gray50')
