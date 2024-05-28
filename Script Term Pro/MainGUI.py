@@ -281,7 +281,9 @@ class MainGUI:
         self.charImageLabel.image = self.testImage
 
         #무릉 업데이트
-        self.mureungLabel['text'] = '무릉 ' + str(charData_mureung.get('dojang_best_floor')) + '층 ' + str(charData_mureung.get('dojang_best_time')) + '초'
+        mureung_min = int(charData_mureung.get('dojang_best_time')) // 60
+        mureung_sec = int(charData_mureung.get('dojang_best_time')) % 60
+        self.mureungLabel['text'] = '무릉 ' + str(charData_mureung.get('dojang_best_floor')) + '층 ' + str(mureung_min) + ':' + str(mureung_sec)
 
     def pressedFavorite(self):
         pass
