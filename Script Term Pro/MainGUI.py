@@ -226,21 +226,24 @@ class MainGUI:
         if encCharName:
             urlString_2 = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + response_1.json()['ocid']
             response_2 = requests.get(urlString_2, headers=self.headers)
-            if response_2.status_code == 200:
+            urlString_3 = "https://open.api.nexon.com/maplestory/v1/character/popularity?ocid=" + response_1.json()['ocid']
+            response_3 = requests.get(urlString_3, headers=self.headers)
+            if response_2.status_code == 200 and response_3.status_code == 200:
                 charData = response_2.json()
-                self.updateCharacterInfo(charData)
+                charData_pop = response_3.json()
+                self.updateCharacterInfo(charData, charData_pop)
             else:
                 print('캐릭터 정보를 가져오는 데 실패했습니다.')
         else:
             print('캐릭터 이름을 입력하세요.')
 
-    def updateCharacterInfo(self, charData):
+    def updateCharacterInfo(self, charData, charData_pop):
         # 캐릭터 정보를 업데이트하는 함수
         self.charNameLabel['text'] = str(charData.get('character_name'))
         self.charLevelLabel['text'] = 'Lv ' + str(charData.get('character_level'))
         self.charServerLabel['text'] = '서버 - ' + str(charData.get('world_name'))
         self.charGuildLabel['text'] = '길드 - ' + str((charData.get('character_guild_name')))
-        self.charPopularLabel['text'] = '인기도 - ' + str(charData.get('character_popularity'))
+        self.charPopularLabel['text'] = '인기도 - ' + str(charData_pop.get('popularity'))
 
         # 능력치 업데이트
         self.HPLabel['text'] = 'HP: ' + str(charData.get('hp'))
