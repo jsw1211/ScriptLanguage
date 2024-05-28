@@ -235,7 +235,32 @@ class MainGUI:
         #
         frame5 = Frame(self.window)  # 검키우기 미니게임?
         self.notebook.add(frame5, text='강화 시뮬')
-        Label(frame5, text='검키우기', fg='purple', font='helvetica 48').pack()
+        # Label(frame5, text='검키우기', fg='purple', font='helvetica 48').pack()
+        frame5_1 = Frame(frame5, width=600, height=100, background='snow2')
+        frame5_1.pack()
+        self.spentMesoLabel = Label(frame5_1, text='총 사용한 메소: ~~', width=20, height=2, font=self.fontB, background='slate blue')
+        self.spentMesoLabel.place(x=100, y=40, width=400, height=40)
+        frame5_2 = Frame(frame5, width=600, height=400, background='SeaGreen1')
+        frame5_2.pack()
+        self.SFWeaponLabel = Label(frame5_2, width=300, height=300, background='cyan2')
+        self.SFWeaponLabel.place(x=150, y=50, width=300, height=300)
+        frame5_3 = Frame(frame5, width=600, height=260, background='pink1')
+        frame5_3.pack()
+        self.SFPercentLabel = Label(frame5_3, text='확률', width=20, height=2, font=self.fontB, background='azure2')
+        self.SFPercentLabel.place(x=200, y=0, width=200, height=50)
+        Button(frame5_3, text='강화하기!', width=30, height=2, command=self.pressedEnhance, font=self.fontB).place(x=400, y=100, width=150, height=80)
+        frame5_3_1 = Frame(frame5_3, width=300, height=100, background='tomato')
+        frame5_3_1.place(x=50, y=100, width=300, height=100)
+        self.checkSF = IntVar()
+        Checkbutton(frame5_3, text='스타포스 체크', variable=self.checkSF, command=self.pressedNothing, font=self.fontB).place(x=50, y=60)
+        self.succesPercentLabel = Label(frame5_3_1, text='성공확률', width=8, height=1, font=self.fontB, background='PaleGreen1')
+        self.succesPercentLabel.place(x=25, y=6, width=250, height=25)
+        self.failPercentLabel = Label(frame5_3_1, text='실패확률', width=8, height=1, font=self.fontB, background='PaleGreen2')
+        self.failPercentLabel.place(x=25, y=37, width=250, height=25)
+        self.destroyPercentLabel = Label(frame5_3_1, text='파괴확률', width=8, height=1, font=self.fontB, background='PaleGreen3')
+        self.destroyPercentLabel.place(x=25, y=68, width=250, height=25)
+        self.enHanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background='chocolate1')
+        self.enHanceMesoLabel.place(x=100, y=220, width=400, height=40)
 
         self.window.mainloop()
 
@@ -367,6 +392,12 @@ class MainGUI:
         self.UpdateLankingLabel()
 
     def pressedAPIKey(self):
+        pass
+
+    def pressedEnhance(self):
+        pass
+
+    def pressedNothing(self):
         pass
 
     def changeLankServer(self, serverName):
