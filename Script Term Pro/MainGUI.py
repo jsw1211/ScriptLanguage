@@ -213,12 +213,19 @@ class MainGUI:
         self.notebook.add(frame3, text='확률 정보')
         Label(frame3, text='인게임 확률 통계를 보여줌', fg='green', font='helvetica 48').pack()
 
-        # 팝업스토어 위치 및 이미지
+        # 오프라인 이벤트 위치 및 이미지
         #
         #
         frame4 = Frame(self.window)  # 팝업스토어 위치 지도 기능
         self.notebook.add(frame4, text='팝업스토어')
         Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
+
+        # 강화 시뮬레이터(검키우기)
+        #
+        #
+        frame5 = Frame(self.window)  # 검키우기 미니게임?
+        self.notebook.add(frame5, text='강화 시뮬')
+        Label(frame5, text='검키우기', fg='purple', font='helvetica 48').pack()
 
         self.window.mainloop()
 
