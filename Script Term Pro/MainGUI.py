@@ -1,3 +1,4 @@
+import io
 from tkinter import *
 from tkinter import font
 import tkinter.ttk
@@ -218,7 +219,45 @@ class MainGUI:
         self.window.mainloop()
 
     def pressedSearch(self):
-        pass
+        characterName = self.searchStr.get()  # 입력된 텍스트 가져오기
+        encCharName = urllib.parse.quote(characterName)
+        urlString_1 = "https://open.api.nexon.com/maplestory/v1/id?character_name=" + encCharName
+        response_1 = requests.get(urlString_1, headers=self.headers)
+        if encCharName:
+            urlString_2 = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + response_1.json()['ocid']
+            response_2 = requests.get(urlString_2, headers=self.headers)
+            if response_2.status_code == 200:
+                charData = response_2.json()
+                self.updateCharacterInfo(charData)
+            else:
+                print('캐릭터 정보를 가져오는 데 실패했습니다.')
+        else:
+            print('캐릭터 이름을 입력하세요.')
+
+    def updateCharacterInfo(self, charData):
+        # 캐릭터 정보를 업데이트하는 함수
+        self.charNameLabel['text'] = str(charData.get('character_name'))
+        self.charLevelLabel['text'] = 'Lv ' + str(charData.get('character_level'))
+        self.charServerLabel['text'] = '서버 - ' + str(charData.get('world_name'))
+        self.charGuildLabel['text'] = '길드 - ' + str((charData.get('character_guild_name')))
+        self.charPopularLabel['text'] = '인기도 - ' + str(charData.get('character_popularity'))
+
+        # 능력치 업데이트
+        self.HPLabel['text'] = 'HP: ' + str(charData.get('hp'))
+        self.MPLabel['text'] = 'MP: ' + str(charData.get('mp'))
+        self.STRLabel['text'] = 'STR: ' + str(charData.get('str'))
+        self.DEXLabel['text'] = 'DEX: ' + str(charData.get('dex'))
+        self.INTLabel['text'] = 'INT: ' + str(charData.get('int'))
+        self.LUKLabel['text'] = 'LUK: ' + str(charData.get('luk'))
+
+        # 캐릭터 이미지 업데이트
+        image_url = charData.get('characterImgUrl')
+        image_data = urllib.request.urlopen(image_url).read()
+        image = Image.open(io.BytesIO(image_data))
+        image = image.resize((200, 200))
+        self.testImage = ImageTk.PhotoImage(image)
+        self.charImageLabel.configure(image=self.testImage)
+        self.charImageLabel.image = self.testImage
 
     def pressedFavorite(self):
         pass
