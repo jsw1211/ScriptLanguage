@@ -34,6 +34,11 @@ response_6 = requests.get(urlString_6, headers=headers)
 print(response_6.json())
 print('\n\n')
 
+#무릉 조회
+urlString_7 = "https://open.api.nexon.com/maplestory/v1/character/dojang?ocid=" + response.json()['ocid']
+response_7 = requests.get(urlString_7, headers=headers)
+print(response_7.json())
+print('\n\n')
 
 # 랭킹정보 보기 서버는 전체(일반서버 기준)
 urlString_2 = "https://open.api.nexon.com/maplestory/v1/ranking/overall?date=2023-12-22"
