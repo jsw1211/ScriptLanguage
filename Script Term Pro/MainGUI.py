@@ -76,7 +76,7 @@ class MainGUI:
         self.charNameLabel.place(x=10, y=10)
         level = 250     # 토스트용
         self.charLevelLabel = Label(frame1_2_1_2, text='Lv '+str(level), font=self.font)
-        self.charLevelLabel.place(x=100, y=10)
+        self.charLevelLabel.place(x=180, y=10)
         server = '스카니아'     # 텨스트용
         self.charServerLabel = Label(frame1_2_1_2, text='서버 - '+server, font=self.font)
         self.charServerLabel.place(x=10, y=50)
