@@ -228,16 +228,19 @@ class MainGUI:
             response_2 = requests.get(urlString_2, headers=self.headers)
             urlString_3 = "https://open.api.nexon.com/maplestory/v1/character/popularity?ocid=" + response_1.json()['ocid']
             response_3 = requests.get(urlString_3, headers=self.headers)
-            if response_2.status_code == 200 and response_3.status_code == 200:
+            urlString_4 = "https://open.api.nexon.com/maplestory/v1/character/stat?ocid=" + response_1.json()['ocid']
+            response_4 = requests.get(urlString_4, headers=self.headers)
+            if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200:
                 charData = response_2.json()
                 charData_pop = response_3.json()
-                self.updateCharacterInfo(charData, charData_pop)
+                charData_stat = response_4.json()
+                self.updateCharacterInfo(charData, charData_pop, charData_stat)
             else:
                 print('캐릭터 정보를 가져오는 데 실패했습니다.')
         else:
             print('캐릭터 이름을 입력하세요.')
 
-    def updateCharacterInfo(self, charData, charData_pop):
+    def updateCharacterInfo(self, charData, charData_pop, charData_stat):
         # 캐릭터 정보를 업데이트하는 함수
         self.charNameLabel['text'] = str(charData.get('character_name'))
         self.charLevelLabel['text'] = 'Lv ' + str(charData.get('character_level'))
@@ -246,15 +249,17 @@ class MainGUI:
         self.charPopularLabel['text'] = '인기도 - ' + str(charData_pop.get('popularity'))
 
         # 능력치 업데이트
-        self.HPLabel['text'] = 'HP: ' + str(charData.get('hp'))
-        self.MPLabel['text'] = 'MP: ' + str(charData.get('mp'))
-        self.STRLabel['text'] = 'STR: ' + str(charData.get('str'))
-        self.DEXLabel['text'] = 'DEX: ' + str(charData.get('dex'))
-        self.INTLabel['text'] = 'INT: ' + str(charData.get('int'))
-        self.LUKLabel['text'] = 'LUK: ' + str(charData.get('luk'))
+        for stat in charData_stat['final_stat']:
+            if stat['stat_name'] == 'HP':
+                self.HPLabel['text'] = 'HP: ' + str(charData_stat.get('stat_value'))
+        #self.MPLabel['text'] = 'MP: ' + str(charData_stat.get('stat_value'))
+        #self.STRLabel['text'] = 'STR: ' + str(charData_stat.get('stat_value'))
+        #self.DEXLabel['text'] = 'DEX: ' + str(charData_stat.get('stat_value'))
+        #self.INTLabel['text'] = 'INT: ' + str(charData_stat.get('stat_value'))
+        #self.LUKLabel['text'] = 'LUK: ' + str(charData_stat.get('stat_value'))
 
         # 캐릭터 이미지 업데이트
-        image_url = charData.get('characterImgUrl')
+        image_url = charData.get('character_image')
         image_data = urllib.request.urlopen(image_url).read()
         image = Image.open(io.BytesIO(image_data))
         image = image.resize((200, 200))
