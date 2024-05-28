@@ -250,6 +250,7 @@ class MainGUI:
         self.charServerLabel['text'] = '서버 - ' + str(charData.get('world_name'))
         self.charGuildLabel['text'] = '길드 - ' + str((charData.get('character_guild_name')))
         self.charPopularLabel['text'] = '인기도 - ' + str(charData_pop.get('popularity'))
+        self.charClassLabel['text'] = '직업 - ' + str(charData.get('character_class'))
 
         # 능력치 업데이트
         for stat in charData_stat['final_stat']:
