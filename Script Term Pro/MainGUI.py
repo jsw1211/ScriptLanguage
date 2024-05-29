@@ -224,6 +224,10 @@ class MainGUI:
         frame3_2.pack()
         self.percentageCanvas = Canvas(frame3_2, background="white", width=600, height=600)
         self.percentageCanvas.pack()
+        self.cxs = 25   # Canvas x start 좌표
+        self.cye = 500  # Canvas y end 좌표
+        self.cxw = 22   # Canvas x width
+        self.cys = 100
         self.percentageCanvas.create_line(0, 500, 600, 500, tags='graph')
         for i in range(25):
             self.percentageCanvas.create_text(25+22*i+11, 520, text=str(i), width=22, tags='graph')
@@ -436,8 +440,8 @@ class MainGUI:
             startTime += timedelta(days=1)
         print('end crolling')
         print(self.userEnhanceData['count'])
-        for da in self.userEnhanceData['starforce_history']:
-            print(da)
+        # for da in self.userEnhanceData['starforce_history']:
+        #     print(da)
         self.userEnhanceDict = {i: [0, 0] for i in range(25)}
         for ones in self.userEnhanceData['starforce_history']:
             before = ones['before_starforce_count']
@@ -445,7 +449,16 @@ class MainGUI:
                 self.userEnhanceDict[before][0] += 1
             else:
                 self.userEnhanceDict[before][1] += 1
-
+        # 테스트용 키 live_89851af69166ce8aa7a91eb387c6842e953dd95faa2ec58e09c3282956a1dbfcefe8d04e6d233bd35cf2fabdeb93fb0d
+        self.percentageCanvas.delete('user')
+        for keyStr in self.userEnhanceDict.keys():
+            key = int(keyStr)
+            userPercent = self.userPercentage(key)
+            realPercent = self.realPercentage(key)
+            self.percentageCanvas.create_rectangle(self.cxs+self.cxw*key, self.cye-(400/100)*userPercent, self.cxs+self.cxw*(2*key+1)/2, self.cye, fill='yellow', tags='user')
+            self.percentageCanvas.create_rectangle(self.cxs+self.cxw*(2*key+1)/2, self.cye-(400/100)*realPercent, self.cxs+self.cxw*(key+1), self.cye, fill='dodger blue', tags='user')
+            self.percentageCanvas.create_text(self.cxs+self.cxw*(key+0.25), self.cye-(400/100)*userPercent-10, text=str(int(userPercent)), tags='user')
+            self.percentageCanvas.create_text(self.cxs+self.cxw*(key+0.75), self.cye-(400/100)*realPercent-10, text=str(int(realPercent)), tags='user')
 
     def pressedEnhance(self):
         pass
@@ -503,6 +516,29 @@ class MainGUI:
                 self.lankingLabels[i][4]['font'] = self.fontN
             else:
                 self.lankingLabels[i][4]['font'] = self.font
+
+    def userPercentage(self, s):
+        successed = self.userEnhanceDict[s][0]
+        sumCase = successed + self.userEnhanceDict[s][1]
+        if sumCase == 0:
+            return 0
+        return (successed / sumCase)*100
+
+    def realPercentage(self, s):
+        if 0 <= s <= 2:
+            return 95-5*s
+        elif 3 <= s <= 14:
+            return 100-5*s
+        elif 15 <= s <= 21:
+            return 30
+        elif 22 == s:
+            return 3
+        elif 23 == s:
+            return 2
+        elif 24 == s:
+            return 1
+        else:
+            pass
 
 
 class ServerMod(Enum):
