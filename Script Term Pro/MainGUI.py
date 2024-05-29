@@ -219,10 +219,18 @@ class MainGUI:
         self.searchAPIKey = StringVar()
         Entry(frame3_1, textvariable=self.searchAPIKey, justify=LEFT, font=self.font).place(x=50, y=50, width=400, height=25)
         Button(frame3_1, text='키 입력', width=5, height=1, command=self.pressedAPIKey, font=self.fontB).place(x=485, y=48, width=80, height=30)
-        frame3_2 = Frame(frame3, width=600, height=700, bg='tan1')
+        frame3_2 = Frame(frame3, width=600, height=660, bg='tan1')
+        frame3_2.pack_propagate(False)
         frame3_2.pack()
-        self.percentageCanvas = Canvas(frame3_2, background="white", width=600, height=660)
+        self.percentageCanvas = Canvas(frame3_2, background="white", width=600, height=600)
         self.percentageCanvas.pack()
+        self.percentageCanvas.create_line(0, 500, 600, 500, tags='graph')
+        for i in range(25):
+            self.percentageCanvas.create_text(25+22*i+11, 520, text=str(i), width=22, tags='graph')
+        self.percentageCanvas.create_rectangle(50, 560, 150, 580, fill='yellow', tags='graph')
+        self.percentageCanvas.create_text(220, 570, text='내 강화 확률', tags='graph', font=('Helvetica', 12, 'bold'))
+        self.percentageCanvas.create_rectangle(350-30, 560, 450-30, 580, fill='dodger blue', tags='graph')
+        self.percentageCanvas.create_text(520-30, 570, text='실제 강화 확률', tags='graph', font=('Helvetica', 12, 'bold'))
 
         # 오프라인 이벤트 위치 및 이미지
         #
@@ -430,7 +438,13 @@ class MainGUI:
         print(self.userEnhanceData['count'])
         for da in self.userEnhanceData['starforce_history']:
             print(da)
-
+        self.userEnhanceDict = {i: [0, 0] for i in range(25)}
+        for ones in self.userEnhanceData['starforce_history']:
+            before = ones['before_starforce_count']
+            if ones['item_upgrade_result'] == '성공':
+                self.userEnhanceDict[before][0] += 1
+            else:
+                self.userEnhanceDict[before][1] += 1
 
 
     def pressedEnhance(self):
