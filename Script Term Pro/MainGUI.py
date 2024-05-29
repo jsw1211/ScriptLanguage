@@ -596,6 +596,25 @@ class MainGUI:
         else:
             pass
 
+    def failPercentage(self, s):
+        if 0 <= s <=2:
+            return 5+5*s
+        elif 3 <= s <= 14:
+            return 0+5*s
+        elif 15 <= s <= 17:
+            return 100-32.1
+        elif 18 <= s <= 19:
+            return 100-32.8
+        elif 20 <= s <= 21:
+            return 100-37
+        elif 22 == s:
+            return 100-22.4
+        elif 23 == s:
+            return 100-31.4
+        elif 24 == s:
+            return 100-40.6
+        else:
+            pass
     def upgradeWeapon(self):
         stars = ''
         for i in range(1, 25+1):
@@ -610,10 +629,10 @@ class MainGUI:
         self.weaponLNLabel['text'] = '+'+str(self.weaponLevel)
         succesPercent = self.realPercentage(self.weaponLevel)
         brokePercent = self.brokePrecentage(self.weaponLevel)
-        failPercent = 100 - succesPercent - brokePercent
-        self.succesPercentLabel['text'] = str(int(succesPercent))+'%'
-        self.failPercentLabel['text'] = str(int(failPercent))+'%'
-        self.destroyPercentLabel['text'] = str(int(brokePercent))+'%'
+        failPercent = self.failPercentage(self.weaponLevel)
+        self.succesPercentLabel['text'] = str(float(succesPercent))+'%'
+        self.failPercentLabel['text'] = str(float(failPercent))+'%'
+        self.destroyPercentLabel['text'] = str(float(brokePercent))+'%'
 
 
 class ServerMod(Enum):
