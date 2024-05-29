@@ -1,4 +1,5 @@
 import io
+import random
 from tkinter import *
 from tkinter import font
 import tkinter.ttk as ttk
@@ -262,13 +263,14 @@ class MainGUI:
         self.spentMesoLabel.place(x=100, y=40, width=400, height=40)
         frame5_2 = Frame(frame5, width=600, height=400, background='SeaGreen1')
         frame5_2.pack()
-        self.SFWeaponLabel = Label(frame5_2, width=300, height=300, background='cyan2')
+        self.SFWeaponLabel = Label(frame5_2, width=300, height=300, background='white')
         self.SFWeaponLabel.place(x=150, y=50, width=300, height=300)
         frame5_3 = Frame(frame5, width=600, height=260, background='pink1')
         frame5_3.pack()
         self.SFPercentLabel = Label(frame5_3, text='확률', width=20, height=2, font=self.fontB, background='azure2')
         self.SFPercentLabel.place(x=200, y=0, width=200, height=50)
-        Button(frame5_3, text='강화하기!', width=30, height=2, command=self.pressedEnhance, font=self.fontB).place(x=400, y=100, width=150, height=80)
+        self.enhanceButton = Button(frame5_3, text='강화하기!', width=30, height=2, command=self.pressedEnhance, font=self.fontB)
+        self.enhanceButton.place(x=400, y=100, width=150, height=80)
         frame5_3_1 = Frame(frame5_3, width=300, height=100, background='tomato')
         frame5_3_1.place(x=50, y=100, width=300, height=100)
         self.checkSF = IntVar()
@@ -282,6 +284,16 @@ class MainGUI:
         self.enhanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background='chocolate1')
         self.enhanceMesoLabel.place(x=100, y=220, width=400, height=40)
 
+        # 검 키우기를 위한 정보들(멤버변수들)
+        self.weaponsImage = []  # 이미지들 저장할 리스트
+        for weaponNum in range(25+1):
+            image = Image.open('Resource/Image/weapons/'+str(weaponNum)+'.png')
+            image = image.resize((280, 280))
+            self.weaponsImage.append(ImageTk.PhotoImage(image))
+        self.weaponLevel = 0
+        self.upgradeWeapon()
+
+        # Tkinter 나타나게
         self.window.mainloop()
 
     def pressedSearch(self):
@@ -461,7 +473,26 @@ class MainGUI:
             self.percentageCanvas.create_text(self.cxs+self.cxw*(key+0.75), self.cye-(400/100)*realPercent-10, text=str(int(realPercent)), tags='user')
 
     def pressedEnhance(self):
-        pass
+        if self.checkSF.get():
+            pass
+        else:
+            # 스타캐치 없이 확률
+            luck = random.random()
+            if luck <= self.realPercentage(self.weaponLevel)/100:
+                # 성공
+                self.weaponLevel += 1
+                # 무기 업데이트 함수
+            elif luck >= 1 - self.brokePrecentage(self.weaponLevel)/100:
+                # 파괴
+                self.weaponLevel = 0
+            else:
+                # 유지
+                pass
+            self.upgradeWeapon()
+
+        if self.weaponLevel == 25:  # 풀강이다
+            self.enhanceButton['state'] = 'disable'
+            self.enhanceButton['bg'] = 'gray65'
 
     def pressedNothing(self):
         pass
@@ -539,6 +570,34 @@ class MainGUI:
             return 1
         else:
             pass
+
+    def brokePrecentage(self, s):
+        if 0 <= s <= 14:
+            return 0
+        elif 15 <= s <= 17:
+            return 2.1
+        elif 18 <= s <= 19:
+            return 2.8
+        elif 20 <= s <= 21:
+            return 7.0
+        elif 22 == s:
+            return 19.4
+        elif 23 == s:
+            return 29.4
+        elif 24 == s:
+            return 39.6
+        else:
+            pass
+
+    def upgradeWeapon(self):
+        self.SFWeaponLabel['image'] = self.weaponsImage[self.weaponLevel]
+        self.SFWeaponLabel.image = self.weaponsImage[self.weaponLevel]
+        succesPercent = self.realPercentage(self.weaponLevel)
+        brokePercent = self.brokePrecentage(self.weaponLevel)
+        failPercent = 100 - succesPercent - brokePercent
+        self.succesPercentLabel['text'] = str(int(succesPercent))+'%'
+        self.failPercentLabel['text'] = str(int(failPercent))+'%'
+        self.destroyPercentLabel['text'] = str(int(brokePercent))+'%'
 
 
 class ServerMod(Enum):
