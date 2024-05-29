@@ -3,7 +3,7 @@ import urllib.request
 
 # 내 키를 사용한 api 접근
 headers = {             #허용 받은 키 입력
-    "x-nxopen-api-key": "test_cebf915b37b6eae59393a51b5d2a56e2798071e29e9cae7e85d9e988c8e293b61d98edcf6f5e475acb4e50f454c8019e"
+    "x-nxopen-api-key": "live_89851af69166ce8aa7a91eb387c6842e953dd95faa2ec58e09c3282956a1dbfcefe8d04e6d233bd35cf2fabdeb93fb0d"
 }
 
 # 닉네임으로 유저식별번호(id) 가져오기
