@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from enum import Enum
 import requests
 import urllib.request
+from datetime import datetime, timedelta
 
 
 class MainGUI:
@@ -266,8 +267,8 @@ class MainGUI:
         self.failPercentLabel.place(x=25, y=37, width=250, height=25)
         self.destroyPercentLabel = Label(frame5_3_1, text='파괴확률', width=8, height=1, font=self.fontB, background='PaleGreen3')
         self.destroyPercentLabel.place(x=25, y=68, width=250, height=25)
-        self.enHanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background='chocolate1')
-        self.enHanceMesoLabel.place(x=100, y=220, width=400, height=40)
+        self.enhanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background='chocolate1')
+        self.enhanceMesoLabel.place(x=100, y=220, width=400, height=40)
 
         self.window.mainloop()
 
@@ -399,7 +400,38 @@ class MainGUI:
         self.UpdateLankingLabel()
 
     def pressedAPIKey(self):
-        pass
+        urlString = 'https://open.api.nexon.com/maplestory/v1/ouid'
+        self.nowAPIKey = {"x-nxopen-api-key": self.searchAPIKey.get()}
+        response = requests.get(urlString, headers=self.nowAPIKey)
+        if response.status_code == 200:
+            pass
+        else:
+            print('올바른 API 키가 아닙니다')
+            return
+
+        startTime = datetime(2023, 12, 28)
+        nowTime = datetime.today()
+        urlString = 'https://open.api.nexon.com/maplestory/v1/history/starforce?count=1000&date='
+        self.userEnhanceData = {'count': 0, 'starforce_history': []}
+        print('start crolling')
+        while startTime < nowTime:
+            nowUrlString = urlString + str(startTime.date())
+            response = requests.get(nowUrlString, headers=self.nowAPIKey)
+            if response.status_code == 200:
+                data = response.json()
+                if data['count'] > 0:
+                    for his in data['starforce_history']:
+                        self.userEnhanceData['count'] += 1
+                        self.userEnhanceData['starforce_history'].append(his)
+            elif response.json()['error']['message'] != 'Please try again later':
+                continue
+            startTime += timedelta(days=1)
+        print('end crolling')
+        print(self.userEnhanceData['count'])
+        for da in self.userEnhanceData['starforce_history']:
+            print(da)
+
+
 
     def pressedEnhance(self):
         pass
