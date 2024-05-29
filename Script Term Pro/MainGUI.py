@@ -261,10 +261,14 @@ class MainGUI:
         frame5_1.pack()
         self.spentMesoLabel = Label(frame5_1, text='총 사용한 메소: ~~', width=20, height=2, font=self.fontB, background='slate blue')
         self.spentMesoLabel.place(x=100, y=40, width=400, height=40)
-        frame5_2 = Frame(frame5, width=600, height=400, background='SeaGreen1')
+        frame5_2 = Frame(frame5, width=600, height=400, background='deep sky blue')
         frame5_2.pack()
+        self.weaponLVLabel = Label(frame5_2, width=550, height=30, background='deep sky blue', font=('Helvetica', 14), fg='yellow')
+        self.weaponLVLabel.place(x=25, y=10, width=550, height=30)
         self.SFWeaponLabel = Label(frame5_2, width=300, height=300, background='white')
         self.SFWeaponLabel.place(x=150, y=50, width=300, height=300)
+        self.weaponLNLabel = Label(frame5_2, width=60, height=30, background='deep sky blue', font=('Helvetica', 24, 'bold'), fg='black')
+        self.weaponLNLabel.place(x=270, y=360, width=60, height=30)
         frame5_3 = Frame(frame5, width=600, height=260, background='pink1')
         frame5_3.pack()
         self.SFPercentLabel = Label(frame5_3, text='확률', width=20, height=2, font=self.fontB, background='azure2')
@@ -275,12 +279,15 @@ class MainGUI:
         frame5_3_1.place(x=50, y=100, width=300, height=100)
         self.checkSF = IntVar()
         Checkbutton(frame5_3, text='스타포스 체크', variable=self.checkSF, command=self.pressedNothing, font=self.fontB).place(x=50, y=60)
-        self.succesPercentLabel = Label(frame5_3_1, text='성공확률', width=8, height=1, font=self.fontB, background='PaleGreen1')
-        self.succesPercentLabel.place(x=25, y=6, width=250, height=25)
-        self.failPercentLabel = Label(frame5_3_1, text='실패확률', width=8, height=1, font=self.fontB, background='PaleGreen2')
-        self.failPercentLabel.place(x=25, y=37, width=250, height=25)
-        self.destroyPercentLabel = Label(frame5_3_1, text='파괴확률', width=8, height=1, font=self.fontB, background='PaleGreen3')
-        self.destroyPercentLabel.place(x=25, y=68, width=250, height=25)
+        Label(frame5_3_1, text='성공확률', width=8, height=1, font=self.fontB).place(x=50, y=6, width=100, height=25)
+        self.succesPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e')
+        self.succesPercentLabel.place(x=150, y=6, width=100, height=25)
+        Label(frame5_3_1, text='실패확률', width=8, height=1, font=self.fontB).place(x=50, y=37, width=100, height=25)
+        self.failPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e')
+        self.failPercentLabel.place(x=150, y=37, width=100, height=25)
+        Label(frame5_3_1, text='파괴확률', width=8, height=1, font=self.fontB).place(x=50, y=68, width=100, height=25)
+        self.destroyPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e')
+        self.destroyPercentLabel.place(x=150, y=68, width=100, height=25)
         self.enhanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background='chocolate1')
         self.enhanceMesoLabel.place(x=100, y=220, width=400, height=40)
 
@@ -590,8 +597,17 @@ class MainGUI:
             pass
 
     def upgradeWeapon(self):
+        stars = ''
+        for i in range(1, 25+1):
+            if i <= self.weaponLevel:
+                stars += '★'
+            else:
+                stars += '☆'
+
+        self.weaponLVLabel['text'] = stars
         self.SFWeaponLabel['image'] = self.weaponsImage[self.weaponLevel]
         self.SFWeaponLabel.image = self.weaponsImage[self.weaponLevel]
+        self.weaponLNLabel['text'] = '+'+str(self.weaponLevel)
         succesPercent = self.realPercentage(self.weaponLevel)
         brokePercent = self.brokePrecentage(self.weaponLevel)
         failPercent = 100 - succesPercent - brokePercent
