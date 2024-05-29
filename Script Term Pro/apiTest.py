@@ -60,7 +60,7 @@ for char in response_3.json()['ranking']:
     print(char)
 
 # 스타포스 강화 정보 count가 몇개씩 가져올 건지
-urlString_4 = "https://open.api.nexon.com/maplestory/v1/history/starforce?count=100&date=2023-12-27"
+urlString_4 = "https://open.api.nexon.com/maplestory/v1/history/starforce?count=100&date=2024-05-19"
 response_4 = requests.get(urlString_4, headers=headers)
 
 print('\n\n')
