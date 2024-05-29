@@ -1,7 +1,7 @@
 import io
 from tkinter import *
 from tkinter import font
-import tkinter.ttk
+import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 from enum import Enum
 import requests
@@ -33,7 +33,7 @@ class MainGUI:
         image_hat = image_hat.resize((50, 50))
         self.testImage_hat = ImageTk.PhotoImage(image_hat)
 
-        self.notebook = tkinter.ttk.Notebook(self.window, width=600, height=800)
+        self.notebook = ttk.Notebook(self.window, width=600, height=800)
         self.notebook.pack()
 
         # 캐릭터 정보 검색 페이지
@@ -227,8 +227,15 @@ class MainGUI:
         #
         #
         frame4 = Frame(self.window)  # 팝업스토어 위치 지도 기능
-        self.notebook.add(frame4, text='팝업스토어')
-        Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
+        self.notebook.add(frame4, text='오프라인 행사')
+        # Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
+        frame4_1 = Frame(frame4, width=600, height=100, bg='gray')
+        frame4_1.pack()
+        combo = ttk.Combobox(frame4_1, width=400, height=25, values=['팝업스토어', '2023 여름 쇼케이스', '2023 겨울 쇼케이스'])
+        combo.place(x=100, y=30, width=400, height=25)
+        combo.current(0)
+        frame4_2 = Frame(frame4, width=600, height=660, bg='red')
+        frame4_2.pack()
 
         # 강화 시뮬레이터(검키우기)
         #
