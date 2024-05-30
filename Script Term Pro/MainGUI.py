@@ -330,15 +330,20 @@ class MainGUI:
         # 강화 시뮬레이터(검키우기)
         #
         #
+        self.spentMeso = 0
         frame5 = Frame(self.window)  # 검키우기 미니게임?
         self.notebook.add(frame5, text='강화 시뮬')
         # Label(frame5, text='검키우기', fg='purple', font='helvetica 48').pack()
-        frame5_1 = Frame(frame5, width=600, height=100, background='snow2')
+        frame5_1 = Frame(frame5, width=600, height=100)
         frame5_1.pack()
-        self.searchStr_2 = StringVar()
-        Entry(frame5_1, textvariable=self.searchStr_2, width=20, justify=LEFT, font=self.font).place(x=50, y=0)
-        self.spentMesoLabel = Label(frame5_1, text='총 사용한 메소: ~~', width=20, height=2, font=self.fontB, background='slate blue')
-        self.spentMesoLabel.place(x=100, y=40, width=400, height=40)
+        image = Image.open('Resource/Image/icon/mesoB.png')
+        image = image.resize((40, 40))
+        image = ImageTk.PhotoImage(image)
+        mesoLabel = Label(frame5_1, image=image)
+        mesoLabel.place(x=100, y=40, width=40, height=40)
+        mesoLabel.image = image
+        self.spentMesoLabel = Label(frame5_1, text=str(self.spentMeso), width=20, height=2, font=self.fontB, anchor='w')
+        self.spentMesoLabel.place(x=140, y=40, width=360, height=40)
         frame5_2 = Frame(frame5, width=600, height=400, background='deep sky blue')
         frame5_2.pack()
         self.weaponLVLabel = Label(frame5_2, width=550, height=30, background='deep sky blue', font=('Helvetica', 14), fg='yellow')
@@ -632,6 +637,7 @@ class MainGUI:
             pass
         else:
             # 스타캐치 없이 확률
+            self.addSpentMeso()
             luck = random.random()
             if luck <= self.realPercentage(self.weaponLevel)/100:
                 # 성공
@@ -644,6 +650,7 @@ class MainGUI:
                 # 유지
                 pass
             self.upgradeWeapon()
+            self.spentMesoLabel['text'] = str(int(self.spentMeso))
 
         if self.weaponLevel == 25:  # 풀강이다
             self.enhanceButton['state'] = 'disable'
@@ -782,24 +789,24 @@ class MainGUI:
         self.failPercentLabel['text'] = str(float(failPercent))+'%'
         self.destroyPercentLabel['text'] = str(float(brokePercent))+'%'
 
-    def need_meso(self,s):
-        # if 0 <= s <= 9:
-        #     return 1000+((착용 무기 레벨)*(s+1)/36)
-        # elif s == 10:
-        #     return 1000+((착용 무기 레벨)*((s+1)**2.7)/571)
-        # elif s == 11:
-        #     return 1000+((착용 무기 레벨)*((s+1)**2.7)/314)
-        # elif s == 12:
-        #     return 1000+((착용 무기 레벨)*((s+1)**2.7)/214)
-        # elif s == 13:
-        #     return 1000+((착용 무기 레벨)*((s+1)**2.7)/157)
-        # elif s == 14:
-        #     return 1000+((착용 무기 레벨)*((s+1)**2.7)/107)
-        # elif 15 <= s <= 24:
-        #     return 1000+((착용 무기 레벨)*((s+1)**2.7)/200)
-        # else:
-        #     pass
-        pass
+    def addSpentMeso(self):
+        weaponEquipLevel = 140
+        if 0 <= self.weaponLevel <= 9:
+            self.spentMeso += 1000+((weaponEquipLevel)*(self.weaponLevel+1)/36)
+        elif self.weaponLevel == 10:
+            self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/571)
+        elif self.weaponLevel == 11:
+            self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/314)
+        elif self.weaponLevel == 12:
+            self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/214)
+        elif self.weaponLevel == 13:
+            self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/157)
+        elif self.weaponLevel == 14:
+            self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/107)
+        elif 15 <= self.weaponLevel <= 24:
+            self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/200)
+        else:
+            pass
 
 
 class ServerMod(Enum):
