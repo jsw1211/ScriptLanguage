@@ -77,9 +77,27 @@ class MainGUI:
         frame1_1.pack()
         self.searchStr = StringVar()
         Entry(frame1_1, textvariable=self.searchStr, width=20, justify=LEFT, font=self.font).place(x=50, y=50)
-        Button(frame1_1, text='돋보기', width=5, height=1, command=self.pressedSearch, font=self.fontB).place(x=320, y=45)
-        Button(frame1_1, text='별', width=3, height=1, command=self.pressedFavorite, font=self.fontB).place(x=450, y=45)
-        Button(frame1_1, text='메일', width=3, height=1, command=self.pressedMail, font=self.fontB).place(x=510, y=45)
+        # 검색 버튼
+        image = Image.open('Resource/Image/icon/search.png')
+        image = image.resize((35, 35))
+        image = ImageTk.PhotoImage(image)
+        searchButton = Button(frame1_1, text='', image=image, command=self.pressedSearch, font=self.fontB)
+        searchButton.place(x=320, y=45, width=80, height=40)
+        searchButton.image = image
+        # 즐겨찾기 버튼
+        image = Image.open('Resource/Image/icon/star.png')
+        image = image.resize((40, 40))
+        image = ImageTk.PhotoImage(image)
+        favoriteButton = Button(frame1_1, text='', image=image, command=self.pressedFavorite, font=self.fontB)
+        favoriteButton.place(x=450, y=45, width=40, height=40)
+        favoriteButton.image = image
+        # 메일 버튼
+        image = Image.open('Resource/Image/icon/mail.png')
+        image = image.resize((40, 40))
+        image = ImageTk.PhotoImage(image)
+        mailButton = Button(frame1_1, text='', image=image, command=self.pressedMail, font=self.fontB)
+        mailButton.place(x=510, y=45, width=40, height=40)
+        mailButton.image = image
 
         frame1_2 = Frame(frame1, width=600, height=700, bg='gold')
         frame1_2.pack()
