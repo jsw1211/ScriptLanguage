@@ -439,6 +439,62 @@ class MainGUI:
                 self.testImage_hat = ImageTk.PhotoImage(image_hat)
                 self.equipLabel_1.configure(image=self.testImage_hat)
                 self.equipLabel_1.image = self.testImage_hat
+            elif equip['item_equipment_slot'] == '상의':
+                top_url = equip.get('item_icon')
+                top_data = urllib.request.urlopen(top_url).read()
+                image_top = Image.open(io.BytesIO(top_data))
+                image_top = image_top.resize((50, 50))
+                self.testImage_top = ImageTk.PhotoImage(image_top)
+                self.equipLabel_2.configure(image=self.testImage_top)
+                self.equipLabel_2.image = self.testImage_top
+            elif equip['item_equipment_slot'] == '하의':
+                bot_url = equip.get('item_icon')
+                bot_data = urllib.request.urlopen(bot_url).read()
+                image_bot = Image.open(io.BytesIO(bot_data))
+                image_bot = image_bot.resize((50, 50))
+                self.testImage_bot = ImageTk.PhotoImage(image_bot)
+                self.equipLabel_3.configure(image=self.testImage_bot)
+                self.equipLabel_3.image = self.testImage_bot
+            elif equip['item_equipment_slot'] == '신발':
+                shoe_url = equip.get('item_icon')
+                shoe_data = urllib.request.urlopen(shoe_url).read()
+                image_shoe = Image.open(io.BytesIO(shoe_data))
+                image_shoe = image_shoe.resize((50, 50))
+                self.testImage_shoe = ImageTk.PhotoImage(image_shoe)
+                self.equipLabel_4.configure(image=self.testImage_shoe)
+                self.equipLabel_4.image = self.testImage_shoe
+            elif equip['item_equipment_slot'] == '무기':
+                weapon_url = equip.get('item_icon')
+                weapon_data = urllib.request.urlopen(weapon_url).read()
+                image_weapon = Image.open(io.BytesIO(weapon_data))
+                image_weapon = image_weapon.resize((50, 50))
+                self.testImage_weapon = ImageTk.PhotoImage(image_weapon)
+                self.equipLabel_5.configure(image=self.testImage_weapon)
+                self.equipLabel_5.image = self.testImage_weapon
+            elif equip['item_equipment_slot'] == '보조무기':
+                bojo_url = equip.get('item_icon')
+                bojo_data = urllib.request.urlopen(bojo_url).read()
+                image_bojo = Image.open(io.BytesIO(bojo_data))
+                image_bojo = image_bojo.resize((50, 50))
+                self.testImage_bojo = ImageTk.PhotoImage(image_bojo)
+                self.equipLabel_6.configure(image=self.testImage_bojo)
+                self.equipLabel_6.image = self.testImage_bojo
+            elif equip['item_equipment_slot'] == '망토':
+                cloak_url = equip.get('item_icon')
+                cloak_data = urllib.request.urlopen(cloak_url).read()
+                image_cloak = Image.open(io.BytesIO(cloak_data))
+                image_cloak = image_cloak.resize((50, 50))
+                self.testImage_cloak = ImageTk.PhotoImage(image_cloak)
+                self.equipLabel_7.configure(image=self.testImage_cloak)
+                self.equipLabel_7.image = self.testImage_cloak
+            elif equip['item_equipment_slot'] == '장갑':
+                glove_url = equip.get('item_icon')
+                glove_data = urllib.request.urlopen(glove_url).read()
+                image_glove = Image.open(io.BytesIO(glove_data))
+                image_glove = image_glove.resize((50, 50))
+                self.testImage_glove = ImageTk.PhotoImage(image_glove)
+                self.equipLabel_8.configure(image=self.testImage_glove)
+                self.equipLabel_8.image = self.testImage_glove
 
     def pressedFavorite(self):
         pass
