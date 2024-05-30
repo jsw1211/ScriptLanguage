@@ -321,7 +321,11 @@ class MainGUI:
         # Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
         frame4_1 = Frame(frame4, width=600, height=100, bg='gray')
         frame4_1.pack()
-        combo = ttk.Combobox(frame4_1, width=400, height=25, values=['팝업스토어', '2023 여름 쇼케이스', '2023 겨울 쇼케이스'])
+        locateData = ['2023 겨울 쇼케이스', '팝업스토어', '2023 여름 쇼케이스', '2023 여름 CGV 영등포', '2023 여름 CGV 용산아이파크몰',
+                      '2023 여름 CGV 대전', '2023 여름 CGV 서면', '2023 여름 CGV 대구아카데미', '2023 여름 CGV 광주터미널',
+                      '2023 여름 CGV 왕십리', '2023 여름 CGV 신촌아트레온', '2023 여름 CGV 인천', '2023 여름 CGV 원주',
+                      '2023 여름 CGV 제주노형', '2023 여름 CGV 상봉', '2023 여름 CGV 서면', '2023 여름 CGV 천안펜타포트']
+        combo = ttk.Combobox(frame4_1, width=400, height=25, values=locateData)
         combo.place(x=100, y=30, width=400, height=25)
         combo.current(0)
         frame4_2 = Frame(frame4, width=600, height=660, bg='red')
