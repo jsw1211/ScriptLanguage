@@ -131,9 +131,9 @@ class MainGUI:
         frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, bg='thistle', padx=10, pady=10)
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
-        self.equipmnLabel_2 = Label(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, width=50, height=50)
-        self.equipmnLabel_2.image = self.testImage_hat
-        self.equipmnLabel_2.place(x=80, y=-5)
+        self.equipLabel_1 = Label(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, width=50, height=50)
+        self.equipLabel_1.image = self.testImage_hat
+        self.equipLabel_1.place(x=80, y=-5)
 
         #무릉
         Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
@@ -319,18 +319,21 @@ class MainGUI:
             response_4 = requests.get(urlString_4, headers=self.headers)
             urlString_5 = "https://open.api.nexon.com/maplestory/v1/character/dojang?ocid=" + response_1.json()['ocid']
             response_5 = requests.get(urlString_5, headers=self.headers)
+            urlString_6 = "https://open.api.nexon.com/maplestory/v1/character/item-equipment?ocid=" + response_1.json()['ocid']
+            response_6 = requests.get(urlString_6, headers=self.headers)
             if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200 and response_5.status_code == 200:
                 charData = response_2.json()
                 charData_pop = response_3.json()
                 charData_stat = response_4.json()
                 charData_mureung = response_5.json()
-                self.updateCharacterInfo(charData, charData_pop, charData_stat, charData_mureung)
+                charData_equip = response_6.json()
+                self.updateCharacterInfo(charData, charData_pop, charData_stat, charData_mureung, charData_equip)
             else:
                 print('캐릭터 정보를 가져오는 데 실패했습니다.')
         else:
             print('캐릭터 이름을 입력하세요.')
 
-    def updateCharacterInfo(self, charData, charData_pop, charData_stat, charData_mureung):
+    def updateCharacterInfo(self, charData, charData_pop, charData_stat, charData_mureung, charData_equip):
         # 캐릭터 정보를 업데이트하는 함수
         self.charNameLabel['text'] = str(charData.get('character_name'))
         self.charLevelLabel['text'] = 'Lv ' + str(charData.get('character_level'))
@@ -367,6 +370,17 @@ class MainGUI:
         mureung_min = int(charData_mureung.get('dojang_best_time')) // 60
         mureung_sec = int(charData_mureung.get('dojang_best_time')) % 60
         self.mureungLabel['text'] = '무릉 ' + str(charData_mureung.get('dojang_best_floor')) + '층 ' + str(mureung_min) + ':' + str(mureung_sec)
+
+        #장비 업데이트
+        for equip in charData_equip['item_equipment_preset_1']:
+            if equip['item_equipment_slot'] == '모자':
+                hat_url = equip.get('item_icon')
+                hat_data = urllib.request.urlopen(hat_url).read()
+                image_hat = Image.open(io.BytesIO(hat_data))
+                image_hat = image_hat.resize((50, 50))
+                self.testImage_hat = ImageTk.PhotoImage(image_hat)
+                self.equipLabel_1.configure(image=self.testImage_hat)
+                self.equipLabel_1.image = self.testImage_hat
 
     def pressedFavorite(self):
         pass
