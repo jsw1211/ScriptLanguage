@@ -31,9 +31,38 @@ class MainGUI:
         image = image.resize((200, 200))
         self.testImage = ImageTk.PhotoImage(image)
 
+        # 모자
         image_hat = Image.open('Resource/Image/testHat.png')
         image_hat = image_hat.resize((50, 50))
         self.testImage_hat = ImageTk.PhotoImage(image_hat)
+        # 상의
+        image_top = Image.open('Resource/Image/testTop.png')
+        image_top = image_top.resize((50, 50))
+        self.testImage_top = ImageTk.PhotoImage(image_top)
+        # 하의
+        image_bot = Image.open('Resource/Image/testBot.png')
+        image_bot = image_bot.resize((50, 50))
+        self.testImage_bot = ImageTk.PhotoImage(image_bot)
+        # 신발
+        image_shoe = Image.open('Resource/Image/testShoe.png')
+        image_shoe = image_shoe.resize((50, 50))
+        self.testImage_shoe = ImageTk.PhotoImage(image_shoe)
+        # 무기
+        image_weapon = Image.open('Resource/Image/testWeapon.png')
+        image_weapon = image_weapon.resize((50, 50))
+        self.testImage_weapon = ImageTk.PhotoImage(image_weapon)
+        # 보조
+        image_bojo = Image.open('Resource/Image/testBojo.png')
+        image_bojo = image_bojo.resize((50, 50))
+        self.testImage_bojo = ImageTk.PhotoImage(image_bojo)
+        # 방토
+        image_cloak = Image.open('Resource/Image/testCloak.png')
+        image_cloak = image_cloak.resize((50, 50))
+        self.testImage_cloak = ImageTk.PhotoImage(image_cloak)
+        # 장갑
+        image_glove = Image.open('Resource/Image/testGlove.png')
+        image_glove = image_glove.resize((50, 50))
+        self.testImage_glove = ImageTk.PhotoImage(image_glove)
 
         self.notebook = ttk.Notebook(self.window, width=600, height=800)
         self.notebook.pack()
@@ -131,9 +160,38 @@ class MainGUI:
         frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, bg='thistle', padx=10, pady=10)
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
+        # 모자
         self.equipLabel_1 = Label(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, width=50, height=50)
         self.equipLabel_1.image = self.testImage_hat
         self.equipLabel_1.place(x=80, y=-5)
+        # 상의
+        self.equipLabel_2 = Label(frame1_2_2_2_2, text='상의이미지', image=self.testImage_top, width=50, height=50)
+        self.equipLabel_2.image = self.testImage_top
+        self.equipLabel_2.place(x=80, y=60)
+        # 하의
+        self.equipLabel_3 = Label(frame1_2_2_2_2, text='하의이미지', image=self.testImage_bot, width=50, height=50)
+        self.equipLabel_3.image = self.testImage_bot
+        self.equipLabel_3.place(x=80, y=125)
+        # 신발
+        self.equipLabel_4 = Label(frame1_2_2_2_2, text= '신발이미지', image=self.testImage_shoe, width=50, height=50)
+        self.equipLabel_4.image = self.testImage_shoe
+        self.equipLabel_4.place(x=80, y=190)
+        # 무기
+        self.equipLabel_5 = Label(frame1_2_2_2_2, text='무기이미지', image=self.testImage_weapon, width=50, height=50)
+        self.equipLabel_5.image = self.testImage_weapon
+        self.equipLabel_5.place(x=15, y=60)
+        # 보조
+        self.equipLabel_6 = Label(frame1_2_2_2_2, text='보조이미지', image=self.testImage_bojo, width=50, height=50)
+        self.equipLabel_6.image = self.testImage_bojo
+        self.equipLabel_6.place(x=15, y=125)
+        # 망토
+        self.equipLabel_7 = Label(frame1_2_2_2_2, text='망토이미지', image=self.testImage_cloak, width=50, height=50)
+        self.equipLabel_7.image = self.testImage_cloak
+        self.equipLabel_7.place(x=145, y=60)
+        # 장갑
+        self.equipLabel_8 = Label(frame1_2_2_2_2, text='장갑이미지', image=self.testImage_glove, width=50, height=50)
+        self.equipLabel_8.image = self.testImage_glove
+        self.equipLabel_8.place(x=145, y=125)
 
         #무릉
         Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
