@@ -589,7 +589,9 @@ class MainGUI:
 
     def pressedAPIKey(self):
         urlString = 'https://open.api.nexon.com/maplestory/v1/ouid'
-        self.nowAPIKey = {"x-nxopen-api-key": self.searchAPIKey.get()}
+        apiKey = self.searchAPIKey.get()
+        apiKey = apiKey.strip()
+        self.nowAPIKey = {"x-nxopen-api-key": apiKey}
         response = requests.get(urlString, headers=self.nowAPIKey)
         if response.status_code == 200:
             pass
