@@ -330,23 +330,29 @@ class MainGUI:
                             '대전 중구 계백로 1700', '부산 부산진구 동천로 4', '대구 중구 중앙대로 412', '광주 서구 무진대로 904',
                             '서울 성동구 왕십리광장로 17', '서울 서대문구 신촌로 129', '인천 남동구 예술로 198', '강원특별자치도 원주시 서원대로 171',
                             '제주특별자치도 제주시 노형로 407', '서울 중랑구 상봉로 131', '부산 부산진구 동천로 4', '충남 천안시 서북구 공원로 196']
-        self.scheduleData = ['', '', '', '', '',
-                             '', '', '', '',
-                             '', '', '', '',
-                             '', '', '', '']
+        self.scheduleData = ['2023년 12월 15일 ~ 12월 16일', '2023년 10월 5일 ~ 10월 15일', '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일',
+                             '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일',
+                             '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일',
+                             '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일', '2023년 6월 10일']
         self.combo = ttk.Combobox(frame4_1, width=400, height=25, values=self.locateData)
         self.combo.place(x=100, y=30, width=400, height=25)
         self.combo.bind("<<ComboboxSelected>>", self.comboSelect)
-        self.combo.current(0)
         frame4_2 = Frame(frame4, width=600, height=660, bg='light yellow')
         frame4_2.pack()
         self.mapWidget = TkinterMapView(frame4_2, width=400, height=300, corner_radius=10)
         self.mapWidget.place(x=100, y=20, width=400, height=300)
+        self.setMapView(True)
         self.mapDescLabels = []
-        for mapLabelNum in range(3):
-            mapLabel = Label(frame4_2, text='', font=self.fontB, anchor=CENTER)
-            mapLabel.place(x=100, y=350+60*mapLabelNum, width=400, height=40)
-            self.mapDescLabels.append(mapLabel)
+
+        mapLabel = Label(frame4_2, text='한국공학대학교', font=self.fontB, anchor=CENTER)
+        mapLabel.place(x=100, y=350 + 60 * 0, width=400, height=40)
+        self.mapDescLabels.append(mapLabel)
+        mapLabel = Label(frame4_2, text='경기 시흥시 산기대학로 237', font=self.fontB, anchor=CENTER)
+        mapLabel.place(x=100, y=350 + 60 * 1, width=400, height=40)
+        self.mapDescLabels.append(mapLabel)
+        mapLabel = Label(frame4_2, text='1997년 12월 20일 ~', font=self.fontB, anchor=CENTER)
+        mapLabel.place(x=100, y=350 + 60 * 2, width=400, height=40)
+        self.mapDescLabels.append(mapLabel)
 
         # 강화 시뮬레이터(검키우기)
         #
@@ -682,10 +688,13 @@ class MainGUI:
     def pressedNothing(self):
         pass
 
-    def comboSelect(self):
-        selectValue = self.combo.get()
-
-        pass
+    def comboSelect(self, event):
+        selectStr = self.combo.get()
+        selectValue = self.locateData.index(selectStr)
+        self.setMapView(False)
+        self.mapDescLabels[0]['text'] = self.locateData[selectValue]
+        self.mapDescLabels[1]['text'] = self.addressData[selectValue]
+        self.mapDescLabels[2]['text'] = self.scheduleData[selectValue]
 
     def changeLankServer(self, serverName):
         # 서버 이름을 받고 데이터를 API로 불러온다.
@@ -835,6 +844,23 @@ class MainGUI:
             self.spentMeso += 1000+((weaponEquipLevel)*((self.weaponLevel+1)**2.7)/200)
         else:
             pass
+
+    def setMapView(self, first):
+        url = 'https://dapi.kakao.com/v2/local/search/address.json'
+        params = {'query': '경기도 시흥시 산기대학로 237', 'analyze_type': 'exact'}
+        headers = {"Authorization": "KakaoAK 1afd311e3e6fc59b34bc57ed105c19aa"}  # 송승호 카카오 키
+        if not first:
+            selectStr = self.combo.get()
+            index = self.locateData.index(selectStr)
+            params['query'] = self.addressData[index]
+
+        response = requests.get(url, params=params, headers=headers).json()
+        data = response['documents']
+        lat, lon = float(data[0]['y']), float(data[0]['x'])
+        try:
+            self.mapWidget.set_position(lat, lon, marker=True)
+        except ValueError:
+            print('error')
 
 
 class ServerMod(Enum):
