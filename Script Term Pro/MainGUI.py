@@ -8,6 +8,7 @@ from enum import Enum
 import requests
 import urllib.request
 from datetime import datetime, timedelta
+from tkintermapview import TkinterMapView
 
 
 class MainGUI:
@@ -321,15 +322,31 @@ class MainGUI:
         # Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
         frame4_1 = Frame(frame4, width=600, height=100, bg='gray')
         frame4_1.pack()
-        locateData = ['2023 겨울 쇼케이스', '팝업스토어', '2023 여름 쇼케이스', '2023 여름 CGV 영등포', '2023 여름 CGV 용산아이파크몰',
-                      '2023 여름 CGV 대전', '2023 여름 CGV 서면', '2023 여름 CGV 대구아카데미', '2023 여름 CGV 광주터미널',
+        self.locateData = ['2023 겨울 쇼케이스', '팝업스토어', '2023 여름 쇼케이스', '2023 여름 CGV 영등포', '2023 여름 CGV 용산아이파크몰',
+                      '2023 여름 CGV 대전', '2023 여름 CGV 서면(6관)', '2023 여름 CGV 대구아카데미', '2023 여름 CGV 광주터미널',
                       '2023 여름 CGV 왕십리', '2023 여름 CGV 신촌아트레온', '2023 여름 CGV 인천', '2023 여름 CGV 원주',
-                      '2023 여름 CGV 제주노형', '2023 여름 CGV 상봉', '2023 여름 CGV 서면', '2023 여름 CGV 천안펜타포트']
-        combo = ttk.Combobox(frame4_1, width=400, height=25, values=locateData)
-        combo.place(x=100, y=30, width=400, height=25)
-        combo.current(0)
-        frame4_2 = Frame(frame4, width=600, height=660, bg='red')
+                      '2023 여름 CGV 제주노형', '2023 여름 CGV 상봉', '2023 여름 CGV 서면(7관)', '2023 여름 CGV 천안펜타포트']
+        self.addressData = ['', '', '', '',
+                            '', '', '', '',
+                            '', '', '', '',
+                            '', '', '', '', '']
+        self.scheduleData = ['', '', '', '',
+                             '', '', '', '',
+                             '', '', '', '',
+                             '', '', '', '', '']
+        self.combo = ttk.Combobox(frame4_1, width=400, height=25, values=self.locateData)
+        self.combo.place(x=100, y=30, width=400, height=25)
+        self.combo.bind("<<ComboboxSelected>>", self.comboSelect)
+        self.combo.current(0)
+        frame4_2 = Frame(frame4, width=600, height=660, bg='light yellow')
         frame4_2.pack()
+        self.mapWidget = TkinterMapView(frame4_2, width=400, height=300, corner_radius=10)
+        self.mapWidget.place(x=100, y=20, width=400, height=300)
+        self.mapDescLabels = []
+        for mapLabelNum in range(3):
+            mapLabel = Label(frame4_2, text='', font=self.fontB, anchor=CENTER)
+            mapLabel.place(x=100, y=350+60*mapLabelNum, width=400, height=40)
+            self.mapDescLabels.append(mapLabel)
 
         # 강화 시뮬레이터(검키우기)
         #
@@ -663,6 +680,11 @@ class MainGUI:
             self.enhanceButton['bg'] = 'gray65'
 
     def pressedNothing(self):
+        pass
+
+    def comboSelect(self):
+        selectValue = self.combo.get()
+
         pass
 
     def changeLankServer(self, serverName):
