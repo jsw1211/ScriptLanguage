@@ -798,7 +798,7 @@ class MainGUI:
             pass
 
     def failPercentage(self, s):
-        if 0 <= s <=2:
+        if 0 <= s <= 2:
             return 5+5*s
         elif 3 <= s <= 14:
             return 0+5*s
@@ -836,7 +836,7 @@ class MainGUI:
         self.destroyPercentLabel['text'] = str(float(brokePercent))+'%'
 
     def addSpentMeso(self):
-        weaponEquipLevel = 140
+        weaponEquipLevel = 200
         if 0 <= self.weaponLevel <= 9:
             self.spentMeso += 1000+((weaponEquipLevel)*(self.weaponLevel+1)/36)
         elif self.weaponLevel == 10:
