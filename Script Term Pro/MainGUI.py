@@ -320,8 +320,14 @@ class MainGUI:
         frame4 = Frame(self.window)  # 팝업스토어 위치 지도 기능
         self.notebook.add(frame4, text='오프라인 행사')
         # Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
-        frame4_1 = Frame(frame4, width=600, height=100, bg='gray')
+        frame4_1 = Frame(frame4, width=600, height=80, bg='gray')
         frame4_1.pack()
+        self.eventImage = []
+        for imageNum in range(3):
+            image = Image.open('Resource/Image/event/'+str(imageNum)+'.jpg')
+            image = image.resize((320, 180))
+            self.eventImage.append(ImageTk.PhotoImage(image))
+
         self.locateData = ['2023 겨울 쇼케이스', '팝업스토어', '2023 여름 쇼케이스', '2023 여름 CGV 영등포', '2023 여름 CGV 용산아이파크몰',
                       '2023 여름 CGV 대전', '2023 여름 CGV 서면(6관)', '2023 여름 CGV 대구아카데미', '2023 여름 CGV 광주터미널',
                       '2023 여름 CGV 왕십리', '2023 여름 CGV 신촌아트레온', '2023 여름 CGV 인천', '2023 여름 CGV 원주(폐점)',
@@ -337,7 +343,7 @@ class MainGUI:
         self.combo = ttk.Combobox(frame4_1, width=400, height=25, values=self.locateData)
         self.combo.place(x=100, y=30, width=400, height=25)
         self.combo.bind("<<ComboboxSelected>>", self.comboSelect)
-        frame4_2 = Frame(frame4, width=600, height=660, bg='light yellow')
+        frame4_2 = Frame(frame4, width=600, height=680, bg='light yellow')
         frame4_2.pack()
         self.mapWidget = TkinterMapView(frame4_2, width=400, height=300, corner_radius=10)
         self.mapWidget.place(x=100, y=20, width=400, height=300)
@@ -345,14 +351,16 @@ class MainGUI:
         self.mapDescLabels = []
 
         mapLabel = Label(frame4_2, text='한국공학대학교', font=self.fontB, anchor=CENTER)
-        mapLabel.place(x=100, y=350 + 60 * 0, width=400, height=40)
+        mapLabel.place(x=100, y=330 + 50 * 0, width=400, height=40)
         self.mapDescLabels.append(mapLabel)
         mapLabel = Label(frame4_2, text='경기 시흥시 산기대학로 237', font=self.fontB, anchor=CENTER)
-        mapLabel.place(x=100, y=350 + 60 * 1, width=400, height=40)
+        mapLabel.place(x=100, y=330 + 50 * 1, width=400, height=40)
         self.mapDescLabels.append(mapLabel)
         mapLabel = Label(frame4_2, text='1997년 12월 20일 ~', font=self.fontB, anchor=CENTER)
-        mapLabel.place(x=100, y=350 + 60 * 2, width=400, height=40)
+        mapLabel.place(x=100, y=330 + 50 * 2, width=400, height=40)
         self.mapDescLabels.append(mapLabel)
+        self.mapImageLabel = Label(frame4_2)
+        self.mapImageLabel.place(x=140, y=490, width=320, height=180)
 
         # 강화 시뮬레이터(검키우기)
         #
@@ -695,6 +703,7 @@ class MainGUI:
         self.mapDescLabels[0]['text'] = self.locateData[selectValue]
         self.mapDescLabels[1]['text'] = self.addressData[selectValue]
         self.mapDescLabels[2]['text'] = self.scheduleData[selectValue]
+        self.setEventImage()
 
     def changeLankServer(self, serverName):
         # 서버 이름을 받고 데이터를 API로 불러온다.
@@ -861,6 +870,15 @@ class MainGUI:
             self.mapWidget.set_position(lat, lon, marker=True)
         except ValueError:
             print('error')
+
+    def setEventImage(self):
+        selectStr = self.combo.get()
+        index = self.locateData.index(selectStr)
+        if 0 <= index <= 2:
+            self.mapImageLabel['image'] = self.eventImage[index]
+        else:
+            self.mapImageLabel['image'] = self.eventImage[2]
+
 
 
 class ServerMod(Enum):
