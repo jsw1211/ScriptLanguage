@@ -9,7 +9,7 @@ import requests
 import urllib.request
 from datetime import datetime, timedelta
 from tkintermapview import TkinterMapView
-
+from mailGUI import mailGUI
 
 class MainGUI:
     headers = { # 송승호 개발용 키
@@ -93,6 +93,7 @@ class MainGUI:
         favoriteButton.place(x=450, y=45, width=40, height=40)
         favoriteButton.image = image
         # 메일 버튼
+        self.mailWindow = None
         image = Image.open('Resource/Image/icon/mail.png')
         image = image.resize((40, 40))
         image = ImageTk.PhotoImage(image)
@@ -563,7 +564,10 @@ class MainGUI:
         pass
 
     def pressedMail(self):
-        pass
+        if self.mailWindow is None or not self.mailWindow.window.winfo_exists():
+            self.mailWindow = mailGUI()
+        else:
+            self.mailWindow.window.lift()
 
     def pressedServer(self, server):
         self.lankServerButton[self.lankSeenServer.value]['state'] = 'active'
