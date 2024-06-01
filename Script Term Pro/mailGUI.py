@@ -4,6 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+import requests
 
 
 class mailGUI:
@@ -46,27 +47,37 @@ class mailGUI:
         msg['To'] = reciveAddress
         msg['Subject'] = "메이플스토리 캐릭터 정보"
 
-        mainText = ''
-        for first, second in self.parent.charData.items():
-            mainText += str(first) + ': ' + str(second) + '\n'
+        self.parent.charData
+        self.parent.charData_pop
+        self.parent.charData_stat
+        self.parent.charData_mureung
+        self.parent.charData_equip
 
         htmlBody = f"""
             <html>
             <body>
             <img src="cid:image1">
-            <p>{mainText}</p>
+            <p>{'닉네임: ' + str(self.parent.charData['character_gender'])}</p>
+            <p>{'길드: ' + str(self.parent.charData['character_guild_name'])}</p>
+            <p>{'서버: ' + str(self.parent.charData['world_name'])}</p>
+            <p>{'직업: ' + str(self.parent.charData['character_class'])}</p>
+            <p>{'레밸: ' + str(self.parent.charData['character_level'])}</p>
+            <p>{'경험치: ' + str(self.parent.charData['character_exp_rate'])}</p>
+            <p>{'인기도: ' + str(self.parent.charData_pop['popularity'])}</p>
+            <p>{'무릉(최고층): ' + str(self.parent.charData_mureung['dojang_best_floor'])}</p>
+            <p>{'스텟들'}</p>
             </body>
             </html>
             """
         msgPart = MIMEText(htmlBody, 'html')
         msg.attach(msgPart)
 
-        imgPath = 'Resource/Image/tempCharImage.png'
-        with open(imgPath, 'rb') as imgFile:
-            imgData = imgFile.read()
-            img = MIMEImage(imgData)
-            img.add_header('Content-ID', '<image1>')
-            msg.attach(img)
+        imgUrl = str(self.parent.charData['character_image'])
+        response = requests.get(imgUrl)
+        imgData = response.content
+        img = MIMEImage(imgData)
+        img.add_header('Content-ID', '<image1>')
+        msg.attach(img)
 
         try:
             server = smtplib.SMTP(self.smtpServer, self.portNum)
