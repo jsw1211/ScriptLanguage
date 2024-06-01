@@ -554,7 +554,9 @@ class MainGUI:
                 self.equipLabel_8.configure(image=self.testImage_glove)
                 self.equipLabel_8.image = self.testImage_glove
     def pressedEquip(self):
-        pass
+        self.window = Tk()
+        self.window.title('장비 능력치')
+        self.window.geometry('100X100')
     def pressedFavorite(self):
         pass
 
