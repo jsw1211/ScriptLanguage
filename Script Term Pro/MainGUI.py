@@ -564,10 +564,10 @@ class MainGUI:
         pass
 
     def pressedMail(self):
-        if self.mailWindow is None or not self.mailWindow.window.winfo_exists():
-            self.mailWindow = mailGUI()
+        if mailGUI.instance is None or not mailGUI.instance.window.winfo_exists():
+            mailGUI()
         else:
-            self.mailWindow.window.lift()
+            mailGUI.instance.window.lift()
 
     def pressedServer(self, server):
         self.lankServerButton[self.lankSeenServer.value]['state'] = 'active'

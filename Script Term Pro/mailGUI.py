@@ -3,11 +3,18 @@ from tkinter import font
 
 
 class mailGUI:
+    instance = None
 
     def __init__(self):
-        self.window = Tk()
+        if mailGUI.instance is not None:
+            return
+
+        mailGUI.instance = self
+
+        self.window = Toplevel()
         self.window.title('메일 시스템')
         self.window.geometry('400x200')
+        self.window.protocol("WM_DELETE_WINDOW", self.onClose)
 
         self.mailFont = font.Font(self.window, size=16, weight='bold', family='굴림')
         self.mailFontB = font.Font(self.window, size=32, weight='bold', family='굴림')
@@ -22,3 +29,7 @@ class mailGUI:
 
     def pressedSend(self):
         pass
+
+    def onClose(self):
+        mailGUI.instance = None
+        self.window.destroy()
