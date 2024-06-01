@@ -439,12 +439,12 @@ class MainGUI:
             urlString_6 = "https://open.api.nexon.com/maplestory/v1/character/item-equipment?ocid=" + response_1.json()['ocid']
             response_6 = requests.get(urlString_6, headers=self.headers)
             if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200 and response_5.status_code == 200:
-                charData = response_2.json()
-                charData_pop = response_3.json()
-                charData_stat = response_4.json()
-                charData_mureung = response_5.json()
-                charData_equip = response_6.json()
-                self.updateCharacterInfo(charData, charData_pop, charData_stat, charData_mureung, charData_equip)
+                self.charData = response_2.json()
+                self.charData_pop = response_3.json()
+                self.charData_stat = response_4.json()
+                self.charData_mureung = response_5.json()
+                self.charData_equip = response_6.json()
+                self.updateCharacterInfo(self.charData, self.charData_pop, self.charData_stat, self.charData_mureung, self.charData_equip)
             else:
                 print('캐릭터 정보를 가져오는 데 실패했습니다.')
         else:
@@ -565,7 +565,7 @@ class MainGUI:
 
     def pressedMail(self):
         if mailGUI.instance is None or not mailGUI.instance.window.winfo_exists():
-            mailGUI()
+            mailGUI(self)
         else:
             mailGUI.instance.window.lift()
 
