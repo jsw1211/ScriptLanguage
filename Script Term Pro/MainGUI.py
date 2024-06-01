@@ -180,31 +180,31 @@ class MainGUI:
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
         # 모자
-        self.equipLabel_1 = Button(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, width=50, height=50)
+        self.equipLabel_1 = Button(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_1.image = self.testImage_hat
         self.equipLabel_1.place(x=80, y=-5)
         # 상의
-        self.equipLabel_2 = Button(frame1_2_2_2_2, text='상의이미지', image=self.testImage_top, width=50, height=50)
+        self.equipLabel_2 = Button(frame1_2_2_2_2, text='상의이미지', image=self.testImage_top, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_2.image = self.testImage_top
         self.equipLabel_2.place(x=80, y=60)
         # 하의
-        self.equipLabel_3 = Button(frame1_2_2_2_2, text='하의이미지', image=self.testImage_bot, width=50, height=50)
+        self.equipLabel_3 = Button(frame1_2_2_2_2, text='하의이미지', image=self.testImage_bot, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_3.image = self.testImage_bot
         self.equipLabel_3.place(x=80, y=125)
         # 신발
-        self.equipLabel_4 = Button(frame1_2_2_2_2, text= '신발이미지', image=self.testImage_shoe, width=50, height=50)
+        self.equipLabel_4 = Button(frame1_2_2_2_2, text= '신발이미지', image=self.testImage_shoe, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_4.image = self.testImage_shoe
         self.equipLabel_4.place(x=80, y=190)
         # 무기
-        self.equipLabel_5 = Button(frame1_2_2_2_2, text='무기이미지', image=self.testImage_weapon, width=50, height=50)
+        self.equipLabel_5 = Button(frame1_2_2_2_2, text='무기이미지', image=self.testImage_weapon, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_5.image = self.testImage_weapon
         self.equipLabel_5.place(x=15, y=60)
         # 보조
-        self.equipLabel_6 = Button(frame1_2_2_2_2, text='보조이미지', image=self.testImage_bojo, width=50, height=50)
+        self.equipLabel_6 = Button(frame1_2_2_2_2, text='보조이미지', image=self.testImage_bojo, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_6.image = self.testImage_bojo
         self.equipLabel_6.place(x=15, y=125)
         # 망토
-        self.equipLabel_7 = Button(frame1_2_2_2_2, text='망토이미지', image=self.testImage_cloak, width=50, height=50)
+        self.equipLabel_7 = Button(frame1_2_2_2_2, text='망토이미지', image=self.testImage_cloak, command=self.pressedEquip, width=50, height=50)
         self.equipLabel_7.image = self.testImage_cloak
         self.equipLabel_7.place(x=145, y=60)
         # 장갑
