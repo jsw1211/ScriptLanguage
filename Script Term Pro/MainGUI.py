@@ -10,6 +10,7 @@ import urllib.request
 from datetime import datetime, timedelta
 from tkintermapview import TkinterMapView
 from mailGUI import mailGUI
+from guideText import PlaceholderEntry
 
 class MainGUI:
     headers = { # 송승호 개발용 키
@@ -67,6 +68,7 @@ class MainGUI:
 
         self.notebook = ttk.Notebook(self.window, width=600, height=800)
         self.notebook.pack()
+        self.notebook.bind("<<NotebookTabChanged>>", self.onTabChange)
 
         # 캐릭터 정보 검색 페이지
         #
@@ -77,13 +79,14 @@ class MainGUI:
         frame1_1 = Frame(frame1, width=600, height=100, bg='gold')
         frame1_1.pack()
         self.searchStr = StringVar()
-        Entry(frame1_1, textvariable=self.searchStr, width=20, justify=LEFT, font=self.font).place(x=50, y=50)
+        self.charEntry = PlaceholderEntry(frame1_1, textvariable=self.searchStr, placeholder="캐릭터 닉네임을 입력하시오", justify=LEFT, font=self.font)
+        self.charEntry.place(x=50, y=50)
         # 검색 버튼
         image = Image.open('Resource/Image/icon/search.png')
         image = image.resize((35, 35))
         image = ImageTk.PhotoImage(image)
         searchButton = Button(frame1_1, text='', image=image, command=self.pressedSearch, font=self.fontB)
-        searchButton.place(x=320, y=45, width=80, height=40)
+        searchButton.place(x=340, y=45, width=80, height=40)
         searchButton.image = image
         # 즐겨찾기 버튼
         image = Image.open('Resource/Image/icon/star.png')
@@ -302,7 +305,8 @@ class MainGUI:
         frame3_1 = Frame(frame3, width=600, height=100, bg='OliveDrab1')
         frame3_1.pack()
         self.searchAPIKey = StringVar()
-        Entry(frame3_1, textvariable=self.searchAPIKey, justify=LEFT, font=self.font).place(x=50, y=50, width=400, height=25)
+        self.apiKeyEntry = PlaceholderEntry(frame3_1, textvariable=self.searchAPIKey, placeholder='넥슨 API 키를 입력하시오', justify=LEFT, font=self.font)
+        self.apiKeyEntry.place(x=50, y=50, width=400, height=25)
         Button(frame3_1, text='키 입력', width=5, height=1, command=self.pressedAPIKey, font=self.fontB).place(x=485, y=48, width=80, height=30)
         frame3_2 = Frame(frame3, width=600, height=660, bg='tan1')
         frame3_2.pack_propagate(False)
@@ -430,6 +434,8 @@ class MainGUI:
 
     def pressedSearch(self):
         characterName = self.searchStr.get()  # 입력된 텍스트 가져오기
+        if characterName == '캐릭터 닉네임을 입력하시오':
+            return
         encCharName = urllib.parse.quote(characterName)
         urlString_1 = "https://open.api.nexon.com/maplestory/v1/id?character_name=" + encCharName
         response_1 = requests.get(urlString_1, headers=self.headers)
@@ -749,6 +755,11 @@ class MainGUI:
         self.mapDescLabels[1]['text'] = self.addressData[selectValue]
         self.mapDescLabels[2]['text'] = self.scheduleData[selectValue]
         self.setEventImage()
+
+    def onTabChange(self, event):
+        self.window.focus()
+        self.charEntry.foc_out()
+        self.apiKeyEntry.foc_out()
 
     def changeLankServer(self, serverName):
         # 서버 이름을 받고 데이터를 API로 불러온다.
