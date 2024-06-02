@@ -444,7 +444,7 @@ class MainGUI:
             response_5 = requests.get(urlString_5, headers=self.headers)
             urlString_6 = "https://open.api.nexon.com/maplestory/v1/character/item-equipment?ocid=" + response_1.json()['ocid']
             response_6 = requests.get(urlString_6, headers=self.headers)
-            if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200 and response_5.status_code == 200:
+            if response_2.status_code == 200 and response_3.status_code == 200 and response_4.status_code == 200 and response_5.status_code == 200 and response_6.status_code == 200:
                 self.charData = response_2.json()
                 self.charData_pop = response_3.json()
                 self.charData_stat = response_4.json()
@@ -565,14 +565,36 @@ class MainGUI:
         self.equip_window = Tk()
         self.equip_window.title('장비 능력치')
         self.equip_window.geometry('300x800')
-        self.potential_Label = Label(self.equip_window, text="잠재능력 등급: 유니크").pack(pady=5)
-        self.option1_Label = Label(self.equip_window, text="DEX:+9%").pack(pady=5)
-        self.option2_Label = Label(self.equip_window, text="DEX:+9%").pack(pady=5)
-        self.option3_Label = Label(self.equip_window, text="DEX:+9%").pack(pady=5)
-        self.additionalLabel = Label(self.equip_window, text="에디셔널 잡재능력: 레전드리").pack(pady=5)
-        self.additionaloption1_Label = Label(self.equip_window, text="공:+10").pack(pady=5)
-        self.additionaloption2_Label = Label(self.equip_window, text="마:+10").pack(pady=5)
-        self.additionaloption3_Label = Label(self.equip_window, text="점프력:+2").pack(pady=5)
+        self.potential_Label = (Label(self.equip_window, text="잠재능력 등급: 레어"))
+        self.potential_Label.pack(pady=5)
+        self.potentialoption1_Label = Label(self.equip_window, text="DEX:+9%")
+        self.potentialoption1_Label.pack(pady=5)
+        self.potentialoption2_Label = Label(self.equip_window, text="DEX:+9%")
+        self.potentialoption2_Label.pack(pady=5)
+        self.potentialoption3_Label = Label(self.equip_window, text="DEX:+9%")
+        self.potentialoption3_Label.pack(pady=5)
+        self.additional_Label = Label(self.equip_window, text="에디셔널 잡재능력: 레전드리")
+        self.additional_Label.pack(pady=5)
+        self.additionaloption1_Label = Label(self.equip_window, text="마:+10")
+        self.additionaloption1_Label.pack(pady=5)
+        self.additionaloption2_Label = Label(self.equip_window, text="마:+10")
+        self.additionaloption2_Label.pack(pady=5)
+        self.additionaloption3_Label = Label(self.equip_window, text="점프력:+2")
+        self.additionaloption3_Label.pack(pady=5)
+
+        self.updateEquipStat()
+
+    def updateEquipStat(self):
+        for option in self.charData_equip['item_equipment']:
+            if option['item_equipment_slot'] == '모자':
+                self.potential_Label['text'] = str(option['potential_option_grade'])
+                self.potentialoption1_Label['text'] = str(option['potential_option_1'])
+                self.potentialoption2_Label['text'] = str(option['potential_option_2'])
+                self.potentialoption3_Label['text'] = str(option['potential_option_3'])
+                self.additional_Label['text'] = str(option['additional_potential_option_grade'])
+                self.additionaloption1_Label['text'] = str(option['additional_potential_option_1'])
+                self.additionaloption2_Label['text'] = str(option['additional_potential_option_2'])
+                self.additionaloption3_Label['text'] = str(option['additional_potential_option_3'])
 
     def pressedFavorite(self):
         pass
