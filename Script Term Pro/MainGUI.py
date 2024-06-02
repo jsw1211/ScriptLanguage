@@ -104,6 +104,12 @@ class MainGUI:
         frame1_2 = Frame(frame1, width=600, height=700, bg='gold')
         frame1_2.pack()
 
+        self.charData = None
+        self.charData_pop = None
+        self.charData_stat = None
+        self.charData_mureung = None
+        self.charData_equip = None
+
         # 종합정보
         Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
         frame1_2_1 = Frame(frame1_2, width=600, height=200, bg='gray50')

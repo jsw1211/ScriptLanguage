@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import font
+import tkinter.messagebox
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -47,11 +48,10 @@ class mailGUI:
         msg['To'] = reciveAddress
         msg['Subject'] = "메이플스토리 캐릭터 정보"
 
-        self.parent.charData
-        self.parent.charData_pop
-        self.parent.charData_stat
-        self.parent.charData_mureung
-        self.parent.charData_equip
+        if self.parent.charData is None:
+            tkinter.messagebox.showinfo('오류', '캐릭터 정보를 조회하지 않았습니다.')
+            self.onClose()
+            return
 
         htmlBody = f"""
             <html>
