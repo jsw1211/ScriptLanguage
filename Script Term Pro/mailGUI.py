@@ -6,6 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import requests
+from guideText import PlaceholderEntry
 
 
 class mailGUI:
@@ -34,7 +35,7 @@ class mailGUI:
         frame = Frame(self.window, width=400, height=200, bg='orange')
         frame.pack()
         self.mailStr = StringVar()
-        entry = Entry(self.window, textvariable=self.mailStr, font=self.mailFont)
+        entry = PlaceholderEntry(self.window, textvariable=self.mailStr, placeholder='메일 주소를 입력하시오', font=self.mailFont)
         entry.place(x=50, y=50, width=300, height=25)
         button = Button(self.window, text='보내기', command=self.pressedSend, font=self.mailFontB, bg='SkyBlue1')
         button.place(x=100, y=100, width=200, height=80)
