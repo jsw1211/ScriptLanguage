@@ -24,7 +24,7 @@ class mailGUI:
         mailGUI.instance = self
         self.parent = parent
 
-        self.window = Toplevel()
+        self.window = Toplevel(self.parent.window)
         self.window.title('메일 시스템')
         self.window.geometry('400x200')
         self.window.protocol("WM_DELETE_WINDOW", self.onClose)

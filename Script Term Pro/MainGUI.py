@@ -12,6 +12,7 @@ from tkintermapview import TkinterMapView
 from mailGUI import mailGUI
 from guideText import PlaceholderEntry
 
+
 class MainGUI:
     headers = { # 송승호 개발용 키
         "x-nxopen-api-key": "test_cebf915b37b6eae59393a51b5d2a56e2798071e29e9cae7e85d9e988c8e293b61d98edcf6f5e475acb4e50f454c8019e"
@@ -428,6 +429,7 @@ class MainGUI:
             self.weaponsImage.append(ImageTk.PhotoImage(image))
         self.weaponLevel = 0
         self.upgradeWeapon()
+        self.miniGameResult = None
 
         # Tkinter 나타나게
         self.window.mainloop()
@@ -724,7 +726,23 @@ class MainGUI:
 
     def pressedEnhance(self):
         if self.checkSF.get():
-            pass
+            self.miniGameResult = None
+            self.openMiniGame()
+            successPercent = self.realPercentage(self.weaponLevel)
+            if self.miniGameResult:
+                successPercent *= 1.05
+            self.addSpentMeso()
+            luck = random.random()
+            if luck <= successPercent / 100:
+                # 성공
+                self.weaponLevel += 1
+                # 무기 업데이트 함수
+            elif luck >= 1 - self.brokePrecentage(self.weaponLevel) / 100:
+                # 파괴
+                self.weaponLevel = 0
+            else:
+                # 유지
+                pass
         else:
             # 스타캐치 없이 확률
             self.addSpentMeso()
@@ -739,8 +757,8 @@ class MainGUI:
             else:
                 # 유지
                 pass
-            self.upgradeWeapon()
-            self.spentMesoLabel['text'] = str(int(self.spentMeso))
+        self.upgradeWeapon()
+        self.spentMesoLabel['text'] = str(int(self.spentMeso))
 
         if self.weaponLevel == 25:  # 풀강이다
             self.enhanceButton['state'] = 'disable'
@@ -855,25 +873,6 @@ class MainGUI:
         else:
             pass
 
-    def failPercentage(self, s):
-        if 0 <= s <= 2:
-            return 5+5*s
-        elif 3 <= s <= 14:
-            return 0+5*s
-        elif 15 <= s <= 17:
-            return 100-32.1
-        elif 18 <= s <= 19:
-            return 100-32.8
-        elif 20 <= s <= 21:
-            return 100-37
-        elif 22 == s:
-            return 100-22.4
-        elif 23 == s:
-            return 100-31.4
-        elif 24 == s:
-            return 100-40.6
-        else:
-            pass
     def upgradeWeapon(self):
         stars = ''
         for i in range(1, 25+1):
@@ -888,7 +887,7 @@ class MainGUI:
         self.weaponLNLabel['text'] = '+'+str(self.weaponLevel)
         succesPercent = self.realPercentage(self.weaponLevel)
         brokePercent = self.brokePrecentage(self.weaponLevel)
-        failPercent = self.failPercentage(self.weaponLevel)
+        failPercent = 100 - (succesPercent + brokePercent)
         self.succesPercentLabel['text'] = str(float(succesPercent))+'%'
         self.failPercentLabel['text'] = str(float(failPercent))+'%'
         self.destroyPercentLabel['text'] = str(float(brokePercent))+'%'
@@ -937,6 +936,71 @@ class MainGUI:
         else:
             self.mapImageLabel['image'] = self.eventImage[2]
 
+    def openMiniGame(self):
+        def move_star():
+            nonlocal star_pos, direction
+            canvas.move(star, direction, 0)
+            star_pos += direction
+
+            if star_pos >= canvas_width - star_size:
+                direction = -5
+            elif star_pos <= 0:
+                direction = 5
+
+            if not game_ended:
+                mini_game.after(30, move_star)
+
+        def check_success(event=None):
+            nonlocal game_ended
+            if game_ended:
+                return
+
+            star_coords = canvas.coords(star)
+            if target_x1 < star_coords[0] < target_x2:
+                result_label.config(text="성공!", foreground="green")
+                mini_game.after(500, close_game_window, True)
+            else:
+                result_label.config(text="실패!", foreground="red")
+                mini_game.after(500, close_game_window, False)
+            game_ended = True
+
+        def close_game_window(result):
+            self.miniGameResult = result
+            mini_game.destroy()
+
+        mini_game = Toplevel(self.window)
+        mini_game.title("스타포스")
+        mini_game.grab_set()  # 이 창이 닫힐 때까지 다른 창과 상호작용을 막음
+
+        canvas_width = 400
+        canvas_height = 100
+        star_size = 20
+
+        canvas = Canvas(mini_game, width=canvas_width, height=canvas_height)
+        canvas.pack(pady=10)
+
+        star_pos = random.randint(0, canvas_width - star_size)
+        direction = 5
+        star = canvas.create_oval(star_pos, 40, star_pos + star_size, 40 + star_size, fill="yellow")
+
+        # 가운데 목표 영역 설정
+        target_x1 = canvas_width // 2 - 50
+        target_x2 = canvas_width // 2 + 50
+        canvas.create_rectangle(target_x1, 40, target_x2, 60, outline="blue", width=2)
+
+        button_check = ttk.Button(mini_game, text="확인", command=check_success)
+        button_check.pack(pady=5)
+        # 키 이벤트 바인딩
+        mini_game.bind("<space>", check_success)
+        mini_game.bind("<Return>", check_success)
+
+        result_label = ttk.Label(mini_game, text="")
+        result_label.pack(pady=5)
+        game_ended = False
+
+        mini_game.focus_set()
+        move_star()
+        self.window.wait_window(mini_game)  # 새로운 창이 닫힐 때까지 기다림
 
 
 class ServerMod(Enum):
