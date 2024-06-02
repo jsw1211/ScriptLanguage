@@ -21,12 +21,12 @@ class MainGUI:
         self.window.title('메이플스토리(임시)')
         self.window.geometry('600x800')
 
-        self.font = font.Font(self.window, size=16, weight='bold', family='굴림')
-        self.fontS = font.Font(self.window, size=8, weight='bold', family='굴림')
-        self.fontB = font.Font(self.window, size=16, weight='bold', family='arial')
-        self.fontT = font.Font(self.window, size=24, weight='bold', family='굴림')
-        self.fontV = font.Font(self.window, size=28, weight='bold', family='굴림')
-        self.fontN = font.Font(self.window, size=12, weight='bold', family='굴림')
+        self.font = font.Font(self.window, size=16, weight='bold', family='메이플스토리')
+        self.fontS = font.Font(self.window, size=8, weight='bold', family='메이플스토리')
+        self.fontB = font.Font(self.window, size=16, weight='bold', family='메이플스토리')
+        self.fontT = font.Font(self.window, size=24, weight='bold', family='메이플스토리')
+        self.fontV = font.Font(self.window, size=28, weight='bold', family='메이플스토리')
+        self.fontN = font.Font(self.window, size=12, weight='bold', family='메이플스토리')
 
         image = Image.open('Resource/Image/tempCharImage.png')
         image = image.resize((200, 200))
