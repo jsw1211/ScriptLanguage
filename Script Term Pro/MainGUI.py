@@ -77,7 +77,7 @@ class MainGUI:
         frame1 = Frame(self.window)  # 캐릭터 정보 검색 기능
         self.notebook.add(frame1, text='캐릭터 정보')
         # Label(frame1, text='캐릭터 정보를 조회', fg='red', font='helvetica 48').pack()
-        frame1_1 = Frame(frame1, width=600, height=100, bg='gold')
+        frame1_1 = Frame(frame1, width=600, height=100)
         frame1_1.pack()
         self.searchStr = StringVar()
         self.charEntry = PlaceholderEntry(frame1_1, textvariable=self.searchStr, placeholder="캐릭터 닉네임을 입력하시오", justify=LEFT, font=self.font)
@@ -105,7 +105,7 @@ class MainGUI:
         mailButton.place(x=510, y=45, width=40, height=40)
         mailButton.image = image
 
-        frame1_2 = Frame(frame1, width=600, height=700, bg='gold')
+        frame1_2 = Frame(frame1, width=600, height=700)
         frame1_2.pack()
 
         self.charData = None
@@ -115,11 +115,11 @@ class MainGUI:
         self.charData_equip = None
 
         # 종합정보
-        Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
-        frame1_2_1 = Frame(frame1_2, width=600, height=200, bg='gray50')
+        Frame(frame1_2, width=600, height=30).pack()
+        frame1_2_1 = Frame(frame1_2, width=600, height=200)
         frame1_2_1.pack()
         # 이미지 액자
-        frame1_2_1_1 = Frame(frame1_2_1, width=160, height=200, bg='#ede0c8')
+        frame1_2_1_1 = Frame(frame1_2_1, width=160, height=200)
         frame1_2_1_1.place(x=50, y=0)
         frame1_2_1_1_1 = Frame(frame1_2_1_1, width=140, height=180)
         frame1_2_1_1_1.pack_propagate(False)
@@ -130,7 +130,7 @@ class MainGUI:
 
 
         # 정보
-        frame1_2_1_2 = Frame(frame1_2_1, width=290, height=200, bg='purple1')
+        frame1_2_1_2 = Frame(frame1_2_1, width=290, height=200)
         frame1_2_1_2.place(x=270, y=0)
         name = '김땡땡'    # 테스트용
         self.charNameLabel = Label(frame1_2_1_2, text=name, font=self.font)
@@ -151,19 +151,19 @@ class MainGUI:
         self.charClassLabel = Label(frame1_2_1_2, text='직업 - ' + str(c_class), font=self.font)
         self.charClassLabel.place(x=10, y=170)
 
-        Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
-        frame1_2_2 = Frame(frame1_2, width=600, height=300, bg='gray50')
+        Frame(frame1_2, width=600, height=30).pack()
+        frame1_2_2 = Frame(frame1_2, width=600, height=300)
         frame1_2_2.pack()
         # 능력치
-        frame1_2_2_1 = Frame(frame1_2_2, width=240, height=300, bg='khaki1')
+        frame1_2_2_1 = Frame(frame1_2_2, width=240, height=300)
         frame1_2_2_1.pack_propagate(False)
         frame1_2_2_1.place(x=40, y=0)
-        frame1_2_2_1_1 = Frame(frame1_2_2_1, width=200, height=40, bg='sky blue')
+        frame1_2_2_1_1 = Frame(frame1_2_2_1, width=200, height=40)
         frame1_2_2_1_1.pack_propagate(False)
         frame1_2_2_1_1.pack()
         self.statusLabel = Label(frame1_2_2_1_1, text='능력치', font=self.fontT)
         self.statusLabel.pack(side=BOTTOM)
-        frame1_2_2_1_2 = Frame(frame1_2_2_1, width=140, height=260, bg='thistle', padx=10, pady=10)
+        frame1_2_2_1_2 = Frame(frame1_2_2_1, width=140, height=260, padx=10, pady=10)
         frame1_2_2_1_2.pack_propagate(False)
         frame1_2_2_1_2.pack(padx=5, pady=5)
         self.HPLabel = Label(frame1_2_2_1_2, text='HP: '+str(50000), font=self.font)
@@ -179,15 +179,15 @@ class MainGUI:
         self.LUKLabel = Label(frame1_2_2_1_2, text='LUK: '+str(150), font=self.font)
         self.LUKLabel.pack(side=TOP, anchor=W, expand=Y)
         # 장비
-        frame1_2_2_2 = Frame(frame1_2_2, width=240, height=300, bg='burlywood1')
+        frame1_2_2_2 = Frame(frame1_2_2, width=240, height=300)
         frame1_2_2_2.pack_propagate(False)
         frame1_2_2_2.place(x=320, y=0)
-        frame1_2_2_2_1 = Frame(frame1_2_2_2, width=200, height=40, bg='sky blue')
+        frame1_2_2_2_1 = Frame(frame1_2_2_2, width=200, height=40)
         frame1_2_2_2_1.pack_propagate(False)
         frame1_2_2_2_1.pack()
         self.equipmnLabel = Label(frame1_2_2_2_1, text='장비', font=self.fontT)
         self.equipmnLabel.pack(side=BOTTOM)
-        frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, bg='thistle', padx=10, pady=10)
+        frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, padx=10, pady=10)
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
         # 모자
@@ -224,8 +224,8 @@ class MainGUI:
         self.equipLabel_8.place(x=145, y=125)
 
         #무릉
-        Frame(frame1_2, width=600, height=30, bg='LightBlue1').pack()
-        frame1_2_3 = Frame(frame1_2, width=600, height=80, bg='gray50')
+        Frame(frame1_2, width=600, height=30).pack()
+        frame1_2_3 = Frame(frame1_2, width=600, height=80)
         frame1_2_3.pack_propagate(False)
         frame1_2_3.pack()
         self.mureungLabel = Label(frame1_2_3, text='무릉 '+str(49)+'층 '+str(12)+':'+str(59), font=self.fontV)
@@ -238,7 +238,7 @@ class MainGUI:
         self.lankPage = 0   # default 0 0~9페이지까지(100위까지 보여줄 예정)
         frame2 = Frame(self.window)  # 랭킹 기능
         self.notebook.add(frame2, text='랭킹 정보')
-        frame2_1 = Frame(frame2, width=600, height=100, bg='gray50')
+        frame2_1 = Frame(frame2, width=600, height=100)
         frame2_1.grid_propagate(False)
         frame2_1.pack()
         w = 4   # 버튼 넓이
@@ -265,8 +265,8 @@ class MainGUI:
         for i in range(len(self.lankServerButton)):
             self.lankServerButton[i].place(x=25+70*(i%8), y=10+45*(i//8), width=px, height=py)
         # 임시 랭킹들 나열
-        Frame(frame2, width=600, height=30, background='LightBlue1').pack()
-        frame2_2 = Frame(frame2, width=600, height=550, bg='gray50')
+        Frame(frame2, width=600, height=30).pack()
+        frame2_2 = Frame(frame2, width=600, height=550)
         frame2_2.grid_propagate(False)
         frame2_2.pack()
         px = 24  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
@@ -289,8 +289,8 @@ class MainGUI:
             for j, label in enumerate(self.lankingLabels[i]):   # 그리드 배치
                 label.place(x=20+115*j, y=80+46*i, width=100, height=40)
         # 다음 페이지 버튼(10 페이지 정도 생각중)
-        Frame(frame2, width=600, height=30, background='LightBlue1').pack()
-        frame2_3 = Frame(frame2, width=600, height=60, bg='plum1')
+        Frame(frame2, width=600, height=30).pack()
+        frame2_3 = Frame(frame2, width=600, height=60)
         frame2_3.pack()
         Button(frame2_3, text='<-', width=10, height=2, command=self.pressedPrev, font=self.fontB).place(x=150, y=0, width=100, height=50)
         Button(frame2_3, text='->', width=10, height=2, command=self.pressedNext, font=self.fontB).place(x=350, y=0, width=100, height=50)
@@ -303,13 +303,13 @@ class MainGUI:
         #
         frame3 = Frame(self.window)  # 확률 정보 기능
         self.notebook.add(frame3, text='스타포스 확률')
-        frame3_1 = Frame(frame3, width=600, height=100, bg='OliveDrab1')
+        frame3_1 = Frame(frame3, width=600, height=100)
         frame3_1.pack()
         self.searchAPIKey = StringVar()
         self.apiKeyEntry = PlaceholderEntry(frame3_1, textvariable=self.searchAPIKey, placeholder='넥슨 API 키를 입력하시오', justify=LEFT, font=self.font)
         self.apiKeyEntry.place(x=50, y=50, width=400, height=25)
         Button(frame3_1, text='키 입력', width=5, height=1, command=self.pressedAPIKey, font=self.fontB).place(x=485, y=48, width=80, height=30)
-        frame3_2 = Frame(frame3, width=600, height=660, bg='tan1')
+        frame3_2 = Frame(frame3, width=600, height=660)
         frame3_2.pack_propagate(False)
         frame3_2.pack()
         self.percentageCanvas = Canvas(frame3_2, background="white", width=600, height=600)
@@ -332,7 +332,7 @@ class MainGUI:
         frame4 = Frame(self.window)  # 팝업스토어 위치 지도 기능
         self.notebook.add(frame4, text='오프라인 행사')
         # Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
-        frame4_1 = Frame(frame4, width=600, height=80, bg='gray')
+        frame4_1 = Frame(frame4, width=600, height=80)
         frame4_1.pack()
         self.eventImage = []
         for imageNum in range(3):
@@ -355,7 +355,7 @@ class MainGUI:
         self.combo = ttk.Combobox(frame4_1, width=400, height=25, values=self.locateData)
         self.combo.place(x=100, y=30, width=400, height=25)
         self.combo.bind("<<ComboboxSelected>>", self.comboSelect)
-        frame4_2 = Frame(frame4, width=600, height=680, bg='light yellow')
+        frame4_2 = Frame(frame4, width=600, height=680)
         frame4_2.pack()
         self.mapWidget = TkinterMapView(frame4_2, width=400, height=300, corner_radius=10)
         self.mapWidget.place(x=100, y=20, width=400, height=300)
@@ -377,48 +377,49 @@ class MainGUI:
         # 강화 시뮬레이터(검키우기)
         #
         #
+        f5color = 'gray50'
         self.spentMeso = 0
-        frame5 = Frame(self.window)  # 검키우기 미니게임?
+        frame5 = Frame(self.window, bg='gray50', background=f5color)  # 검키우기 미니게임?
         self.notebook.add(frame5, text='강화 시뮬')
         # Label(frame5, text='검키우기', fg='purple', font='helvetica 48').pack()
-        frame5_1 = Frame(frame5, width=600, height=100)
+        frame5_1 = Frame(frame5, width=600, height=100, background=f5color)
         frame5_1.pack()
         image = Image.open('Resource/Image/icon/mesoB.png')
         image = image.resize((40, 40))
         image = ImageTk.PhotoImage(image)
-        mesoLabel = Label(frame5_1, image=image)
+        mesoLabel = Label(frame5_1, image=image, background=f5color)
         mesoLabel.place(x=100, y=40, width=40, height=40)
         mesoLabel.image = image
-        self.spentMesoLabel = Label(frame5_1, text=str(self.spentMeso), width=20, height=2, font=self.fontB, anchor='w')
+        self.spentMesoLabel = Label(frame5_1, text=str(self.spentMeso), width=20, height=2, font=self.fontB, anchor='w', background=f5color)
         self.spentMesoLabel.place(x=140, y=40, width=360, height=40)
-        frame5_2 = Frame(frame5, width=600, height=400, background='deep sky blue')
+        frame5_2 = Frame(frame5, width=600, height=400, background=f5color)
         frame5_2.pack()
-        self.weaponLVLabel = Label(frame5_2, width=550, height=30, background='deep sky blue', font=('Helvetica', 14), fg='yellow')
+        self.weaponLVLabel = Label(frame5_2, width=550, height=30, font=('Helvetica', 14), fg='yellow', background=f5color)
         self.weaponLVLabel.place(x=25, y=10, width=550, height=30)
-        self.SFWeaponLabel = Label(frame5_2, width=300, height=300, background='white')
+        self.SFWeaponLabel = Label(frame5_2, width=300, height=300, background=f5color)
         self.SFWeaponLabel.place(x=150, y=50, width=300, height=300)
-        self.weaponLNLabel = Label(frame5_2, width=60, height=30, background='deep sky blue', font=('Helvetica', 24, 'bold'), fg='black')
+        self.weaponLNLabel = Label(frame5_2, width=60, height=30, font=('Helvetica', 24, 'bold'), fg='black', background=f5color)
         self.weaponLNLabel.place(x=270, y=360, width=60, height=30)
-        frame5_3 = Frame(frame5, width=600, height=260, background='pink1')
+        frame5_3 = Frame(frame5, width=600, height=260, background=f5color)
         frame5_3.pack()
-        self.SFPercentLabel = Label(frame5_3, text='확률', width=20, height=2, font=self.fontB, background='azure2')
+        self.SFPercentLabel = Label(frame5_3, text='확률', width=20, height=2, font=self.fontB, background=f5color)
         self.SFPercentLabel.place(x=200, y=0, width=200, height=50)
-        self.enhanceButton = Button(frame5_3, text='강화하기!', width=30, height=2, command=self.pressedEnhance, font=self.fontB)
+        self.enhanceButton = Button(frame5_3, text='강화하기!', width=30, height=2, command=self.pressedEnhance, font=self.fontB, background='gray70')
         self.enhanceButton.place(x=400, y=100, width=150, height=80)
-        frame5_3_1 = Frame(frame5_3, width=300, height=100, background='tomato')
+        frame5_3_1 = Frame(frame5_3, width=300, height=100, background=f5color)
         frame5_3_1.place(x=50, y=100, width=300, height=100)
         self.checkSF = IntVar()
-        Checkbutton(frame5_3, text='스타포스 체크', variable=self.checkSF, command=self.pressedNothing, font=self.fontB).place(x=50, y=60)
-        Label(frame5_3_1, text='성공확률', width=8, height=1, font=self.fontB).place(x=50, y=6, width=100, height=25)
-        self.succesPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e')
+        Checkbutton(frame5_3, text='스타포스 체크', variable=self.checkSF, command=self.pressedNothing, font=self.fontB, background=f5color).place(x=50, y=60)
+        Label(frame5_3_1, text='성공확률', width=8, height=1, font=self.fontB, background=f5color).place(x=50, y=6, width=100, height=25)
+        self.succesPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e', background=f5color)
         self.succesPercentLabel.place(x=150, y=6, width=100, height=25)
-        Label(frame5_3_1, text='실패확률', width=8, height=1, font=self.fontB).place(x=50, y=37, width=100, height=25)
-        self.failPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e')
+        Label(frame5_3_1, text='실패확률', width=8, height=1, font=self.fontB, background=f5color).place(x=50, y=37, width=100, height=25)
+        self.failPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e', background=f5color)
         self.failPercentLabel.place(x=150, y=37, width=100, height=25)
-        Label(frame5_3_1, text='파괴확률', width=8, height=1, font=self.fontB).place(x=50, y=68, width=100, height=25)
-        self.destroyPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e')
+        Label(frame5_3_1, text='파괴확률', width=8, height=1, font=self.fontB, background=f5color).place(x=50, y=68, width=100, height=25)
+        self.destroyPercentLabel = Label(frame5_3_1, text='', width=8, height=1, font=self.fontB, anchor='e', background=f5color)
         self.destroyPercentLabel.place(x=150, y=68, width=100, height=25)
-        self.enhanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background='chocolate1')
+        self.enhanceMesoLabel = Label(frame5_3, text='필요한 메소', width=8, height=1, font=self.fontB, background=f5color)
         self.enhanceMesoLabel.place(x=100, y=220, width=400, height=40)
 
         # 검 키우기를 위한 정보들(멤버변수들)
