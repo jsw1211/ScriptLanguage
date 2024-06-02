@@ -72,6 +72,11 @@ class mailGUI:
         msgPart = MIMEText(htmlBody, 'html')
         msg.attach(msgPart)
 
+        stats = self.parent.charData_stat['final_stat']
+        for dic in stats:
+            addMsg = MIMEText(str(dic['stat_name'])+': '+str(dic['stat_value']+'\n'), 'plain')
+            msg.attach(addMsg)
+
         imgUrl = str(self.parent.charData['character_image'])
         response = requests.get(imgUrl)
         imgData = response.content
