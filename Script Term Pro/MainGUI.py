@@ -672,6 +672,8 @@ class MainGUI:
     def pressedAPIKey(self):
         urlString = 'https://open.api.nexon.com/maplestory/v1/ouid'
         apiKey = self.searchAPIKey.get()
+        if apiKey == '넥슨 API 키를 입력하시오':
+            return
         apiKey = apiKey.strip()
         self.nowAPIKey = {"x-nxopen-api-key": apiKey}
         response = requests.get(urlString, headers=self.nowAPIKey)

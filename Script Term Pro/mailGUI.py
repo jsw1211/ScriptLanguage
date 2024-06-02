@@ -44,6 +44,8 @@ class mailGUI:
 
     def pressedSend(self):
         reciveAddress = self.mailStr.get()
+        if reciveAddress == '메일 주소를 입력하시오':
+            return
         reciveAddress.strip()
 
         msg = MIMEMultipart()
