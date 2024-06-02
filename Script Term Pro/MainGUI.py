@@ -568,9 +568,17 @@ class MainGUI:
                 self.equipLabel_8.image = self.testImage_glove
 
     def pressedEquip(self):
-        self.window = Tk()
-        self.window.title('장비 능력치')
-        self.window.geometry('100x100')
+        self.equip_window = Tk()
+        self.equip_window.title('장비 능력치')
+        self.equip_window.geometry('300x800')
+        self.potential_Label = Label(self.equip_window, text="잠재능력 등급: 유니크").pack(pady=5)
+        self.option1_Label = Label(self.equip_window, text="DEX:+9%").pack(pady=5)
+        self.option2_Label = Label(self.equip_window, text="DEX:+9%").pack(pady=5)
+        self.option3_Label = Label(self.equip_window, text="DEX:+9%").pack(pady=5)
+        self.additionalLabel = Label(self.equip_window, text="에디셔널 잡재능력: 레전드리").pack(pady=5)
+        self.additionaloption1_Label = Label(self.equip_window, text="공:+10").pack(pady=5)
+        self.additionaloption2_Label = Label(self.equip_window, text="마:+10").pack(pady=5)
+        self.additionaloption3_Label = Label(self.equip_window, text="점프력:+2").pack(pady=5)
 
     def pressedFavorite(self):
         pass
