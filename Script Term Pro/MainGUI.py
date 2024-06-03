@@ -234,11 +234,12 @@ class MainGUI:
         # 랭킹 페이지
         #
         #
+        f2color = 'cornsilk2'
         self.lankSeenServer = ServerMod.Entire  # default 전체서버(일반서버 전체)
         self.lankPage = 0   # default 0 0~9페이지까지(100위까지 보여줄 예정)
-        frame2 = Frame(self.window)  # 랭킹 기능
+        frame2 = Frame(self.window, background=f2color)  # 랭킹 기능
         self.notebook.add(frame2, text='랭킹 정보')
-        frame2_1 = Frame(frame2, width=600, height=100)
+        frame2_1 = Frame(frame2, width=600, height=100, background=f2color)
         frame2_1.grid_propagate(False)
         frame2_1.pack()
         w = 4   # 버튼 넓이
@@ -265,8 +266,8 @@ class MainGUI:
         for i in range(len(self.lankServerButton)):
             self.lankServerButton[i].place(x=25+70*(i%8), y=10+45*(i//8), width=px, height=py)
         # 임시 랭킹들 나열
-        Frame(frame2, width=600, height=30).pack()
-        frame2_2 = Frame(frame2, width=600, height=550)
+        Frame(frame2, width=600, height=30, background=f2color).pack()
+        frame2_2 = Frame(frame2, width=600, height=550, background='ivory3')
         frame2_2.grid_propagate(False)
         frame2_2.pack()
         px = 24  # 버튼 패딩 양옆에 - 버튼 사이 간격 확보
@@ -289,12 +290,12 @@ class MainGUI:
             for j, label in enumerate(self.lankingLabels[i]):   # 그리드 배치
                 label.place(x=20+115*j, y=80+46*i, width=100, height=40)
         # 다음 페이지 버튼(10 페이지 정도 생각중)
-        Frame(frame2, width=600, height=30).pack()
-        frame2_3 = Frame(frame2, width=600, height=60)
+        Frame(frame2, width=600, height=30, background=f2color).pack()
+        frame2_3 = Frame(frame2, width=600, height=60, background=f2color)
         frame2_3.pack()
         Button(frame2_3, text='<-', width=10, height=2, command=self.pressedPrev, font=self.fontB).place(x=150, y=0, width=100, height=50)
         Button(frame2_3, text='->', width=10, height=2, command=self.pressedNext, font=self.fontB).place(x=350, y=0, width=100, height=50)
-        self.lankPageLabel = Label(frame2_3, text=str(self.lankPage+1), width=2, height=1, font=self.fontB)
+        self.lankPageLabel = Label(frame2_3, text=str(self.lankPage+1), width=2, height=1, font=self.fontB, background='cornsilk3')
         self.lankPageLabel.place(x=250+10, y=0, width=80, height=50)
         self.pressedServer(ServerMod.Entire)
 
@@ -329,10 +330,11 @@ class MainGUI:
         # 오프라인 이벤트 위치 및 이미지
         #
         #
-        frame4 = Frame(self.window)  # 팝업스토어 위치 지도 기능
+        f4color = 'snow2'
+        frame4 = Frame(self.window, background=f4color)  # 팝업스토어 위치 지도 기능
         self.notebook.add(frame4, text='오프라인 행사')
         # Label(frame4, text='팝업스토어 위치를 지도로', fg='black', font='helvetica 48').pack()
-        frame4_1 = Frame(frame4, width=600, height=80)
+        frame4_1 = Frame(frame4, width=600, height=80, background=f4color)
         frame4_1.pack()
         self.eventImage = []
         for imageNum in range(3):
@@ -355,7 +357,7 @@ class MainGUI:
         self.combo = ttk.Combobox(frame4_1, width=400, height=25, values=self.locateData)
         self.combo.place(x=100, y=30, width=400, height=25)
         self.combo.bind("<<ComboboxSelected>>", self.comboSelect)
-        frame4_2 = Frame(frame4, width=600, height=680)
+        frame4_2 = Frame(frame4, width=600, height=680, background=f4color)
         frame4_2.pack()
         self.mapWidget = TkinterMapView(frame4_2, width=400, height=300, corner_radius=10)
         self.mapWidget.place(x=100, y=20, width=400, height=300)
@@ -371,7 +373,7 @@ class MainGUI:
         mapLabel = Label(frame4_2, text='1997년 12월 20일 ~', font=self.fontB, anchor=CENTER)
         mapLabel.place(x=100, y=330 + 50 * 2, width=400, height=40)
         self.mapDescLabels.append(mapLabel)
-        self.mapImageLabel = Label(frame4_2)
+        self.mapImageLabel = Label(frame4_2, background=f4color)
         self.mapImageLabel.place(x=140, y=490, width=320, height=180)
 
         # 강화 시뮬레이터(검키우기)
