@@ -191,35 +191,35 @@ class MainGUI:
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
         # 모자
-        self.equipLabel_1 = Button(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_1 = Button(frame1_2_2_2_2, text='모자이미지', image=self.testImage_hat, command=lambda: self.pressedEquip(EquipMod.hat), width=50, height=50)
         self.equipLabel_1.image = self.testImage_hat
         self.equipLabel_1.place(x=80, y=-5)
         # 상의
-        self.equipLabel_2 = Button(frame1_2_2_2_2, text='상의이미지', image=self.testImage_top, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_2 = Button(frame1_2_2_2_2, text='상의이미지', image=self.testImage_top, command=lambda: self.pressedEquip(EquipMod.top), width=50, height=50)
         self.equipLabel_2.image = self.testImage_top
         self.equipLabel_2.place(x=80, y=60)
         # 하의
-        self.equipLabel_3 = Button(frame1_2_2_2_2, text='하의이미지', image=self.testImage_bot, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_3 = Button(frame1_2_2_2_2, text='하의이미지', image=self.testImage_bot, command=lambda: self.pressedEquip(EquipMod.bot), width=50, height=50)
         self.equipLabel_3.image = self.testImage_bot
         self.equipLabel_3.place(x=80, y=125)
         # 신발
-        self.equipLabel_4 = Button(frame1_2_2_2_2, text= '신발이미지', image=self.testImage_shoe, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_4 = Button(frame1_2_2_2_2, text= '신발이미지', image=self.testImage_shoe, command=lambda: self.pressedEquip(EquipMod.shoe), width=50, height=50)
         self.equipLabel_4.image = self.testImage_shoe
         self.equipLabel_4.place(x=80, y=190)
         # 무기
-        self.equipLabel_5 = Button(frame1_2_2_2_2, text='무기이미지', image=self.testImage_weapon, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_5 = Button(frame1_2_2_2_2, text='무기이미지', image=self.testImage_weapon, command=lambda: self.pressedEquip(EquipMod.weapon), width=50, height=50)
         self.equipLabel_5.image = self.testImage_weapon
         self.equipLabel_5.place(x=15, y=60)
         # 보조
-        self.equipLabel_6 = Button(frame1_2_2_2_2, text='보조이미지', image=self.testImage_bojo, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_6 = Button(frame1_2_2_2_2, text='보조이미지', image=self.testImage_bojo, command=lambda: self.pressedEquip(EquipMod.bojo), width=50, height=50)
         self.equipLabel_6.image = self.testImage_bojo
         self.equipLabel_6.place(x=15, y=125)
         # 망토
-        self.equipLabel_7 = Button(frame1_2_2_2_2, text='망토이미지', image=self.testImage_cloak, command=self.pressedEquip, width=50, height=50)
+        self.equipLabel_7 = Button(frame1_2_2_2_2, text='망토이미지', image=self.testImage_cloak, command=lambda: self.pressedEquip(EquipMod.cloak), width=50, height=50)
         self.equipLabel_7.image = self.testImage_cloak
         self.equipLabel_7.place(x=145, y=60)
         # 장갑
-        self.equipLabel_8 = Button(frame1_2_2_2_2, text='장갑이미지', image=self.testImage_glove, width=50, height=50)
+        self.equipLabel_8 = Button(frame1_2_2_2_2, text='장갑이미지', image=self.testImage_glove, command=lambda: self.pressedEquip(EquipMod.glove), width=50, height=50)
         self.equipLabel_8.image = self.testImage_glove
         self.equipLabel_8.place(x=145, y=125)
 
@@ -570,11 +570,18 @@ class MainGUI:
                 self.equipLabel_8.configure(image=self.testImage_glove)
                 self.equipLabel_8.image = self.testImage_glove
 
-    def pressedEquip(self):
+    def pressedEquip(self, equip):
         self.equip_window = Tk()
         self.equip_window.title('장비 능력치')
         self.equip_window.geometry('300x800')
-        self.potential_Label = (Label(self.equip_window, text="잠재능력 등급: 레어"))
+        if equip in EquipMod:
+            equipName = ''
+            if equip == EquipMod.hat:
+                equipName = '모자'
+            elif equip == EquipMod.top:
+                equipName = '상의'
+            self.updateEquipStat(equipName)
+        self.potential_Label = Label(self.equip_window, text="잠재능력 등급: 레어")
         self.potential_Label.pack(pady=5)
         self.potentialoption1_Label = Label(self.equip_window, text="DEX:+9%")
         self.potentialoption1_Label.pack(pady=5)
@@ -593,17 +600,24 @@ class MainGUI:
 
         self.updateEquipStat()
 
-    def updateEquipStat(self):
+    def updateEquipStat(self, equipName):
         for option in self.charData_equip['item_equipment']:
-            if option['item_equipment_slot'] == '모자':
+            if option['item_equipment_slot'] == str(equipName):
+                print(equipName)
                 self.potential_Label['text'] = str(option['potential_option_grade'])
                 self.potentialoption1_Label['text'] = str(option['potential_option_1'])
                 self.potentialoption2_Label['text'] = str(option['potential_option_2'])
-                self.potentialoption3_Label['text'] = str(option['potential_option_3'])
+                if option['potential_option_3'] == None:
+                    self.potentialoption3_Label['text'] = ''
+                else:
+                    self.potentialoption3_Label['text'] = str(option['potential_option_3'])
                 self.additional_Label['text'] = str(option['additional_potential_option_grade'])
                 self.additionaloption1_Label['text'] = str(option['additional_potential_option_1'])
                 self.additionaloption2_Label['text'] = str(option['additional_potential_option_2'])
-                self.additionaloption3_Label['text'] = str(option['additional_potential_option_3'])
+                if option['additional_potential_option_3'] == None:
+                    self.additionaloption3_Label['text'] = ''
+                else:
+                    self.additionaloption3_Label['text'] = str(option['additional_potential_option_3'])
 
     def pressedFavorite(self):
         pass
@@ -1021,6 +1035,14 @@ class ServerMod(Enum):
     RebootAll = 13
     Reboot1 = 14
     Reboot2 = 15
-
+class EquipMod(Enum):
+    hat = '모자'
+    top = '상의'
+    bot = 2
+    shoe = 3
+    weapon = 4
+    bojo = 5
+    cloak = 6
+    glove = 7
 
 MainGUI()
