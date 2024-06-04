@@ -11,6 +11,7 @@ import urllib.request
 from datetime import datetime, timedelta
 from tkintermapview import TkinterMapView
 from mailGUI import mailGUI
+from favoriteGUI import favoriteGUI
 from guideText import PlaceholderEntry
 
 
@@ -626,7 +627,10 @@ class MainGUI:
                     self.additionaloption3_Label['text'] = str(option['additional_potential_option_3'])
 
     def pressedFavorite(self):
-        pass
+        if favoriteGUI.instance is None or not favoriteGUI.instance.window.winfo_exists():
+            favoriteGUI(self)
+        else:
+            favoriteGUI.instance.window.lift()
 
     def pressedMail(self):
         if mailGUI.instance is None or not mailGUI.instance.window.winfo_exists():
