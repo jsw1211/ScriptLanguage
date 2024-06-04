@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import font
 
+items = ['이덱']
+
 
 class favoriteGUI:
     instance = None
@@ -27,7 +29,8 @@ class favoriteGUI:
 
         self.listbox = Listbox(frame, selectmode=SINGLE, font=self.favFont)
         self.listbox.place(x=50, y=150, width=300, height=400)
-        self.listbox.insert(END, '이덱')
+        for item in items:
+            self.listbox.insert(END, item)
 
         Button(frame, text='선택', font=self.favFont, command=self.pressedSelect).place(x=80, y=600, width=100, height=60)
         Button(frame, text='삭제', font=self.favFont, command=self.pressedDelete).place(x=220, y=600, width=100, height=60)
@@ -46,6 +49,9 @@ class favoriteGUI:
         selected_index = self.listbox.curselection()
         if selected_index:
             self.listbox.delete(selected_index)
+
+    def appendItem(self, name):
+        self.listbox.insert(END, name)
 
     def onClose(self):
         favoriteGUI.instance = None

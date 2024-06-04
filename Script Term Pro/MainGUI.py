@@ -11,7 +11,7 @@ import urllib.request
 from datetime import datetime, timedelta
 from tkintermapview import TkinterMapView
 from mailGUI import mailGUI
-from favoriteGUI import favoriteGUI
+from favoriteGUI import favoriteGUI, items
 from guideText import PlaceholderEntry
 
 
@@ -100,7 +100,6 @@ class MainGUI:
         favoriteButton.place(x=450, y=45, width=40, height=40)
         favoriteButton.image = image
         # 메일 버튼
-        self.mailWindow = None
         image = Image.open('Resource/Image/icon/mail.png')
         image = image.resize((40, 40))
         image = ImageTk.PhotoImage(image)
@@ -138,24 +137,30 @@ class MainGUI:
         labColor = 'azure'
         frame1_2_1_2 = Frame(frame1_2_1, width=290, height=200, background=synColor)
         frame1_2_1_2.place(x=270, y=0)
+        image = Image.open('Resource/Image/icon/star2.png')
+        image = image.resize((40, 40))
+        image = ImageTk.PhotoImage(image)
+        starButton = Button(frame1_2_1_2, text='', image=image, command=self.pressedStar, font=self.fontB, background='white')
+        starButton.place(x=230, y=20, width=40, height=40)
+        starButton.image = image
         name = '김땡땡'    # 테스트용
-        self.charNameLabel = Label(frame1_2_1_2, text=name, font=self.font, background=labColor, borderwidth=2, relief='groove')
-        self.charNameLabel.place(x=10, y=10)
+        self.charNameLabel = Label(frame1_2_1_2, text=name, font=self.fontT, background=labColor, borderwidth=2, relief='groove')
+        self.charNameLabel.place(x=10, y=20)
         level = 250     # 토스트용
         self.charLevelLabel = Label(frame1_2_1_2, text='Lv '+str(level), font=self.font, background=labColor, borderwidth=2, relief='groove')
-        self.charLevelLabel.place(x=180, y=10)
+        self.charLevelLabel.place(x=10, y=86)
         server = '스카니아'     # 텨스트용
         self.charServerLabel = Label(frame1_2_1_2, text='서버 - '+server, font=self.font, background=labColor, borderwidth=2, relief='groove')
-        self.charServerLabel.place(x=10, y=48)
+        self.charServerLabel.place(x=140, y=86)
         guild = '지존'    # 임시
         self.charGuildLabel = Label(frame1_2_1_2, text='길드 - '+guild, font=self.font, background=labColor, borderwidth=2, relief='groove')
-        self.charGuildLabel.place(x=10, y=86)
-        popular = 999   # 비둘기
-        self.charPopularLabel = Label(frame1_2_1_2, text='인기도 - '+str(popular), font=self.font, background=labColor, borderwidth=2, relief='groove')
-        self.charPopularLabel.place(x=10, y=124)
+        self.charGuildLabel.place(x=140, y=124)
         c_class = '모험가' # 떠나요~ 둘이서~
         self.charClassLabel = Label(frame1_2_1_2, text='직업 - ' + str(c_class), font=self.font, background=labColor, borderwidth=2, relief='groove')
-        self.charClassLabel.place(x=10, y=162)
+        self.charClassLabel.place(x=10, y=124)
+        popular = 999   # 비둘기
+        self.charPopularLabel = Label(frame1_2_1_2, text='인기도 - '+str(popular), font=self.font, background=labColor, borderwidth=2, relief='groove')
+        self.charPopularLabel.place(x=10, y=162)
 
         Frame(frame1_2, width=600, height=30, background=f1color).pack()
         frame1_2_2 = Frame(frame1_2, width=600, height=300, background=f1color)
@@ -483,7 +488,7 @@ class MainGUI:
         self.charServerLabel['text'] = '서버 - ' + str(charData.get('world_name'))
         self.charGuildLabel['text'] = '길드 - ' + str((charData.get('character_guild_name')))
         self.charPopularLabel['text'] = '인기도 - ' + str(charData_pop.get('popularity'))
-        self.charClassLabel['text'] = '직업 - ' + str(charData.get('character_class'))
+        self.charClassLabel['text'] = str(charData.get('character_class'))
 
         # 능력치 업데이트
         for stat in charData_stat['final_stat']:
@@ -637,6 +642,15 @@ class MainGUI:
             mailGUI(self)
         else:
             mailGUI.instance.window.lift()
+
+    def pressedStar(self):
+        if self.charData == None:
+            return
+        name = str(self.charData.get('character_name'))
+        if name not in items:
+            items.append(name)
+            if favoriteGUI.instance is not None:
+                favoriteGUI.instance.appendItem(name)
 
     def pressedServer(self, server):
         self.lankServerButton[self.lankSeenServer.value]['state'] = 'active'
