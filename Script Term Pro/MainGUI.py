@@ -2,6 +2,7 @@ import io
 import random
 from tkinter import *
 from tkinter import font
+import tkinter.messagebox
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 from enum import Enum
@@ -573,16 +574,13 @@ class MainGUI:
                 self.equipLabel_8.image = self.testImage_glove
 
     def pressedEquip(self, equip):
+        if self.charData is None:
+            tkinter.messagebox.showinfo('오류', '캐릭터 정보를 조회하지 않았습니다.')
+            return
+
         self.equip_window = Tk()
         self.equip_window.title('장비 능력치')
         self.equip_window.geometry('300x800')
-        if equip in EquipMod:
-            equipName = ''
-            if equip == EquipMod.hat:
-                equipName = '모자'
-            elif equip == EquipMod.top:
-                equipName = '상의'
-            self.updateEquipStat(equipName)
         self.potential_Label = Label(self.equip_window, text="잠재능력 등급: 레어")
         self.potential_Label.pack(pady=5)
         self.potentialoption1_Label = Label(self.equip_window, text="DEX:+9%")
@@ -599,13 +597,12 @@ class MainGUI:
         self.additionaloption2_Label.pack(pady=5)
         self.additionaloption3_Label = Label(self.equip_window, text="점프력:+2")
         self.additionaloption3_Label.pack(pady=5)
-
-        self.updateEquipStat()
+        if equip in EquipMod:
+            self.updateEquipStat(equip)
 
     def updateEquipStat(self, equipName):
         for option in self.charData_equip['item_equipment']:
-            if option['item_equipment_slot'] == str(equipName):
-                print(equipName)
+            if option['item_equipment_slot'] == str(equipName.value):
                 self.potential_Label['text'] = str(option['potential_option_grade'])
                 self.potentialoption1_Label['text'] = str(option['potential_option_1'])
                 self.potentialoption2_Label['text'] = str(option['potential_option_2'])
