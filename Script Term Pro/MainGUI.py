@@ -75,10 +75,11 @@ class MainGUI:
         # 캐릭터 정보 검색 페이지
         #
         #
-        frame1 = Frame(self.window)  # 캐릭터 정보 검색 기능
+        f1color = 'thistle1'
+        frame1 = Frame(self.window, background=f1color)  # 캐릭터 정보 검색 기능
         self.notebook.add(frame1, text='캐릭터 정보')
         # Label(frame1, text='캐릭터 정보를 조회', fg='red', font='helvetica 48').pack()
-        frame1_1 = Frame(frame1, width=600, height=100)
+        frame1_1 = Frame(frame1, width=600, height=100, background=f1color)
         frame1_1.pack()
         self.searchStr = StringVar()
         self.charEntry = PlaceholderEntry(frame1_1, textvariable=self.searchStr, placeholder="캐릭터 닉네임을 입력하시오", justify=LEFT, font=self.font)
@@ -87,14 +88,14 @@ class MainGUI:
         image = Image.open('Resource/Image/icon/search.png')
         image = image.resize((35, 35))
         image = ImageTk.PhotoImage(image)
-        searchButton = Button(frame1_1, text='', image=image, command=self.pressedSearch, font=self.fontB)
+        searchButton = Button(frame1_1, text='', image=image, command=self.pressedSearch, font=self.fontB, background='white')
         searchButton.place(x=340, y=45, width=80, height=40)
         searchButton.image = image
         # 즐겨찾기 버튼
         image = Image.open('Resource/Image/icon/star.png')
         image = image.resize((40, 40))
         image = ImageTk.PhotoImage(image)
-        favoriteButton = Button(frame1_1, text='', image=image, command=self.pressedFavorite, font=self.fontB)
+        favoriteButton = Button(frame1_1, text='', image=image, command=self.pressedFavorite, font=self.fontB, background='white')
         favoriteButton.place(x=450, y=45, width=40, height=40)
         favoriteButton.image = image
         # 메일 버튼
@@ -102,11 +103,11 @@ class MainGUI:
         image = Image.open('Resource/Image/icon/mail.png')
         image = image.resize((40, 40))
         image = ImageTk.PhotoImage(image)
-        mailButton = Button(frame1_1, text='', image=image, command=self.pressedMail, font=self.fontB)
+        mailButton = Button(frame1_1, text='', image=image, command=self.pressedMail, font=self.fontB, background='white')
         mailButton.place(x=510, y=45, width=40, height=40)
         mailButton.image = image
 
-        frame1_2 = Frame(frame1, width=600, height=700)
+        frame1_2 = Frame(frame1, width=600, height=700, background=f1color)
         frame1_2.pack()
 
         self.charData = None
@@ -116,11 +117,12 @@ class MainGUI:
         self.charData_equip = None
 
         # 종합정보
-        Frame(frame1_2, width=600, height=30).pack()
-        frame1_2_1 = Frame(frame1_2, width=600, height=200)
+        Frame(frame1_2, width=600, height=30, background=f1color).pack()
+        frame1_2_1 = Frame(frame1_2, width=600, height=200, background=f1color)
         frame1_2_1.pack()
         # 이미지 액자
-        frame1_2_1_1 = Frame(frame1_2_1, width=160, height=200)
+        phoColor = 'light blue'
+        frame1_2_1_1 = Frame(frame1_2_1, width=160, height=200, background=phoColor)
         frame1_2_1_1.place(x=50, y=0)
         frame1_2_1_1_1 = Frame(frame1_2_1_1, width=140, height=180)
         frame1_2_1_1_1.pack_propagate(False)
@@ -131,64 +133,68 @@ class MainGUI:
 
 
         # 정보
-        frame1_2_1_2 = Frame(frame1_2_1, width=290, height=200)
+        synColor = 'light cyan'
+        labColor = 'azure'
+        frame1_2_1_2 = Frame(frame1_2_1, width=290, height=200, background=synColor)
         frame1_2_1_2.place(x=270, y=0)
         name = '김땡땡'    # 테스트용
-        self.charNameLabel = Label(frame1_2_1_2, text=name, font=self.font)
+        self.charNameLabel = Label(frame1_2_1_2, text=name, font=self.font, background=labColor, borderwidth=2, relief='groove')
         self.charNameLabel.place(x=10, y=10)
         level = 250     # 토스트용
-        self.charLevelLabel = Label(frame1_2_1_2, text='Lv '+str(level), font=self.font)
+        self.charLevelLabel = Label(frame1_2_1_2, text='Lv '+str(level), font=self.font, background=labColor, borderwidth=2, relief='groove')
         self.charLevelLabel.place(x=180, y=10)
         server = '스카니아'     # 텨스트용
-        self.charServerLabel = Label(frame1_2_1_2, text='서버 - '+server, font=self.font)
-        self.charServerLabel.place(x=10, y=50)
+        self.charServerLabel = Label(frame1_2_1_2, text='서버 - '+server, font=self.font, background=labColor, borderwidth=2, relief='groove')
+        self.charServerLabel.place(x=10, y=48)
         guild = '지존'    # 임시
-        self.charGuildLabel = Label(frame1_2_1_2, text='길드 - '+guild, font=self.font)
-        self.charGuildLabel.place(x=10, y=90)
+        self.charGuildLabel = Label(frame1_2_1_2, text='길드 - '+guild, font=self.font, background=labColor, borderwidth=2, relief='groove')
+        self.charGuildLabel.place(x=10, y=86)
         popular = 999   # 비둘기
-        self.charPopularLabel = Label(frame1_2_1_2, text='인기도 - '+str(popular), font=self.font)
-        self.charPopularLabel.place(x=10, y=130)
+        self.charPopularLabel = Label(frame1_2_1_2, text='인기도 - '+str(popular), font=self.font, background=labColor, borderwidth=2, relief='groove')
+        self.charPopularLabel.place(x=10, y=124)
         c_class = '모험가' # 떠나요~ 둘이서~
-        self.charClassLabel = Label(frame1_2_1_2, text='직업 - ' + str(c_class), font=self.font)
-        self.charClassLabel.place(x=10, y=170)
+        self.charClassLabel = Label(frame1_2_1_2, text='직업 - ' + str(c_class), font=self.font, background=labColor, borderwidth=2, relief='groove')
+        self.charClassLabel.place(x=10, y=162)
 
-        Frame(frame1_2, width=600, height=30).pack()
-        frame1_2_2 = Frame(frame1_2, width=600, height=300)
+        Frame(frame1_2, width=600, height=30, background=f1color).pack()
+        frame1_2_2 = Frame(frame1_2, width=600, height=300, background=f1color)
         frame1_2_2.pack()
         # 능력치
-        frame1_2_2_1 = Frame(frame1_2_2, width=240, height=300)
+        staColor = 'pale green'
+        frame1_2_2_1 = Frame(frame1_2_2, width=240, height=300, background=staColor)
         frame1_2_2_1.pack_propagate(False)
         frame1_2_2_1.place(x=40, y=0)
-        frame1_2_2_1_1 = Frame(frame1_2_2_1, width=200, height=40)
+        frame1_2_2_1_1 = Frame(frame1_2_2_1, width=200, height=40, background=staColor)
         frame1_2_2_1_1.pack_propagate(False)
         frame1_2_2_1_1.pack()
-        self.statusLabel = Label(frame1_2_2_1_1, text='능력치', font=self.fontT)
+        self.statusLabel = Label(frame1_2_2_1_1, text='능력치', font=self.fontT, background=staColor)
         self.statusLabel.pack(side=BOTTOM)
-        frame1_2_2_1_2 = Frame(frame1_2_2_1, width=140, height=260, padx=10, pady=10)
+        frame1_2_2_1_2 = Frame(frame1_2_2_1, width=140, height=260, padx=10, pady=10, background=staColor)
         frame1_2_2_1_2.pack_propagate(False)
         frame1_2_2_1_2.pack(padx=5, pady=5)
-        self.HPLabel = Label(frame1_2_2_1_2, text='HP: '+str(50000), font=self.font)
+        self.HPLabel = Label(frame1_2_2_1_2, text='HP: '+str(50000), font=self.font, borderwidth=2, relief='groove')
         self.HPLabel.pack(side=TOP, anchor=W, expand=Y)
-        self.MPLabel = Label(frame1_2_2_1_2, text='MP: '+str(10000), font=self.font)
+        self.MPLabel = Label(frame1_2_2_1_2, text='MP: '+str(10000), font=self.font, borderwidth=2, relief='groove')
         self.MPLabel.pack(side=TOP, anchor=W, expand=Y)
-        self.STRLabel = Label(frame1_2_2_1_2, text='STR: '+str(1000), font=self.font)
+        self.STRLabel = Label(frame1_2_2_1_2, text='STR: '+str(1000), font=self.font, borderwidth=2, relief='groove')
         self.STRLabel.pack(side=TOP, anchor=W, expand=Y)
-        self.DEXLabel = Label(frame1_2_2_1_2, text='DEX: '+str(500), font=self.font)
+        self.DEXLabel = Label(frame1_2_2_1_2, text='DEX: '+str(500), font=self.font, borderwidth=2, relief='groove')
         self.DEXLabel.pack(side=TOP, anchor=W, expand=Y)
-        self.INTLabel = Label(frame1_2_2_1_2, text='INT: '+str(100), font=self.font)
+        self.INTLabel = Label(frame1_2_2_1_2, text='INT: '+str(100), font=self.font, borderwidth=2, relief='groove')
         self.INTLabel.pack(side=TOP, anchor=W, expand=Y)
-        self.LUKLabel = Label(frame1_2_2_1_2, text='LUK: '+str(150), font=self.font)
+        self.LUKLabel = Label(frame1_2_2_1_2, text='LUK: '+str(150), font=self.font, borderwidth=2, relief='groove')
         self.LUKLabel.pack(side=TOP, anchor=W, expand=Y)
         # 장비
-        frame1_2_2_2 = Frame(frame1_2_2, width=240, height=300)
+        equColor = 'peach puff'
+        frame1_2_2_2 = Frame(frame1_2_2, width=240, height=300, background=equColor)
         frame1_2_2_2.pack_propagate(False)
         frame1_2_2_2.place(x=320, y=0)
-        frame1_2_2_2_1 = Frame(frame1_2_2_2, width=200, height=40)
+        frame1_2_2_2_1 = Frame(frame1_2_2_2, width=200, height=40, background=equColor)
         frame1_2_2_2_1.pack_propagate(False)
         frame1_2_2_2_1.pack()
-        self.equipmnLabel = Label(frame1_2_2_2_1, text='장비', font=self.fontT)
+        self.equipmnLabel = Label(frame1_2_2_2_1, text='장비', font=self.fontT, background=equColor)
         self.equipmnLabel.pack(side=BOTTOM)
-        frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, padx=10, pady=10)
+        frame1_2_2_2_2 = Frame(frame1_2_2_2, width=240, height=260, padx=10, pady=10, background=equColor)
         frame1_2_2_2_2.pack_propagate(False)
         frame1_2_2_2_2.pack(padx=5, pady=5)
         # 모자
@@ -225,11 +231,12 @@ class MainGUI:
         self.equipLabel_8.place(x=145, y=125)
 
         #무릉
-        Frame(frame1_2, width=600, height=30).pack()
-        frame1_2_3 = Frame(frame1_2, width=600, height=80)
+        murColor = 'light goldenrod'
+        Frame(frame1_2, width=600, height=30, background=f1color).pack()
+        frame1_2_3 = Frame(frame1_2, width=600, height=80, background=f1color)
         frame1_2_3.pack_propagate(False)
         frame1_2_3.pack()
-        self.mureungLabel = Label(frame1_2_3, text='무릉 '+str(49)+'층 '+str(12)+':'+str(59), font=self.fontV)
+        self.mureungLabel = Label(frame1_2_3, text='무릉 '+str(49)+'층 '+str(12)+':'+str(59), font=self.fontV, background=murColor)
         self.mureungLabel.pack(side=TOP)
 
         # 랭킹 페이지
@@ -310,7 +317,7 @@ class MainGUI:
         self.searchAPIKey = StringVar()
         self.apiKeyEntry = PlaceholderEntry(frame3_1, textvariable=self.searchAPIKey, placeholder='넥슨 API 키를 입력하시오', justify=LEFT, font=self.font)
         self.apiKeyEntry.place(x=50, y=50, width=400, height=25)
-        Button(frame3_1, text='키 입력', width=5, height=1, command=self.pressedAPIKey, font=self.fontB).place(x=485, y=48, width=80, height=30)
+        Button(frame3_1, text='키 입력', width=5, height=1, command=self.pressedAPIKey, font=self.fontB, background='white').place(x=485, y=48, width=80, height=30)
         frame3_2 = Frame(frame3, width=600, height=660)
         frame3_2.pack_propagate(False)
         frame3_2.pack()
