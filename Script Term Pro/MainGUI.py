@@ -602,7 +602,7 @@ class MainGUI:
         self.potentialoption2_Label.pack(pady=5)
         self.potentialoption3_Label = Label(self.equip_window, text="DEX:+9%")
         self.potentialoption3_Label.pack(pady=5)
-        self.additional_Label = Label(self.equip_window, text="에디셔널 잡재능력: 레전드리")
+        self.additional_Label = Label(self.equip_window, text="에디셔널 잠재능력 등급: 레전드리")
         self.additional_Label.pack(pady=5)
         self.additionaloption1_Label = Label(self.equip_window, text="마:+10")
         self.additionaloption1_Label.pack(pady=5)
@@ -616,14 +616,14 @@ class MainGUI:
     def updateEquipStat(self, equipName):
         for option in self.charData_equip['item_equipment']:
             if option['item_equipment_slot'] == str(equipName.value):
-                self.potential_Label['text'] = str(option['potential_option_grade'])
+                self.potential_Label['text'] = '잠재능력 등급: ' + str(option['potential_option_grade'])
                 self.potentialoption1_Label['text'] = str(option['potential_option_1'])
                 self.potentialoption2_Label['text'] = str(option['potential_option_2'])
                 if option['potential_option_3'] == None:
                     self.potentialoption3_Label['text'] = ''
                 else:
                     self.potentialoption3_Label['text'] = str(option['potential_option_3'])
-                self.additional_Label['text'] = str(option['additional_potential_option_grade'])
+                self.additional_Label['text'] = '에디셔널 잠재능력 등급: ' + str(option['additional_potential_option_grade'])
                 self.additionaloption1_Label['text'] = str(option['additional_potential_option_1'])
                 self.additionaloption2_Label['text'] = str(option['additional_potential_option_2'])
                 if option['additional_potential_option_3'] == None:
