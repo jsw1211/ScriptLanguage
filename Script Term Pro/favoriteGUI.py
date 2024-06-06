@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import font
+import fio
 
 items = ['이덱']
 
@@ -29,11 +30,14 @@ class favoriteGUI:
 
         self.listbox = Listbox(frame, selectmode=SINGLE, font=self.favFont)
         self.listbox.place(x=50, y=150, width=300, height=400)
-        for item in items:
-            self.listbox.insert(END, item)
+        self.itemLoadListbox()
 
-        Button(frame, text='선택', font=self.favFont, command=self.pressedSelect).place(x=80, y=600, width=100, height=60)
-        Button(frame, text='삭제', font=self.favFont, command=self.pressedDelete).place(x=220, y=600, width=100, height=60)
+        bWid = 100
+        bHei = 40
+        Button(frame, text='선택', font=self.favFont, command=self.pressedSelect).place(x=80, y=570, width=bWid, height=bHei)
+        Button(frame, text='삭제', font=self.favFont, command=self.pressedDelete).place(x=220, y=570, width=bWid, height=bHei)
+        Button(frame, text='저장', font=self.favFont, command=self.pressedSave).place(x=80, y=630, width=bWid, height=bHei)
+        Button(frame, text='불러오기', font=self.favFont, command=self.pressedLoad).place(x=220, y=630, width=bWid, height=bHei)
 
         self.window.mainloop()
 
@@ -43,12 +47,27 @@ class favoriteGUI:
             selected_text = self.listbox.get(selected_index)
             self.parent.searchStr.set(selected_text)
             self.parent.pressedSearch()
+        else:
+            return
         self.onClose()
 
     def pressedDelete(self):
         selected_index = self.listbox.curselection()
         if selected_index:
             self.listbox.delete(selected_index)
+
+    def pressedSave(self):
+        fio.save(items)
+
+    def pressedLoad(self):
+        global items
+        items = fio.load()
+        self.listbox.delete(0, END)
+        self.itemLoadListbox()
+
+    def itemLoadListbox(self):
+        for item in items:
+            self.listbox.insert(END, item)
 
     def appendItem(self, name):
         self.listbox.insert(END, name)
