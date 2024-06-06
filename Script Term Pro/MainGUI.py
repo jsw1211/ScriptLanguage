@@ -1062,11 +1062,11 @@ class ServerMod(Enum):
 class EquipMod(Enum):
     hat = '모자'
     top = '상의'
-    bot = 2
-    shoe = 3
-    weapon = 4
-    bojo = 5
-    cloak = 6
-    glove = 7
+    bot = '하의'
+    shoe = '신발'
+    weapon = '무기'
+    bojo = '보조무기'
+    cloak = '망토'
+    glove = '장갑'
 
 MainGUI()
