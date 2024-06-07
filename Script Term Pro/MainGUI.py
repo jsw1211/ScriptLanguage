@@ -22,7 +22,7 @@ class MainGUI:
 
     def __init__(self):
         self.window = Tk()
-        self.window.title('메이플스토리(임시)')
+        self.window.title('메핑크빈')
         self.window.geometry('600x800')
 
         self.font = font.Font(self.window, size=16, weight='bold', family='메이플스토리')
