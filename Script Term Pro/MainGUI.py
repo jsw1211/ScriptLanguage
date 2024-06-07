@@ -448,6 +448,8 @@ class MainGUI:
         self.upgradeWeapon()
         self.miniGameResult = None
 
+        self.window.bind('<Return>', self.bind_enter_key)
+
         # Tkinter 나타나게
         self.window.mainloop()
 
@@ -1040,6 +1042,13 @@ class MainGUI:
         mini_game.focus_set()
         move_star()
         self.window.wait_window(mini_game)  # 새로운 창이 닫힐 때까지 기다림
+
+    def bind_enter_key(self, event):
+        current_tab = self.notebook.index(self.notebook.select())
+        if current_tab == 0:  # 페이지 1
+            self.pressedSearch()
+        elif current_tab == 2:  # 페이지 3
+            self.pressedAPIKey()
 
 
 class ServerMod(Enum):
