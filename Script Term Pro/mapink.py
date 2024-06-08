@@ -41,6 +41,7 @@ def getData(name):
     returnData = {}
     returnData['이미지'] = basicData.get('character_image')
     returnData['닉네임'] = basicData.get('character_name')
+    returnData['직업'] = basicData.get('character_class')
     returnData['레밸'] = basicData.get('character_level')
     returnData['서버'] = basicData.get('world_name')
     returnData['길드'] = basicData.get('character_guild_name')
