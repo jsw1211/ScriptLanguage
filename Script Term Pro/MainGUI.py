@@ -601,6 +601,42 @@ class MainGUI:
         self.equip_window = Tk()
         self.equip_window.title('장비 능력치')
         self.equip_window.geometry('300x800')
+        self.STR_Label = Label(self.equip_window, text="STR:+20")
+        self.STR_Label.pack(pady=5)
+        self.DEX_Label = Label(self.equip_window, text="DEX:+20")
+        self.DEX_Label.pack(pady=5)
+        self.INT_Label = Label(self.equip_window, text="INT:+20")
+        self.INT_Label.pack(pady=5)
+        self.LUK_Label = Label(self.equip_window, text="LUK:+20")
+        self.LUK_Label.pack(pady=5)
+        self.MAX_HP_Label = Label(self.equip_window, text="최대 HP:+20")
+        self.MAX_HP_Label.pack(pady=5)
+        self.MAX_MP_Label = Label(self.equip_window, text="최대 MP:+20")
+        self.MAX_MP_Label.pack(pady=5)
+        self.ATTAK_POWER_Label = Label(self.equip_window, text="공격력:+20")
+        self.ATTAK_POWER_Label.pack(pady=5)
+        self.MAGIC_POWER_Label = Label(self.equip_window, text="마력:+20")
+        self.MAGIC_POWER_Label.pack(pady=5)
+        self.ARMOR_Label = Label(self.equip_window, text="방어력:+20")
+        self.ARMOR_Label.pack(pady=5)
+        self.SPEED_Label = Label(self.equip_window, text="이동속도:+20")
+        self.SPEED_Label.pack(pady=5)
+        self.JUMP_Label = Label(self.equip_window, text="점프력:+20")
+        self.JUMP_Label.pack(pady=5)
+        self.BOSS_DAMAGE_Label = Label(self.equip_window, text="보스 몬스터 공격시 데미지:+20%")
+        self.BOSS_DAMAGE_Label.pack(pady=5)
+        self.IGNORE_MONSTER_ARMOR_Label = Label(self.equip_window, text="몬스터 방어율 무시:+20%")
+        self.IGNORE_MONSTER_ARMOR_Label.pack(pady=5)
+        self.ALL_STAT_Label = Label(self.equip_window, text="올스탯:+20%")
+        self.ALL_STAT_Label.pack(pady=5)
+        self.DAMAGE_Label = Label(self.equip_window, text="데미지:+20%")
+        self.DAMAGE_Label.pack(pady=5)
+        self.EQUIPMENT_LEVEL_DECREASE_Label = Label(self.equip_window, text="착용 레벨 감소:-20")
+        self.EQUIPMENT_LEVEL_DECREASE_Label.pack(pady=5)
+        self.MAX_HP_RATE_Label = Label(self.equip_window, text="최대 HP:+20%")
+        self.MAX_HP_RATE_Label.pack(pady=5)
+        self.MAX_MP_RATE_Label = Label(self.equip_window, text="최대 MP:+20%")
+        self.MAX_MP_RATE_Label.pack(pady=5)
         self.potential_Label = Label(self.equip_window, text="잠재능력 등급: 레어")
         self.potential_Label.pack(pady=5)
         self.potentialoption1_Label = Label(self.equip_window, text="DEX:+9%")
@@ -623,14 +659,53 @@ class MainGUI:
     def updateEquipStat(self, equipName):
         for option in self.charData_equip['item_equipment']:
             if option['item_equipment_slot'] == str(equipName.value):
-                self.potential_Label['text'] = '잠재능력 등급: ' + str(option['potential_option_grade'])
+                self.STR_Label['text'] = 'STR:+' + str(option['item_total_option']['str'])
+                self.DEX_Label['text'] = 'DEX:+' + str(option['item_total_option']['dex'])
+                self.INT_Label['text'] = 'INT:+' + str(option['item_total_option']['int'])
+                self.LUK_Label['text'] = 'LUK:+' + str(option['item_total_option']['luk'])
+                self.MAX_HP_Label['text'] = '최대 HP:+' + str(option['item_total_option']['max_hp'])
+                self.MAX_MP_Label['text'] = '최대 MP:+' + str(option['item_total_option']['max_mp'])
+                self.ATTAK_POWER_Label['text'] = '공격력:+' + str(option['item_total_option']['attack_power'])
+                self.MAGIC_POWER_Label['text'] = '마력:+' + str(option['item_total_option']['magic_power'])
+                self.ARMOR_Label['text'] = '방어력:+' + str(option['item_total_option']['armor'])
+                self.SPEED_Label['text'] = '이동속도:+' + str(option['item_total_option']['speed'])
+                self.JUMP_Label['text'] = '점프력:+' + str(option['item_total_option']['jump'])
+                self.BOSS_DAMAGE_Label['text'] = '보스 몬스터 공격시 데미지:+' + str(option['item_total_option']['boss_damage']) + '%'
+                self.IGNORE_MONSTER_ARMOR_Label['text'] = '몬스터 방어율 무시:+' + str(option['item_total_option']['ignore_monster_armor']) + '%'
+                self.ALL_STAT_Label['text'] = '올스탯:+' + str(option['item_total_option']['all_stat']) + '%'
+                self.DAMAGE_Label['text'] = '데미지:+' + str(option['item_total_option']['damage']) + '%'
+                self.EQUIPMENT_LEVEL_DECREASE_Label['text'] = '착용 레벨 감소:+' + str(option['item_total_option']['equipment_level_decrease'])
+                self.MAX_HP_RATE_Label['text'] = '최대 HP:+' + str(option['item_total_option']['max_hp_rate']) + '%'
+                self.MAX_MP_RATE_Label['text'] = '최대 MP:+' + str(option['item_total_option']['max_mp_rate']) + '%'
+
+                potential_grade = str(option['potential_option_grade'])
+
+                if potential_grade == '레어':
+                    self.potential_Label.config(fg='skyblue')
+                elif potential_grade == '에픽':
+                    self.potential_Label.config(fg='purple')
+                elif potential_grade == '유니크':
+                    self.potential_Label.config(fg='gold')
+                elif potential_grade == '레전드리':
+                    self.potential_Label.config(fg='green')
+                self.potential_Label['text'] = '잠재능력 등급: ' + potential_grade
                 self.potentialoption1_Label['text'] = str(option['potential_option_1'])
                 self.potentialoption2_Label['text'] = str(option['potential_option_2'])
                 if option['potential_option_3'] == None:
                     self.potentialoption3_Label['text'] = ''
                 else:
                     self.potentialoption3_Label['text'] = str(option['potential_option_3'])
-                self.additional_Label['text'] = '에디셔널 잠재능력 등급: ' + str(option['additional_potential_option_grade'])
+
+                additional_potential_grade = str(option['additional_potential_option_grade'])
+                if additional_potential_grade == '레어':
+                    self.additional_Label.config(fg='skyblue')
+                elif additional_potential_grade == '에픽':
+                    self.additional_Label.config(fg='purple')
+                elif additional_potential_grade == '유니크':
+                    self.additional_Label.config(fg='gold')
+                elif additional_potential_grade == '레전드리':
+                    self.additional_Label.config(fg='green')
+                self.additional_Label['text'] = '에디셔널 잠재능력 등급: ' + additional_potential_grade
                 self.additionaloption1_Label['text'] = str(option['additional_potential_option_1'])
                 self.additionaloption2_Label['text'] = str(option['additional_potential_option_2'])
                 if option['additional_potential_option_3'] == None:
