@@ -10,9 +10,11 @@ import requests
 import urllib.request
 from datetime import datetime, timedelta
 from tkintermapview import TkinterMapView
+import threading
 from mailGUI import mailGUI
 from favoriteGUI import favoriteGUI, items
 from guideText import PlaceholderEntry
+import chatbotRun
 
 
 class MainGUI:
@@ -450,6 +452,9 @@ class MainGUI:
 
         self.window.bind('<Return>', self.bind_enter_key)
 
+        chatbot_thread = threading.Thread(target=self.start_chatbot)
+        chatbot_thread.daemon = True
+        chatbot_thread.start()
         # Tkinter 나타나게
         self.window.mainloop()
 
@@ -1050,6 +1055,9 @@ class MainGUI:
         elif current_tab == 2:  # 페이지 3
             self.pressedAPIKey()
 
+    def start_chatbot(self):
+        chatbotRun.main()
+
 
 class ServerMod(Enum):
     Entire = 0
@@ -1068,6 +1076,8 @@ class ServerMod(Enum):
     RebootAll = 13
     Reboot1 = 14
     Reboot2 = 15
+
+
 class EquipMod(Enum):
     hat = '모자'
     top = '상의'
@@ -1077,5 +1087,6 @@ class EquipMod(Enum):
     bojo = '보조무기'
     cloak = '망토'
     glove = '장갑'
+
 
 MainGUI()

@@ -97,15 +97,16 @@ def replyHelp(user_id):
     '''
     mapink.sendMessage(user_id, msg)
 
-today = date.today()
-print('['+str(today)+']recived token:', mapink.TOKEN)
+def main():
+    today = date.today()
+    print('['+str(today)+']recived token:', mapink.TOKEN)
 
-bot = telepot.Bot(mapink.TOKEN)
-print(bot.getMe())
+    bot = telepot.Bot(mapink.TOKEN)
+    print(bot.getMe())
 
-bot.message_loop(handle)
+    bot.message_loop(handle)
 
-print('Listening...')
+    print('Listening...')
 
-while True:
-    time.sleep(10)
+    while True:
+        time.sleep(10)
