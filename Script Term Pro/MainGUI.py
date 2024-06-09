@@ -26,6 +26,7 @@ class MainGUI:
         self.window = Tk()
         self.window.title('메핑크빈')
         self.window.geometry('600x800')
+        self.equip_window = None
 
         self.font = font.Font(self.window, size=16, weight='bold', family='메이플스토리')
         self.fontS = font.Font(self.window, size=8, weight='bold', family='메이플스토리')
@@ -597,6 +598,9 @@ class MainGUI:
         if self.charData is None:
             tkinter.messagebox.showinfo('오류', '캐릭터 정보를 조회하지 않았습니다.')
             return
+
+        if self.equip_window is not None:
+            self.equip_window.destroy()
 
         self.equip_window = Tk()
         self.equip_window.title('장비 능력치')
